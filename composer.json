@@ -1,0 +1,30 @@
+{
+	"name": "xima/xima-typo3-manual",
+	"description": "Editor manual for TYPO3",
+	"type": "typo3-cms-extension",
+	"authors": [
+		{
+			"name": "Maik Schneider",
+			"email": "maik.schneider@xima.de",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"dompdf/dompdf": "^2.0",
+		"typo3/cms-rte-ckeditor": "^11.5 || ^12.0",
+		"blueways/bw-focuspoint-images": "^4.0",
+		"blueways/bw-icons": "dev-12.x-dev",
+		"ext-fileinfo": "*",
+		"typo3/cms-core": "^11.0 || ^12.0"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "xima_typo3_manual"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"Xima\\XimaTypo3Manual\\": "Classes"
+		}
+	}
+}

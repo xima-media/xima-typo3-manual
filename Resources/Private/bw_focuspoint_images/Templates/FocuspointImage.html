@@ -1,0 +1,122 @@
+<f:layout name="Default"/>
+
+<f:section name="Header">
+    <f:if condition="{data.header}">
+        <header>
+            <h3 class="{data.positionClass}">
+                <f:link.typolink parameter="{data.link}">{data.header}</f:link.typolink>
+            </h3>
+        </header>
+    </f:if>
+</f:section>
+
+<f:section name="Main">
+
+    <div class="ce-bodytext ce-focuspoint-bodytext">
+        <f:format.html>{data.bodytext}</f:format.html>
+    </div>
+
+    <f:if condition="{image}">
+        <div class="focuspoint" style="width:{image.properties.width}px">
+
+            <f:image image="{image}"/>
+
+            <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
+
+                <defs>
+                    <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="solid">
+                        <feFlood  flood-color="{color}" result="bg" />
+                        <feMerge>
+                            <feMergeNode in="bg"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+
+                <f:for each="{points}" as="point" iteration="i">
+
+                    <a href="#focuspoint-{data.uid}-{i.cycle}">
+                        <f:if condition="{point.type}=='marking'">
+                            <rect x="{point.x}%"
+                                  y="{point.y}%"
+                                  stroke="{color}"
+                                  stroke-width="2px"
+                                  class="focuspoint__svg__rect marking"
+                                  width="{point.width}%"
+                                  height="{point.height}%"
+                                  fill="transparent"/>
+                        </f:if>
+                    </a>
+
+                    <f:if condition="{point.type}!='marking'">
+                        <a href="#focuspoint-{data.uid}-{i.cycle}">
+
+                        <text x="{point.textX}%"
+                              y="{point.textY}%"
+                              class="default"
+                              fill="#FFF"
+                              font-size="13"
+                              filter="url(#solid)"
+                              alignment-baseline="middle"
+                              text-anchor="middle">
+                            {point.title}
+                        </text>
+                        </a>
+                    </f:if>
+
+                    <f:if condition="{point.type}=='marking'">
+                        <f:if condition="{point.x} < 10">
+                            <f:then>
+                                <circle class="right"
+                                        r="13"
+                                        cx="{point.x}%"
+                                        cy="{point.textY}%"
+                                        fill="{color}"
+                                        style="--margin:{point.width}%"/>
+                                <text style="--margin:{point.width}%"
+                                      class="marking right"
+                                      x="{point.x}%"
+                                      y="{point.textY}%"
+                                      fill="#FFF"
+                                      font-weight="bold"
+                                      font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
+                                      alignment-baseline="middle"
+                                      text-anchor="middle">
+                                    {i.cycle}
+                                </text>
+                            </f:then>
+                            <f:else>
+                                <circle r="13" cx="{point.x}%" cy="{point.textY}%" fill="{color}"/>
+                                <text x="{point.x}%"
+                                      y="{point.textY}%"
+                                      fill="#FFF"
+                                      class="marking"
+                                      font-weight="bold"
+                                      font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
+                                      alignment-baseline="middle"
+                                      text-anchor="middle">
+                                    {i.cycle}
+                                </text>
+                            </f:else>
+                        </f:if>
+                    </f:if>
+
+
+                </f:for>
+
+            </svg>
+
+        </div>
+    </f:if>
+
+    <f:for each="{points}" as="point" iteration="i">
+        <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
+            <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
+            <p>
+                <f:format.nl2br>{point.description}</f:format.nl2br>
+            </p>
+        </div>
+    </f:for>
+
+</f:section>

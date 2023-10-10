@@ -1,0 +1,65 @@
+@-moz-document url-prefix() {
+    :root {
+        --margin-y: 6px;
+    }
+}
+
+.focuspoint {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto min-content;
+    max-width: 100%;
+}
+
+.focuspoint * {
+    text-decoration: none !important;
+}
+
+.focuspoint text.default {
+    transform: translate3d(0, var(--margin-y, 1px), 0);
+    border-radius: 3px;
+}
+
+.focuspoint text.marking {
+    transform: translate3d(-20px, var(--margin-y, 1px), 0);
+}
+
+.focuspoint text.marking.right {
+    transform: translate3d(calc(var(--margin) + 20px), var(--margin-y, 1px), 0);
+}
+
+.focuspoint circle {
+    transform: translate3d(-20px, 0, 0);
+}
+
+.focuspoint circle.right {
+    transform: translate3d(calc(var(--margin) + 20px), 0, 0);
+}
+
+.focuspoint img {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    max-width: 100%;
+    height: auto;
+}
+
+.focuspoint__svg {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    align-self: stretch;
+    justify-self: stretch;
+    width: 100%;
+}
+
+.focuspoint__description {
+    padding-top: var(--space);
+}
+
+.focuspoint__description strong {
+    display: block;
+    margin-bottom: calc(0.25 * var(--space));
+}
+
+.focuspoint__description p {
+    padding-left: calc(0.5 * var(--space));
+}

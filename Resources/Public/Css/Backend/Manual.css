@@ -1,0 +1,13 @@
+.filtered-for-manuals .svg-toolbar__submenu {
+    display: none !important;
+}
+
+.typo3-module-xima_typo3_manual .module-body {
+    height: calc(100vh - 68px);
+    display: grid;
+    padding: 0;
+}
+
+.typo3-module-xima_typo3_manual .module-body iframe {
+    height: 100%;
+}

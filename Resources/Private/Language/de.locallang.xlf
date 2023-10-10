@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
+		<body>
+			<trans-unit id="manual_page_type">
+				<source />
+				<target>Handbuchseite</target>
+			</trans-unit>
+			<trans-unit id="mlang_tabs_tab">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tablabel">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="focus_point.title">
+				<source />
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="focus_point.type">
+				<source />
+				<target>Art</target>
+			</trans-unit>
+			<trans-unit id="focus_point.marking">
+				<source />
+				<target>Markierung</target>
+			</trans-unit>
+			<trans-unit id="focus_point.default">
+				<source />
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="wizard.mbox.title">
+				<source />
+				<target>Infobox</target>
+			</trans-unit>
+			<trans-unit id="wizard.mbox.description">
+				<source />
+				<target>Farblicher Hinweis mit Icon</target>
+			</trans-unit>
+			<trans-unit id="wizard.mtext.title">
+				<source />
+				<target>Text mit Bild</target>
+			</trans-unit>
+			<trans-unit id="wizard.mtext.description">
+				<source />
+				<target>Textelement mit Überschrift und Fließtext</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

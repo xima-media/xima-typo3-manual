@@ -1,0 +1,81 @@
+mod.wizards.newContentElement.wizardItems {
+
+  manual {
+    header = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_labels_tablabel
+    elements {
+      tt_content_mtext {
+        iconIdentifier = content-beside-text-img-below-center
+        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.title
+        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description
+        tt_content_defValues {
+          CType = mtext
+        }
+      }
+
+      tt_content_mbox {
+        iconIdentifier = content-idea
+        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mbox.title
+        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mbox.description
+        tt_content_defValues {
+          CType = mbox
+        }
+      }
+
+      bw_focuspoint_images_svg {
+        iconIdentifier = bw_focuspoint_images_svg
+        title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title
+        description = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description
+        tt_content_defValues {
+          CType = bw_focuspoint_images_svg
+        }
+      }
+    }
+
+    show = tt_content_mtext,tt_content_mbox,bw_focuspoint_images_svg
+  }
+
+  common.show =
+  forms.show =
+  special.show =
+  plugins.show =
+  menu.show =
+  luxletter.show =
+  container.show =
+  ext-news.show =
+}
+
+TCEFORM.tt_content.CType.removeItems >
+TCEFORM.tt_content.assets.config.maxitems = 1
+TCEFORM.tt_content.imageorient.disabled = 0
+TCEFORM.tt_content.imageorient.removeItems = 1,2,9,10,17,18
+
+mod.tx_bwfocuspointimages.settings.fields {
+
+  type {
+    title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.type
+    type = select
+    options {
+      default = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.default
+      marking = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.marking
+    }
+  }
+
+  title {
+    title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.title
+    type = text
+  }
+
+  description {
+    title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:wizard.fields.description
+    type = textarea
+  }
+
+}
+
+mod.tx_bwicons {
+  typo3icons = Blueways\BwIcons\Provider\FileIconProvider
+  typo3icons {
+    title = TYPO3 Icons
+    folder = EXT:core/Resources/Public/Icons/T3Icons/svgs
+  }
+}

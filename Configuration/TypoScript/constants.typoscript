@@ -1,0 +1,27 @@
+@import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
+@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/constants.typoscript'
+
+##############################
+#### FLUID STYLED CONTENT ####
+##############################
+styles {
+  templates {
+    layoutRootPath = EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Layouts/
+    partialRootPath = EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Partials/
+    templateRootPath = EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Templates/
+  }
+}
+
+styles.content.textmedia.maxW = 1200
+styles.content.textmedia.maxWInText = 640
+
+##############################
+#### BW_FOCUSPOINT_IMAGES ####
+##############################
+plugin.tx_bwfocuspointimages {
+  view {
+    templateRootPath = EXT:xima_typo3_manual/Resources/Private/bw_focuspoint_images/Templates/
+    partialRootPath = EXT:fluid_styled_content/Resources/Private/Partials/
+    layoutRootPath = EXT:fluid_styled_content/Resources/Private/Layouts/
+  }
+}

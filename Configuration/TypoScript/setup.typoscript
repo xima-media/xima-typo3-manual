@@ -1,0 +1,85 @@
+@import 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript'
+@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/setup.typoscript'
+
+config {
+  no_cache = 1
+  sendCacheHeaders = 0
+  debug = 1
+  contentObjectExceptionHandler = 0
+  compressJs = 0
+  compressCss = 0
+  concatenateJs = 0
+  concatenateCss = 0
+}
+
+page = PAGE
+page {
+  10 = FLUIDTEMPLATE
+  10 {
+    templateName = Default
+    layoutRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Layouts
+    partialRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Partials
+    templateRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Templates
+
+    dataProcessing {
+      # Main navigation
+      10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+      10 {
+        as = pages
+        levels = 9
+        entryLevel = 0
+        expandAll = 1
+
+        dataProcessing {
+          10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+          10 {
+            as = chapters
+            table = tt_content
+            pidInList.field = uid
+            where = header!=""
+          }
+        }
+      }
+    }
+  }
+
+  includeCSS {
+    gutenberg = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.min.css
+    gutenberg.inline = 1
+    theme = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.modern.min.css
+    theme.inline = 1
+    focuspoint = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/focuspoint.css
+    focuspoint.inline = 1
+    manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
+    manual.inline = 1
+  }
+}
+
+pdf < page
+pdf.typeNum = 1664618986
+
+tt_content {
+  mtext =< tt_content.textmedia
+  mtext.templateName = Mtext
+  mbox =< tt_content.textmedia
+  mbox.templateName = Mbox
+}
+
+lib.dynamicContent = COA
+lib.dynamicContent {
+  20 = CONTENT
+  20 {
+    table = tt_content
+    select {
+      orderBy = sorting
+      pidInList.field = pid
+    }
+  }
+}
+
+tt_content.bw_focuspoint_images_svg.variables {
+  color = TEXT
+  color.value = #ff8700
+}
+
+page.footerData.1637328467 >

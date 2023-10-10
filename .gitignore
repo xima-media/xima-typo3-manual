@@ -1,0 +1,8 @@
+.idea
+public
+!Resources/Public
+vendor
+var
+Documentation-*
+.phpdoc
+node_modules

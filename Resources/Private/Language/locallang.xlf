@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
+		<body>
+			<trans-unit id="manual_page_type">
+				<source>Manual page</source>
+			</trans-unit>
+			<trans-unit id="mlang_tabs_tab">
+				<source>Editor Manual</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source>Editor Manual</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tablabel">
+				<source>Editor Manual</source>
+			</trans-unit>
+			<trans-unit id="focus_point.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="focus_point.type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="focus_point.marking">
+				<source>Marking</source>
+			</trans-unit>
+			<trans-unit id="focus_point.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="wizard.mbox.title">
+				<source>Info box</source>
+			</trans-unit>
+			<trans-unit id="wizard.mbox.description">
+				<source>Color hint with icon</source>
+			</trans-unit>
+			<trans-unit id="wizard.mtext.title">
+				<source>Text with image</source>
+			</trans-unit>
+			<trans-unit id="wizard.mtext.description">
+				<source>Text element with heading and body text</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

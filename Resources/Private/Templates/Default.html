@@ -1,0 +1,50 @@
+<main>
+    <section>
+        <h1>TYPO3-Handbuch</h1>
+    </section>
+
+    <div class="section break-before">
+        <h2 class="no-number">Inhaltsverzeichnis</h2>
+        <ol>
+            <f:for each="{pages}" as="page" iteration="i">
+                <f:render section="chapter" arguments="{page: page}"/>
+            </f:for>
+        </ol>
+    </div>
+
+    <f:for each="{pages}" as="page">
+        <f:render section="page" arguments="{page:page}"/>
+    </f:for>
+
+    <a href="#" class="to-top" title="To top">&#8593;</a>
+</main>
+
+
+<f:section name="chapter">
+    <li>
+        <a href="#p{page.data.uid}">{page.title}</a>
+        <f:if condition="{page.hasSubpages} || {page.chapters}">
+            <ol>
+                <f:for each="{page.chapters}" as="content">
+                    <li>
+                        <a href="#c{content.data.uid}">{content.data.header}</a>
+                    </li>
+                </f:for>
+                <f:for each="{page.children}" as="subpage">
+                    <f:render section="chapter" arguments="{page: subpage}"/>
+                </f:for>
+            </ol>
+        </f:if>
+    </li>
+</f:section>
+
+<f:section name="page">
+    <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
+        <h2 id="p{page.data.uid}">{page.title}</h2>
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
+
+        <f:for each="{page.children}" as="subpage">
+            <f:render section="page" arguments="{page:subpage, noPageBreak:'true'}"/>
+        </f:for>
+    </section>
+</f:section>

@@ -1,0 +1,211 @@
+:root {
+    --space: 1rem;
+}
+
+@media (min-width: 800px) {
+    :root {
+        --space: 2rem;
+    }
+}
+
+@media not print {
+    body {
+        padding: var(--space);
+    }
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    counter-reset: counter-level-1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', 'Arial', 'Helvetica Neue', Helvetica, sans-serif
+}
+
+h2 {
+    margin-bottom: calc(1 * var(--space));
+}
+
+h3 {
+    margin-bottom: calc(0.75 * var(--space));
+}
+
+img {
+    height: auto !important;
+}
+
+img[data-icon-name] {
+    max-width: 20px !important;
+    margin-right: 5px;
+    position: relative;
+    top: -2px;
+    display: inline !important;
+}
+
+ul, ul li, ol, ol li {
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+ul li {
+    margin-bottom: .5rem;
+}
+
+/**
+    Counter-Stuff
+ */
+main > section > h2 {
+    counter-increment: counter-level-1;
+    counter-reset: counter-level-2;
+}
+
+main > section > section > h2:first-child, main > section > div > header > h3 {
+    counter-increment: counter-level-2;
+    counter-reset: counter-level-3;
+}
+
+main > section > section > section > h2:first-child, main > section > section > div > header > h3 {
+    counter-increment: counter-level-3;
+    counter-reset: counter-level-4;
+}
+
+main > section > section > section > section > h2:first-child, main > section > section > section > div > header > h3 {
+    counter-increment: counter-level-4;
+}
+
+main > section > h2:before {
+    content: counter(counter-level-1) ". ";
+}
+
+main > section > section > h2:before, main > section > div > header > h3:before {
+    content: counter(counter-level-1) "." counter(counter-level-2) ". ";
+}
+
+main > section > section > section > h2:before, main > section > section > div > header > h3:before {
+    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) ". ";
+}
+
+main > section > section > section > section > h2:before, main > section > section > section > div > header > h3:before {
+    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) "." counter(counter-level-4) ". ";
+}
+
+ol > li::marker {
+    content: counters(list-item, '.') '. ';
+}
+
+/**
+    General spacing
+ */
+section, .section {
+    margin-bottom: calc(3 * var(--space));
+    width: 100%;
+    max-width: 1200px;
+    background: #fff;
+}
+
+.frame {
+    margin-bottom: calc(1.5 * var(--space));
+}
+
+/**
+    Content elements
+ */
+figure {
+    margin: 0.25rem 0;
+}
+
+figure.image {
+    border: 1px solid darkgrey;
+}
+
+figcaption {
+    font-style: italic;
+    opacity: 0.6;
+    margin: .5rem 0 0 0;
+}
+
+.ce-image {
+    display: grid;
+    gap: var(--space);
+}
+
+.ce-image.ce-center .ce-gallery {
+    justify-self: center;
+}
+
+.ce-image.ce-below .ce-gallery {
+    order: 1;
+}
+
+@media (min-width: 800px) {
+    .ce-image.ce-right, .ce-image.ce-left {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ce-image {
+        gap: calc(2 * var(--space));
+    }
+}
+
+.ce-image.ce-right .ce-bodytext {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+
+.ce-focuspoint-bodytext {
+    margin-bottom: var(--space);
+}
+
+@media print {
+    h2 {
+        font-size: 1.5rem
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    figure.image {
+        max-height: 80vh;
+        object-fit: contain;
+    }
+
+    figure.image > img {
+        max-height: 80vh !important;
+        height: auto !important;
+        width: auto !important;
+    }
+
+    p > span {
+        -webkit-print-color-adjust: exact;
+    }
+
+    main {
+        display: block;
+    }
+}
+
+a.to-top {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    text-decoration: none;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 15px;
+    display: block;
+    background: black;
+    border: 1px solid black;
+    color: white;
+}
+
+a.to-top:hover {
+    color: black;
+    background: white;
+    cursor: pointer;
+}

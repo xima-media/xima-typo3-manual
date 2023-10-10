@@ -1,0 +1,14 @@
+<f:format.raw>{data.bodytext}</f:format.raw>
+
+<f:for each="{files}" as="file">
+    <f:image maxWidth="100" maxHeight="100" image="{file}" />
+</f:for>
+
+<style>
+    .t3-page-ce .t3-page-ce-body-inner img[data-icon-name] {
+        max-height: 16px;
+        margin-right: 2px;
+        position: relative;
+        top: -2px;
+    }
+</style>
