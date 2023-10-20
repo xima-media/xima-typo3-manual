@@ -14,4 +14,4 @@ ExtensionManagementUtility::addUserTSConfig(
 //$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 //$pageRenderer->loadRequireJsModule('TYPO3/CMS/XimaTypo3Manual/ManualGlobal');
 
-$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['manual'] = 'EXT:xima_typo3_manual/Configuration/RTE/Manual.yaml';
+$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['xima_typo3_manual'] = 'EXT:xima_typo3_manual/Configuration/RTE/Manual.yaml';

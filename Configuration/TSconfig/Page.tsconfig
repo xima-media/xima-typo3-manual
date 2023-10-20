@@ -1,6 +1,6 @@
 mod.wizards.newContentElement.wizardItems {
 
-  manual {
+  xima_typo3_manual {
     header = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_labels_tablabel
     elements {
       tt_content_mtext {
@@ -79,3 +79,10 @@ mod.tx_bwicons {
     folder = EXT:core/Resources/Public/Icons/T3Icons/svgs
   }
 }
+
+RTE {
+    default {
+        preset = xima_typo3_manual
+    }
+}
+

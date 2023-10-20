@@ -30,7 +30,7 @@ $GLOBALS['TCA']['tt_content']['types']['mtext'] = [
         'bodytext' => [
             'config' => [
                 'enableRichtext' => true,
-                'richtextConfiguration' => 'manual',
+                'richtextConfiguration' => 'xima_typo3_manual',
             ],
         ],
     ],
