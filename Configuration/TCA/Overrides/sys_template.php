@@ -6,5 +6,5 @@ use Xima\XimaTypo3Manual\Configuration;
 ExtensionManagementUtility::addStaticFile(
     Configuration::EXT_KEY,
     'Configuration/TypoScript',
-    'Xima Manual'
+    'XIMA Manual'
 );

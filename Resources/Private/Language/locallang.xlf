@@ -23,6 +23,9 @@
 			<trans-unit id="focus_point.marking">
 				<source>Marking</source>
 			</trans-unit>
+			<trans-unit id="focus_point.point">
+				<source>Point</source>
+			</trans-unit>
 			<trans-unit id="focus_point.default">
 				<source>Default</source>
 			</trans-unit>

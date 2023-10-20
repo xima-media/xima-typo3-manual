@@ -30,6 +30,10 @@
 				<source />
 				<target>Markierung</target>
 			</trans-unit>
+			<trans-unit id="focus_point.point">
+				<source />
+				<target>Punkt</target>
+			</trans-unit>
 			<trans-unit id="focus_point.default">
 				<source />
 				<target>Standard</target>

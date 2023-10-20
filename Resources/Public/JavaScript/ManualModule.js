@@ -1,6 +1,6 @@
 class ManualModule {
   constructor() {
-    top.TYPO3.Backend.NavigationContainer.showComponent('TYPO3/CMS/Backend/PageTree/PageTreeElement');
+    // top.TYPO3.Backend.NavigationContainer.showComponent('@typo3/backend/page-tree/page-tree-element.js');
 
     setTimeout(function () {
 

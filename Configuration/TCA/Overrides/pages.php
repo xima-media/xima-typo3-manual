@@ -7,7 +7,7 @@ use Xima\XimaTypo3Manual\Configuration;
 ExtensionManagementUtility::registerPageTSConfigFile(
     Configuration::EXT_KEY,
     'Configuration/TsConfig/Page.tsconfig',
-    'Xima Manual'
+    'XIMA Manual'
 );
 
 ExtensionManagementUtility::addTcaSelectItem(

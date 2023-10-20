@@ -1,5 +1,5 @@
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
-@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/constants.typoscript'
+@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/constants.txt'
 
 ##############################
 #### FLUID STYLED CONTENT ####

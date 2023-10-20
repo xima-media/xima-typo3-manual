@@ -1,5 +1,5 @@
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript'
-@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/setup.typoscript'
+@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/setup.txt'
 
 config {
   no_cache = 1

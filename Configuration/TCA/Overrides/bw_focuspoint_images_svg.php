@@ -6,6 +6,6 @@ $GLOBALS['TCA']['tt_content']['types']['bw_focuspoint_images_svg']['showitem'] =
 $GLOBALS['TCA']['tt_content']['types']['bw_focuspoint_images_svg']['columnsOverrides']['bodytext'] = [
     'config' => [
         'enableRichtext' => true,
-        'richtextConfiguration' => 'manual',
+        'richtextConfiguration' => 'xima_typo3_manual',
     ],
 ];

@@ -63,7 +63,7 @@ class ManualController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModule');
+        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModule.js');
 
         /* @phpstan-ignore-next-line */
         $this->view->setTemplateRootPaths(['EXT:xima_typo3_manual/Resources/Private/Templates']);
