@@ -10,12 +10,17 @@
 		}
 	],
 	"require": {
+		"php": "^8.2",
 		"dompdf/dompdf": "^2.0",
-		"typo3/cms-rte-ckeditor": "^11.5 || ^12.0",
+		"typo3/cms-rte-ckeditor": "^12.0",
 		"blueways/bw-focuspoint-images": "^4.0",
 		"blueways/bw-icons": "dev-12.x-dev",
 		"ext-fileinfo": "*",
 		"typo3/cms-core": "^11.0 || ^12.0"
+	}
+	,
+	"require-dev": {
+		"roave/security-advisories": "dev-latest"
 	},
 	"extra": {
 		"typo3/cms": {
