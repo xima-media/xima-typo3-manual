@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Definitions for modules provided by EXT:examples
- */
-
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
 return [

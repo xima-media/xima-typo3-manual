@@ -5,7 +5,6 @@ namespace Xima\XimaTypo3Manual\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -19,7 +18,6 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -40,7 +38,6 @@ class ManualController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModule');
 
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
@@ -52,25 +49,15 @@ class ManualController extends ActionController
         }
 
         $this->moduleTemplate->setBodyTag('<body class="typo3-module-xima_typo3_manual">');
-        $this->moduleTemplate->setModuleId('typo3-module-manual');
-
-        $pageinfo = BackendUtility::readPageAccess(
-            $pageId,
-            $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW)
-        );
-
         $this->moduleTemplate->setTitle(
-            $this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_mod.xlf:mlang_tabs_tab'),
-            $pageinfo['title'] ?? ''
+            $this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_tabs_tab')
         );
 
         $languageId = $this->getCurrentLanguage(
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
-
         $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withLanguage($languageId)->buildUri();
-
         $this->registerDocHeader($pageId, $languageId, $targetUrl, $this->request->getQueryParams()['route'] ?? '');
 
         $this->moduleTemplate->assign('url', $targetUrl);
@@ -107,14 +94,6 @@ class ManualController extends ActionController
         return $page ?: 0;
     }
 
-    protected function getBackendUser(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
-    }
-
-    /**
-     * Returns the current language
-     */
     protected function getCurrentLanguage(int $pageId, string $languageParam = null): int
     {
         $languageId = (int)$languageParam;
@@ -130,6 +109,11 @@ class ManualController extends ActionController
         }
 
         return $languageId;
+    }
+
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 
     protected function getPreviewLanguages(int $pageId): array
@@ -217,12 +201,5 @@ class ManualController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
-
-        $refreshButton = $buttonBar->makeLinkButton()
-            ->setHref('#')
-            ->setClasses('t3js-viewpage-refresh')
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:viewpage/Resources/Private/Language/locallang.xlf:refreshPage'))
-            ->setIcon($this->iconFactory->getIcon('actions-refresh', Icon::SIZE_SMALL));
-        $buttonBar->addButton($refreshButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
     }
 }
