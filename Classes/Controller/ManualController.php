@@ -33,31 +33,13 @@ class ManualController extends ActionController
 {
     protected ?ModuleTemplate $moduleTemplate = null;
 
-    public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory, protected IconFactory $iconFactory, protected PageRenderer $pageRenderer, protected PageRepository $pageRepository, protected SiteFinder $siteFinder)
-    {
-    }
-
-    protected function isManualRootPage(int $pageUid): bool
-    {
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
-        return isset($rootline[0], $rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
-    }
-
-    protected function getUidOfFirstManualPage(): int
-    {
-        $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
-        $page = $qb->select('uid')
-            ->from('pages')
-            ->where(
-                $qb->expr()->and(
-                    $qb->expr()->eq('doktype', $qb->createNamedParameter(701, \PDO::PARAM_INT)),
-                    $qb->expr()->eq('is_siteroot', $qb->createNamedParameter(1, \PDO::PARAM_INT)),
-                )
-            )
-            ->executeQuery()
-            ->fetchOne();
-
-        return $page ?: 0;
+    public function __construct(
+        protected ModuleTemplateFactory $moduleTemplateFactory,
+        protected IconFactory $iconFactory,
+        protected PageRenderer $pageRenderer,
+        protected PageRepository $pageRepository,
+        protected SiteFinder $siteFinder
+    ) {
     }
 
     public function indexAction(): ResponseInterface
@@ -124,26 +106,41 @@ class ManualController extends ActionController
         return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
-    /**
-     * @return BackendUserAuthentication
-     */
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
+    }
+
+    protected function isManualRootPage(int $pageUid): bool
+    {
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        return isset($rootline[0], $rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
+    }
+
+    protected function getUidOfFirstManualPage(): int
+    {
+        $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $page = $qb->select('uid')
+            ->from('pages')
+            ->where(
+                $qb->expr()->and(
+                    $qb->expr()->eq('doktype', $qb->createNamedParameter(701, \PDO::PARAM_INT)),
+                    $qb->expr()->eq('is_siteroot', $qb->createNamedParameter(1, \PDO::PARAM_INT)),
+                )
+            )
+            ->executeQuery()
+            ->fetchOne();
+
+        return $page ?: 0;
+    }
+
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }
 
     /**
-     * @return LanguageService
-     */
-    protected function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
-    }
-
-    /**
      * Returns the current language
-     *
-     * @return int
      */
     protected function getCurrentLanguage(int $pageId, string $languageParam = null): int
     {
@@ -158,13 +155,12 @@ class ManualController extends ActionController
             $this->getBackendUser()->uc['moduleData']['web_view']['States']['languageSelectorValue'] = $languageId;
             $this->getBackendUser()->writeUC();
         }
+
         return $languageId;
     }
 
     /**
      * Returns the preview languages
-     *
-     * @return array
      */
     protected function getPreviewLanguages(int $pageId): array
     {
@@ -192,6 +188,7 @@ class ManualController extends ActionController
         } catch (SiteNotFoundException) {
             // do nothing
         }
+
         return $languages;
     }
 
@@ -199,8 +196,6 @@ class ManualController extends ActionController
      * With page TS config it is possible to force a specific type id via mod.web_view.type
      * for a page id or a page tree.
      * The method checks if a type is set for the given id and returns the additional GET string.
-     *
-     * @return string
      */
     protected function getTypeParameterIfSet(int $pageId): string
     {
@@ -209,6 +204,7 @@ class ManualController extends ActionController
         if ($typeId > 0) {
             $typeParameter = '&type=' . $typeId;
         }
+
         return $typeParameter;
     }
 
@@ -246,8 +242,10 @@ class ManualController extends ActionController
                 if ($languageId === (int)$value) {
                     $menuItem->setActive(true);
                 }
+
                 $languageMenu->addMenuItem($menuItem);
             }
+
             $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($languageMenu);
         }
 

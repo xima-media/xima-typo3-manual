@@ -21,7 +21,7 @@ class TreeController extends \TYPO3\CMS\Backend\Controller\Page\TreeController
 
     protected function getPageTreeRepository(): PageTreeRepository
     {
-        if (!$this->request) {
+        if (!$this->request instanceof ServerRequestInterface) {
             /* @ToDo */
             /* @phpstan-ignore-next-line */
             return parent::getPageTreeRepository();
@@ -54,7 +54,7 @@ class TreeController extends \TYPO3\CMS\Backend\Controller\Page\TreeController
 
         return GeneralUtility::makeInstance(
             PageTreeRepository::class,
-            (int)$backendUser->workspace,
+            $backendUser->workspace,
             [],
             $additionalQueryRestrictions
         );

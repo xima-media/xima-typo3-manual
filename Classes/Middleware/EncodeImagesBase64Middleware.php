@@ -49,33 +49,28 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
             $img->setAttribute('src', 'data:image/svg+xml;base64,' . base64_encode($svgMarkup));
             $svg->parentNode->insertBefore($img);
         }
-
-        $html = $doc->saveHTML();
-        return $html;
+        return $doc->saveHTML();
     }
 
     protected function parseImageUrlsAndEncodeBase64(string $input = ''): string
     {
         $pattern = '/<img[^>]+src="([^">]+)"/';
 
-        return preg_replace_callback($pattern, function ($img) {
+        return preg_replace_callback($pattern, static function ($img) : string {
             /* @phpstan-ignore-next-line */
             if (!is_array($img)) {
                 return '';
             }
-
             $path = Environment::getPublicPath();
             $path .= str_starts_with($img[1], '/') ? $img[1] : '/' . $img[1];
-
             if (!file_exists($path)) {
                 return $img[0];
             }
-
             $fileContent = file_get_contents($path);
-
             if (!$fileContent) {
                 return $img[0];
             }
+            
             $fileType = mime_content_type($path);
             $newSrc = 'data:' . $fileType . ';base64,' . base64_encode($fileContent);
             return str_replace($img[1], $newSrc, $img[0]);

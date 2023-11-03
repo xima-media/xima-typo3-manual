@@ -29,18 +29,14 @@ class DocumentTypeExclusiveRestriction implements QueryRestrictionInterface
     /**
      * @var int[]
      */
-    protected $doktypes;
+    protected $doktypes = [];
 
     /**
      * @param int[]|int $doktype
      */
     public function __construct($doktype)
     {
-        if (is_array($doktype)) {
-            $this->doktypes = $doktype;
-        } else {
-            $this->doktypes = [$doktype];
-        }
+        $this->doktypes = is_array($doktype) ? $doktype : [$doktype];
     }
 
     /**

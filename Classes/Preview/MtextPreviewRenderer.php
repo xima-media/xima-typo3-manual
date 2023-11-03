@@ -20,6 +20,7 @@ class MtextPreviewRenderer extends TextmediaPreviewRenderer
 
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Backend/MboxPreview.html');
+
         $files = $this->fileRepository->findByRelation('tt_content', 'assets', $row['uid']);
         $view->assign('files', $files);
         $view->assign('data', $row);
