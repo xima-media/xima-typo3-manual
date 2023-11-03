@@ -58,11 +58,17 @@ page {
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
     manual.inline = 1
   }
+
+  includeJSFooter {
+    navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
+    navigation.type = module
+  }
 }
 
 pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
+pdf.10.includeJSFooter.navigation >
 
 tt_content {
   mtext =< tt_content.textmedia

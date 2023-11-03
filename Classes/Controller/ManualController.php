@@ -38,6 +38,7 @@ class ManualController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
 
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');

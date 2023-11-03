@@ -186,7 +186,7 @@ figcaption {
     .show-for-print {
         display: block;
     }
-    
+
     nav, a.to-top {
         display: none !important;
     }
@@ -282,4 +282,8 @@ details details summary:before {
 
 details[open] > summary:before {
     content: "▼";
+}
+
+nav a.active {
+    color: #0000FF;
 }
