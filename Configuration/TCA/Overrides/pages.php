@@ -2,10 +2,9 @@
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Xima\XimaTypo3Manual\Configuration;
 
 ExtensionManagementUtility::registerPageTSConfigFile(
-    Configuration::EXT_KEY,
+    'xima_typo3_manual',
     'Configuration/TSconfig/Page.tsconfig',
     'Xima Manual'
 );

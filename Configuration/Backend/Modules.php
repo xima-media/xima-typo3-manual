@@ -4,7 +4,6 @@
  * Definitions for modules provided by EXT:examples
  */
 
-use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
 return [
@@ -18,7 +17,7 @@ return [
         'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-module.svg',
         'labels' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf',
         'navigationComponentId' => 'TYPO3/CMS/Backend/PageTree/PageTreeElement',
-        'extensionName' => Configuration::EXT_KEY,
+        'extensionName' => 'xima_typo3_manual',
         'controllerActions' => [
             ManualController::class => 'index',
         ],

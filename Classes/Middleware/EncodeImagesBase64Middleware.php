@@ -56,7 +56,7 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
     {
         $pattern = '/<img[^>]+src="([^">]+)"/';
 
-        return preg_replace_callback($pattern, static function ($img) : string {
+        return preg_replace_callback($pattern, static function ($img): string {
             /* @phpstan-ignore-next-line */
             if (!is_array($img)) {
                 return '';
@@ -70,7 +70,7 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
             if (!$fileContent) {
                 return $img[0];
             }
-            
+
             $fileType = mime_content_type($path);
             $newSrc = 'data:' . $fileType . ';base64,' . base64_encode($fileContent);
             return str_replace($img[1], $newSrc, $img[0]);
