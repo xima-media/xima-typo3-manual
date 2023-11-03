@@ -6,7 +6,7 @@ use Xima\XimaTypo3Manual\Configuration;
 
 ExtensionManagementUtility::registerPageTSConfigFile(
     Configuration::EXT_KEY,
-    'Configuration/TsConfig/Page.tsconfig',
+    'Configuration/TSconfig/Page.tsconfig',
     'Xima Manual'
 );
 
