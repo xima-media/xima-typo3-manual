@@ -21,6 +21,11 @@ page {
     partialRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Partials
     templateRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Templates
 
+    variables {
+      type = TEXT
+      type.value = default
+    }
+
     dataProcessing {
       # Main navigation
       10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
@@ -57,6 +62,7 @@ page {
 
 pdf < page
 pdf.typeNum = 1664618986
+pdf.10.variables.type.value = pdf
 
 tt_content {
   mtext =< tt_content.textmedia

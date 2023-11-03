@@ -33,6 +33,25 @@ h3 {
     margin-bottom: calc(0.75 * var(--space));
 }
 
+h2 svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+h3 svg {
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+h2 svg, h3 svg {
+    opacity: 0;
+    transition: opacity 0.1s linear;
+}
+
+h2:hover svg, h3:hover svg {
+    opacity: 0.6;
+}
+
 img {
     height: auto !important;
 }
@@ -159,7 +178,19 @@ figcaption {
     margin-bottom: var(--space);
 }
 
+.show-for-print {
+    display: none;
+}
+
 @media print {
+    .show-for-print {
+        display: block;
+    }
+    
+    nav, a.to-top {
+        display: none !important;
+    }
+
     h2 {
         font-size: 1.5rem
     }
@@ -208,4 +239,47 @@ a.to-top:hover {
     color: black;
     background: white;
     cursor: pointer;
+}
+
+@media (min-width: 1850px) {
+    nav.section {
+        position: fixed;
+        left: 20px;
+        max-width: 300px;
+        display: inline-block;
+        width: auto;
+        background: none;
+        margin-bottom: 0;
+    }
+}
+
+nav li, nav summary {
+    margin-bottom: 0.2rem;
+}
+
+nav ol {
+    margin-bottom: 0.4rem !important;
+}
+
+summary {
+    position: relative;
+}
+
+summary::marker {
+    content: '';
+}
+
+summary:before {
+    content: "►";
+    float: left;
+    position: absolute;
+    left: -45px;
+}
+
+details details summary:before {
+    left: -55px;
+}
+
+details[open] > summary:before {
+    content: "▼";
 }

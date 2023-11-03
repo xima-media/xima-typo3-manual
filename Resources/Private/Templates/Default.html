@@ -3,7 +3,18 @@
         <h1>TYPO3-Handbuch</h1>
     </section>
 
-    <div class="section break-before">
+    <f:if condition="{type} != 'pdf'">
+        <nav class="section">
+            <ol>
+                <f:for each="{pages}" as="page" iteration="i">
+                    <f:render section="navigation" arguments="{page: page}"/>
+                </f:for>
+            </ol>
+        </nav>
+    </f:if>
+
+
+    <div class="section break-before show-for-print">
         <h2 class="no-number">Inhaltsverzeichnis</h2>
         <ol>
             <f:for each="{pages}" as="page" iteration="i">
@@ -11,6 +22,7 @@
             </f:for>
         </ol>
     </div>
+
 
     <f:for each="{pages}" as="page">
         <f:render section="page" arguments="{page:page}"/>
@@ -38,9 +50,38 @@
     </li>
 </f:section>
 
+<f:section name="navigation">
+    <li>
+        <f:if condition="{page.hasSubpages} || {page.chapters}">
+            <f:then>
+                <details>
+                    <summary>
+                        <a href="#p{page.data.uid}" title="{page.title}">{page.title}</a>
+                    </summary>
+                    <f:if condition="{page.hasSubpages} || {page.chapters}">
+                        <ol>
+                            <f:for each="{page.chapters}" as="content">
+                                <li>
+                                    <a href="#c{content.data.uid}" title="{page.title}">{content.data.header}</a>
+                                </li>
+                            </f:for>
+                            <f:for each="{page.children}" as="subpage">
+                                <f:render section="navigation" arguments="{page: subpage}"/>
+                            </f:for>
+                        </ol>
+                    </f:if>
+                </details>
+            </f:then>
+            <f:else>
+                <a href="#p{page.data.uid}">{page.title}</a>
+            </f:else>
+        </f:if>
+    </li>
+</f:section>
+
 <f:section name="page">
     <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
-        <h2 id="p{page.data.uid}">{page.title}</h2>
+        <h2 id="p{page.data.uid}">{page.title} <a href="#p{page.data.uid}"><core:icon identifier="actions-link" size="small" /></a></h2>
         <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
 
         <f:for each="{page.children}" as="subpage">
