@@ -14,17 +14,12 @@ use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
-use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -46,13 +41,6 @@ class ManualController extends ActionController
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModule');
-
-        /* @phpstan-ignore-next-line */
-        $this->view->setTemplateRootPaths(['EXT:xima_typo3_manual/Resources/Private/Templates']);
-        /* @phpstan-ignore-next-line */
-        $this->view->setPartialRootPaths(['EXT:xima_typo3_manual/Resources/Private/Partials']);
-        /* @phpstan-ignore-next-line */
-        $this->view->setLayoutRootPaths(['EXT:xima_typo3_manual/Resources/Private/Layouts']);
 
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
@@ -81,29 +69,14 @@ class ManualController extends ActionController
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
 
-        try {
-            $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withAdditionalQueryParameters($this->getTypeParameterIfSet($pageId) . '&L=' . $languageId)->buildUri();
-        } catch (UnableToLinkToPageException) {
-            $flashMessage = GeneralUtility::makeInstance(
-                FlashMessage::class,
-                $this->getLanguageService()->getLL('noSiteConfiguration'),
-                '',
-                ContextualFeedbackSeverity::WARNING
-            );
-            return $this->renderFlashMessage($flashMessage);
-        }
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withLanguage($languageId)->buildUri();
 
-        $languageId = $this->getCurrentLanguage(
-            $pageId,
-            $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
-        );
-        $this->registerDocHeader($pageId, $languageId, $targetUrl, $this->request->getQueryParams()['route']);
+        $this->registerDocHeader($pageId, $languageId, $targetUrl, $this->request->getQueryParams()['route'] ?? '');
 
-        $this->view->assign('url', $targetUrl);
-        $this->view->assign('pid', $pageId);
+        $this->moduleTemplate->assign('url', $targetUrl);
+        $this->moduleTemplate->assign('pid', $pageId);
 
-        $this->moduleTemplate->setContent($this->view->render());
-        return new HtmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse();
     }
 
     protected function getLanguageService(): LanguageService
@@ -114,7 +87,7 @@ class ManualController extends ActionController
     protected function isManualRootPage(int $pageUid): bool
     {
         $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
-        return isset($rootline[0], $rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
+        return isset($rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
     }
 
     protected function getUidOfFirstManualPage(): int
@@ -148,7 +121,7 @@ class ManualController extends ActionController
         if ($languageParam === null) {
             $states = $this->getBackendUser()->uc['moduleData']['web_view']['States'] ?? [];
             $languages = $this->getPreviewLanguages($pageId);
-            if (isset($states['languageSelectorValue']) && isset($languages[$states['languageSelectorValue']])) {
+            if (isset($states['languageSelectorValue'], $languages[$states['languageSelectorValue']])) {
                 $languageId = (int)$states['languageSelectorValue'];
             }
         } else {
@@ -159,9 +132,6 @@ class ManualController extends ActionController
         return $languageId;
     }
 
-    /**
-     * Returns the preview languages
-     */
     protected function getPreviewLanguages(int $pageId): array
     {
         $languages = [];
@@ -192,35 +162,6 @@ class ManualController extends ActionController
         return $languages;
     }
 
-    /**
-     * With page TS config it is possible to force a specific type id via mod.web_view.type
-     * for a page id or a page tree.
-     * The method checks if a type is set for the given id and returns the additional GET string.
-     */
-    protected function getTypeParameterIfSet(int $pageId): string
-    {
-        $typeParameter = '';
-        $typeId = (int)(BackendUtility::getPagesTSconfig($pageId)['mod.']['web_view.']['type'] ?? 0);
-        if ($typeId > 0) {
-            $typeParameter = '&type=' . $typeId;
-        }
-
-        return $typeParameter;
-    }
-
-    protected function renderFlashMessage(FlashMessage $flashMessage): HtmlResponse
-    {
-        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
-        $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
-        $defaultFlashMessageQueue->enqueue($flashMessage);
-
-        $this->moduleTemplate->setContent($this->view->render());
-        return new HtmlResponse($this->moduleTemplate->renderContent());
-    }
-
-    /**
-     * Register the doc header
-     */
     protected function registerDocHeader(int $pageId, int $languageId, string $targetUrl, ?string $route): void
     {
         $languages = $this->getPreviewLanguages($pageId);
@@ -228,14 +169,13 @@ class ManualController extends ActionController
             $languageMenu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
             $languageMenu->setIdentifier('_langSelector');
             foreach ($languages as $value => $label) {
-                //$href = (string)$this->uriBuilder->buildUriFromRoute(
-                //    'web_ViewpageView',
-                //    [
-                //        'id' => $pageId,
-                //        'language' => (int)$value,
-                //    ]
-                //);
-                $href = '';
+                $href = $this->uriBuilder->uriFor(
+                    'index',
+                    [
+                        'id' => $pageId,
+                        'language' => (int)$value,
+                    ]
+                );
                 $menuItem = $languageMenu->makeMenuItem()
                     ->setTitle($label)
                     ->setHref($href);
@@ -261,15 +201,20 @@ class ManualController extends ActionController
                 ]),
             ])
             ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.showPage'))
+            ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-view-page', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $downloadUrl = $uriBuilder->buildUriFromRoute('manual-download-pdf', ['id' => $pageId]);
+        $downloadUrl = $uriBuilder->buildUriFromRoute(
+            'manual-download-pdf',
+            ['id' => $pageId, 'language' => $languageId]
+        );
         $showButton = $buttonBar->makeLinkButton()
             ->setHref($downloadUrl)
             ->setClasses('xima-typo3-manual-download-pdf')
-            ->setTitle('Download')
+            ->setTitle('Download PDF')
+            ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
 

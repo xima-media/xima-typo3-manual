@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DownloadController
 {
@@ -14,10 +15,11 @@ class DownloadController
     {
         $params = $request->getQueryParams();
         $pageId = $params['id'];
+        $languageId = $params['language'] ?? 0;
 
-        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withAdditionalQueryParameters('&type=1664618986')->buildUri();
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withAdditionalQueryParameters('&type=1664618986')->withLanguage($languageId)->buildUri();
 
-        $html = file_get_contents($targetUrl);
+        $html = GeneralUtility::getUrl($targetUrl) ?: '';
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);

@@ -3,9 +3,9 @@
 use TYPO3\CMS\Backend\Controller\Page\TreeController;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TreeController::class] = [
-    'className' => Xima\XimaTypo3Manual\Controller\TreeController::class,
-];
+//$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][TreeController::class] = [
+//    'className' => Xima\XimaTypo3Manual\Controller\TreeController::class,
+//];
 
 ExtensionManagementUtility::addUserTSConfig(
     'options.pageTree.doktypesToShowInNewPageDragArea := addToList(701)'
