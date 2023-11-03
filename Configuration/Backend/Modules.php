@@ -12,7 +12,8 @@ return [
         'aliases' => ['help_manual'],
         'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-module.svg',
         'labels' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf',
-        'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
+        'inheritNavigationComponentFromMainModule' => false,
+        'navigationComponent' => '',
         'extensionName' => 'xima_typo3_manual',
         'controllerActions' => [
             ManualController::class => 'index',
