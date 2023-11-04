@@ -45,6 +45,9 @@ page {
           }
         }
       }
+
+      # Backend settings
+      20 = Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor
     }
   }
 
@@ -68,7 +71,7 @@ page {
 pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
-pdf.10.includeJSFooter.navigation >
+pdf.includeJSFooter.navigation >
 
 tt_content {
   mtext =< tt_content.textmedia

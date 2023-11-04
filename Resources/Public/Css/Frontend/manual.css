@@ -241,6 +241,9 @@ a.to-top:hover {
     cursor: pointer;
 }
 
+/**
+    Sticky navigation
+ */
 @media (min-width: 1850px) {
     nav.section {
         position: fixed;
@@ -285,5 +288,15 @@ details[open] > summary:before {
 }
 
 nav a.active {
-    color: #0000FF;
+    color: var(--link-color, #0000FF);
+}
+
+/**
+    Cover section
+ */
+section.cover {
+    display: grid;
+    justify-content: center;
+    padding: calc(2 * var(--space)) 0;
+    gap: calc(2 * var(--space));
 }

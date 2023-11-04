@@ -1,5 +1,8 @@
-<main>
-    <section>
+<main style="--link-color:{backendSettings.loginHighlightColor}">
+    <section class="section cover">
+        <f:if condition="{backendSettings.backendLogo}">
+            <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo" />
+        </f:if>
         <h1>TYPO3-Handbuch</h1>
     </section>
 
