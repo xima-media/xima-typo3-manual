@@ -2,7 +2,6 @@
 
 namespace Xima\XimaTypo3Manual\Middleware;
 
-use DOMDocument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,7 +16,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class EncodeImagesBase64Middleware implements MiddlewareInterface
 {
     /**
-     * array<string, string>
+     * @var array<string, string>
      */
     protected array $svgSpriteCache = [];
 
@@ -82,7 +81,7 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
             $img->setAttribute('src', 'data:image/svg+xml;base64,' . base64_encode($svgMarkup));
             $svg->parentNode->insertBefore($img);
         }
-        return $doc->saveHTML();
+        return $doc->saveHTML() ?: '';
     }
 
     protected function resolveSvgSprite(string &$svgMarkup): void
@@ -106,7 +105,7 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
             return;
         }
 
-        // parse sprite content
+        // parse sprite markup for icon id
         $svg = new SimpleXMLElement($spriteMarkup);
         $namespaces = $svg->getDocNamespaces() ?: [''];
         $svg->registerXPathNamespace('__nons', $namespaces['']);
@@ -115,9 +114,12 @@ class EncodeImagesBase64Middleware implements MiddlewareInterface
             return;
         }
 
+        // convert to back to string
         $iconMarkup = $searchResult[0]->asXML();
-        if (is_string($iconMarkup)) {
-            $svgMarkup = $iconMarkup;
+        if (!is_string($iconMarkup)) {
+            return;
         }
+
+        $svgMarkup = $iconMarkup;
     }
 }
