@@ -59,7 +59,7 @@ class ManualController extends ActionController
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
-        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withAdditionalQueryParameters(['context' => 'backend'])->withLanguage($languageId)->buildUri();
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('p' . $pageId)->withAdditionalQueryParameters(['context' => 'backend'])->withLanguage($languageId)->buildUri();
         $this->registerDocHeader($pageId, $languageId);
 
         $this->moduleTemplate->assign('url', $targetUrl);
