@@ -1,7 +1,7 @@
 <main style="--link-color:{backendSettings.loginHighlightColor}">
     <section class="section cover">
         <f:if condition="{backendSettings.backendLogo}">
-            <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo" />
+            <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
         </f:if>
         <h1>TYPO3-Handbuch</h1>
     </section>
@@ -28,7 +28,7 @@
 
 
     <f:for each="{pages}" as="page">
-        <f:render section="page" arguments="{page:page}"/>
+        <f:render section="page" arguments="{page:page, type:type}"/>
     </f:for>
 
     <a href="#" class="to-top" title="To top">&#8593;</a>
@@ -84,11 +84,16 @@
 
 <f:section name="page">
     <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
-        <h2 id="p{page.data.uid}">{page.title} <a href="#p{page.data.uid}"><core:icon identifier="actions-link" size="small" /></a></h2>
+        <h2 id="p{page.data.uid}">
+            {page.title}
+            <f:if condition="{type} != 'pdf'">
+                <a href="#p{page.data.uid}"><core:icon identifier="actions-link" size="small"/></a>
+            </f:if>
+        </h2>
         <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
 
         <f:for each="{page.children}" as="subpage">
-            <f:render section="page" arguments="{page:subpage, noPageBreak:'true'}"/>
+            <f:render section="page" arguments="{page:subpage, noPageBreak:'true', type:type}"/>
         </f:for>
     </section>
 </f:section>
