@@ -11,7 +11,11 @@
                     </a>
                 </f:if>
                 <f:if condition="{context} == 'backend'">
-                    <be:link.editRecord uid="{data.uid}" table="tt_content" returnUrl="" fields="header,bodytext,assets" class="edit-record">
+                    <be:link.editRecord uid="{data.uid}"
+                                        table="tt_content"
+                                        returnUrl=""
+                                        fields="header,bodytext,assets"
+                                        class="edit-record">
                         <core:icon identifier="actions-open" size="small"/>
                     </be:link.editRecord>
                 </f:if>
@@ -121,12 +125,14 @@
     </f:if>
 
     <f:for each="{points}" as="point" iteration="i">
-        <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
-            <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
-            <p>
-                <f:format.nl2br>{point.description}</f:format.nl2br>
-            </p>
-        </div>
+        <f:if condition="{point.description}">
+            <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
+                <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
+                <p>
+                    <f:format.nl2br>{point.description}</f:format.nl2br>
+                </p>
+            </div>
+        </f:if>
     </f:for>
 
 </f:section>
