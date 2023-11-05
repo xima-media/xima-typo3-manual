@@ -1,6 +1,6 @@
 {
 	"name": "xima/xima-typo3-manual",
-	"description": "Editor manual for TYPO3",
+	"description": "TYPO3 extension to create editor manuals right in the TYPO3 backend.",
 	"type": "typo3-cms-extension",
 	"authors": [
 		{
@@ -18,7 +18,7 @@
 		"blueways/bw-focuspoint-images": "^4.0",
 		"blueways/bw-icons": "dev-12.x-dev",
 		"ext-fileinfo": "*",
-		"typo3/cms-core": "^11.0 || ^12.0"
+		"typo3/cms-core": "^12.0"
 	},
 	"require-dev": {
 		"roave/security-advisories": "dev-latest"
