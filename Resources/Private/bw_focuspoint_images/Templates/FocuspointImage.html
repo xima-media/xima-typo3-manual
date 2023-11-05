@@ -1,12 +1,19 @@
-<f:layout name="Default"/>
+<f:layout name="Default"/>{namespace be=TYPO3\CMS\Backend\ViewHelpers}
 
 <f:section name="Header">
     <f:if condition="{data.header}">
         <header>
-            <h3 class="ce-headline-{data.header_position}">
-                <f:link.typolink parameter="{data.header_link}">{data.header}</f:link.typolink>
-                <f:if condition="{type} != 'pdf'">
-                    <a href="#c{data.uid}"><core:icon identifier="actions-link" size="small" /></a>
+            <h3 class="ce-headline-{data.header_position}" id="c{data.uid}">
+                {data.header}
+                <f:if condition="{context} == 'frontend'">
+                    <a href="#c{data.uid}">
+                        <core:icon identifier="actions-link" size="small"/>
+                    </a>
+                </f:if>
+                <f:if condition="{context} == 'backend'">
+                    <be:link.editRecord uid="{data.uid}" table="tt_content" returnUrl="" fields="header,bodytext,assets" class="edit-record">
+                        <core:icon identifier="actions-open" size="small"/>
+                    </be:link.editRecord>
                 </f:if>
             </h3>
         </header>
@@ -28,7 +35,7 @@
 
                 <defs>
                     <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="solid">
-                        <feFlood  flood-color="{color}" result="bg" />
+                        <feFlood flood-color="{color}" result="bg"/>
                         <feMerge>
                             <feMergeNode in="bg"/>
                             <feMergeNode in="SourceGraphic"/>
@@ -55,16 +62,16 @@
                     <f:if condition="{point.type}!='marking'">
                         <a href="#focuspoint-{data.uid}-{i.cycle}">
 
-                        <text x="{point.textX}%"
-                              y="{point.textY}%"
-                              class="default"
-                              fill="#FFF"
-                              font-size="13"
-                              filter="url(#solid)"
-                              alignment-baseline="middle"
-                              text-anchor="middle">
-                            {point.title}
-                        </text>
+                            <text x="{point.textX}%"
+                                  y="{point.textY}%"
+                                  class="default"
+                                  fill="#FFF"
+                                  font-size="13"
+                                  filter="url(#solid)"
+                                  alignment-baseline="middle"
+                                  text-anchor="middle">
+                                {point.title}
+                            </text>
                         </a>
                     </f:if>
 

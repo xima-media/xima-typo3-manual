@@ -39,6 +39,7 @@ class ManualController extends ActionController
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
+        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
 
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
@@ -58,8 +59,8 @@ class ManualController extends ActionController
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
-        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withLanguage($languageId)->buildUri();
-        $this->registerDocHeader($pageId, $languageId, $targetUrl, $this->request->getQueryParams()['route'] ?? '');
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withAdditionalQueryParameters(['context' => 'backend'])->withLanguage($languageId)->buildUri();
+        $this->registerDocHeader($pageId, $languageId);
 
         $this->moduleTemplate->assign('url', $targetUrl);
         $this->moduleTemplate->assign('pid', $pageId);
@@ -147,7 +148,7 @@ class ManualController extends ActionController
         return $languages;
     }
 
-    protected function registerDocHeader(int $pageId, int $languageId, string $targetUrl, ?string $route): void
+    protected function registerDocHeader(int $pageId, int $languageId): void
     {
         $languages = $this->getPreviewLanguages($pageId);
         if (count($languages) > 1) {
@@ -174,6 +175,7 @@ class ManualController extends ActionController
             $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($languageMenu);
         }
 
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withLanguage($languageId)->buildUri();
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
         $showButton = $buttonBar->makeLinkButton()
             ->setHref($targetUrl)

@@ -22,8 +22,9 @@ page {
     templateRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Templates
 
     variables {
-      type = TEXT
-      type.value = default
+      context = TEXT
+      context.value = frontend
+      context.override.data = GP:context
     }
 
     dataProcessing {
@@ -71,6 +72,7 @@ page {
 pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
+pdf.10.variables.context.value = pdf
 pdf.includeJSFooter.navigation >
 
 tt_content {
@@ -80,8 +82,9 @@ tt_content {
   mbox.templateName = Mbox
 }
 
-lib.contentElement.variables.type = TEXT
-lib.contentElement.variables.type.value = default
+lib.contentElement.variables.context = TEXT
+lib.contentElement.variables.context.value = frontend
+lib.contentElement.variables.context.override.data = GP:context
 
 lib.dynamicContent = COA
 lib.dynamicContent {
@@ -98,13 +101,14 @@ lib.dynamicContent {
 tt_content.bw_focuspoint_images_svg.variables {
   color = TEXT
   color.value = #ff8700
-  type = TEXT
-  type.value = default
+  context = TEXT
+  context.value = frontend
+  context.override.data = GP:context
 }
 
 page.footerData.1637328467 >
 
 [getTSFE()?.type == 1664618986]
-  lib.contentElement.variables.type.value = pdf
-  tt_content.bw_focuspoint_images_svg.variables.type.value = pdf
+  lib.contentElement.variables.context.value = pdf
+  tt_content.bw_focuspoint_images_svg.variables.context.value = pdf
 [END]

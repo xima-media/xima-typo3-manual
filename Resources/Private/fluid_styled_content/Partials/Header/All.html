@@ -1,9 +1,15 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
 <f:if condition="{data.header}">
     <header>
-        <h3 class="ce-headline-{data.header_position}">
-            <f:link.typolink parameter="{data.header_link}">{data.header}</f:link.typolink>
-            <f:if condition="{type} != 'pdf'">
+        <h3 class="ce-headline-{data.header_position}" id="c{data.uid}">
+            {data.header}
+            <f:if condition="{context} == 'frontend'">
                 <a href="#c{data.uid}"><core:icon identifier="actions-link" size="small" /></a>
+            </f:if>
+            <f:if condition="{context} == 'backend'">
+                <be:link.editRecord uid="{data.uid}" table="tt_content" fields="header,bodytext" returnUrl="manual" class="edit-record">
+                    <core:icon identifier="actions-open" size="small"/>
+                </be:link.editRecord>
             </f:if>
         </h3>
     </header>
