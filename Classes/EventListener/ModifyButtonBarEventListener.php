@@ -34,10 +34,9 @@ final readonly class ModifyButtonBarEventListener
         $manualButton->setTitle('Manual');
         $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
         $buttons = $event->getButtons();
+        $buttons['right'] ??= [];
         $buttons['right'][] = [$manualButton];
 
         $event->setButtons($buttons);
-
-        $e = '';
     }
 }
