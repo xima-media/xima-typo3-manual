@@ -11,25 +11,15 @@ editor:
     config:
         toolbar:
             items:
-                - Bold
-                - Italic
-                - '|'
-                - NumberedList
-                - BulletedList
-                - '|'
-                - Undo
-                - Redo
-                -  '|'
-                - Paste
-                - RemoveFormat
-                - Link
-                - '|'
-                - Table
-                - '|'
-                - IconPicker
-        removeButtons:
-            - Anchor
-            - Superscript
-            - Subscript
-            - Underline
-            - Strike
+              - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] }
+              - { name: 'styles', items: [ 'Styles' ] }
+              - { name: 'links', groups: [ 'links' ] }
+              - { name: 'lists', items: [ 'NumberedList', 'BulletedList' ] }
+              - { name: 'clipboard', items: [ 'Undo', 'Redo' ] }
+              - { name: 'format', items: [ 'Paste', 'RemoveFormat', 'Link' ] }
+              - { name: 'icon', items: [ 'IconPicker' ] }
+        style:
+          definitions:
+            - { name: "Grün", element: "span", classes: ['badge', 'badge--green'] }
+            - { name: "Blau", element: "span", classes: ['badge', 'badge--blue'] }
+            - { name: "Rot", element: "span", classes: ['badge', 'badge--red'] }

@@ -21,6 +21,10 @@ main {
     counter-reset: counter-level-1;
 }
 
+p a, p a:visited {
+    color: var(--link-color, #0000FF);
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', 'Arial', 'Helvetica Neue', Helvetica, sans-serif
 }

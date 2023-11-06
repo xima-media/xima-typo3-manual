@@ -1,0 +1,23 @@
+.ck.ck-content span.badge {
+    background-color: #ececec;
+    font-size: 75%;
+    padding: .25em .5em;
+    color: #505050;
+    border-radius: .25rem;
+    white-space: nowrap
+}
+
+.ck.ck-content span.badge--green {
+    background-color: #c4f3c6;
+    color: #215023;
+}
+
+.ck.ck-content span.badge--blue {
+    background-color: #c4e8f3;
+    color: #214550;
+}
+
+.ck.ck-content span.badge--red {
+    background-color: #f2cece;
+    color: #502121;
+}
