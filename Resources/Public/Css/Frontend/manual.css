@@ -304,3 +304,28 @@ section.cover {
     padding: calc(2 * var(--space)) 0;
     gap: calc(2 * var(--space));
 }
+
+/** RTE styles */
+span.badge {
+    background-color: #ececec;
+    font-size: 75%;
+    padding: .25em .5em;
+    color: #505050;
+    border-radius: .25rem;
+    white-space: nowrap
+}
+
+span.badge--green {
+    background-color: #c4f3c6;
+    color: #215023;
+}
+
+span.badge--blue {
+    background-color: #c4e8f3;
+    color: #214550;
+}
+
+span.badge--red {
+    background-color: #f2cece;
+    color: #502121;
+}
