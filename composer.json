@@ -32,5 +32,13 @@
 		"psr-4": {
 			"Xima\\XimaTypo3Manual\\": "Classes"
 		}
+	},
+	"config": {
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true,
+			"php-http/discovery": true,
+			"helhum/dotenv-connector": true
+		}
 	}
 }
