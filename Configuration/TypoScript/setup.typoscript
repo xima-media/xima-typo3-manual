@@ -25,6 +25,8 @@ page {
       context = TEXT
       context.value = frontend
       context.override.data = GP:context
+      title = TEXT
+      title.data = site:websiteTitle
     }
 
     dataProcessing {
