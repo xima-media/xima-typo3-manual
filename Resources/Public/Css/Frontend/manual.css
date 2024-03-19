@@ -329,3 +329,24 @@ span.badge--red {
     background-color: #f2cece;
     color: #502121;
 }
+
+
+/* mbox */
+.frame-layout-1 {
+	blockquote {
+		background: #0d6efd;
+		border-left-color: #054096;
+	}
+}
+.frame-layout-2 {
+	blockquote {
+		background: #198754;
+		border-left-color: #034728;
+	}
+}
+.frame-layout-3 {
+	blockquote {
+		background: #dc3545;
+		border-left-color: #8f212b;
+	}
+}
