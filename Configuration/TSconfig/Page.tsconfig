@@ -86,3 +86,15 @@ RTE {
     }
 }
 
+TCEFORM {
+  tt_content {
+    layout {
+      altLabels {
+        0 = default
+        1 = info
+        2 = success
+        3 = danger
+      }
+    }
+  }
+}
