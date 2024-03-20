@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2023-01-16T09:23:21Z">
+		<body>
+			<trans-unit id="pages.tx_ximatypo3manual_begroup">
+				<source />
+				<target>Zugriffsrechte für Backend Benutzergruppen</target>
+			</trans-unit>
+			<trans-unit id="pages.palettes.access">
+				<source />
+				<target>Zugriffsrechte</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
