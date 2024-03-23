@@ -15,3 +15,13 @@ services:
     tags:
       - name: event.listener
         identifier: 'xima-typo3-manual/event-listener/modify-button-bar'
+
+  Xima\XimaTypo3Manual\EventListener\BackendUserGroupAccessEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'backendUserGroupAccessEventListener'
+
+  Xima\XimaTypo3Manual\DataProcessing\MenuAccessProcessor:
+    tags:
+      - name: 'data.processor'
+        identifier: 'menu-access-processor'

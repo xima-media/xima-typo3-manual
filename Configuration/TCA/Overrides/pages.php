@@ -21,6 +21,22 @@ ExtensionManagementUtility::addTcaSelectItem(
     'after'
 );
 
+ExtensionManagementUtility::addTCAcolumns(
+    'pages',
+    [
+        'tx_ximatypo3manual_begroup' => [
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:pages.tx_ximatypo3manual_begroup',
+            'config' => [
+                'foreign_table' => 'be_groups',
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'size' => 7,
+                'maxitems' => 20,
+            ],
+        ],
+    ]
+);
+
 ArrayUtility::mergeRecursiveWithOverrule(
     $GLOBALS['TCA']['pages'],
     [
@@ -42,8 +58,15 @@ ArrayUtility::mergeRecursiveWithOverrule(
                         --palette--;;media,
                         --palette--;;config,is_siteroot,
                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
-                        --palette--;;visibility,',
+                        --palette--;;visibility,
+                        --palette--;;access_be,',
             ],
         ],
+        'palettes' => [
+            'access_be' => [
+                'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:pages.palettes.access',
+                'showitem' => 'tx_ximatypo3manual_begroup',
+            ]
+        ]
     ]
 );
