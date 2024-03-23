@@ -8,7 +8,7 @@ use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 
-final readonly class ModifyButtonBarEventListener
+final class ModifyButtonBarEventListener
 {
     public function __construct(private IconFactory $iconFactory, private UriBuilder $uriBuilder)
     {
