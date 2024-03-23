@@ -6,39 +6,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 class SelectItemsProcFunc
 {
-    public static function getLabelForTableAndType(string $table, string|int $type): string
-    {
-        $fallbackLabel = $GLOBALS['TCA'][$table]['ctrl']['title'];
-
-        $typeField = $GLOBALS['TCA'][$table]['ctrl']['type'] ?? null;
-        if (!$typeField) {
-            return $fallbackLabel;
-        }
-
-        $typeItems = $GLOBALS['TCA'][$table]['columns'][$typeField]['config']['items'] ?? [];
-        if (empty($typeItems)) {
-            return $fallbackLabel;
-        }
-
-        $index = array_search($type, array_column($typeItems, 'value'), false);
-        if ($index) {
-            $index = MathUtility::canBeInterpretedAsInteger($index) ? (int)$index : $index;
-            return $typeItems[$index]['label'] ?? $fallbackLabel;
-        }
-
-        return $fallbackLabel;
-    }
-
-    public static function getIconForTableAndType(string $table, string|int $type): string
-    {
-        $iconName = $type === 0 ? 'default' : $type;
-        if (isset($GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName])) {
-            return $GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName];
-        }
-
-        return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
-    }
-
     public function getItems(&$params): void
     {
         $items = [];
@@ -78,12 +45,13 @@ class SelectItemsProcFunc
             }
             foreach ($GLOBALS['TCA'][$table]['types'] as $type => $typeConfig) {
                 $label = self::getLabelForTableAndType($table, $type);
+                $icon = self::getIconForTableAndType($table, $type);
                 $typeCount = count($GLOBALS['TCA'][$table]['types']);
 
                 $item = [
                     'value' => $table . ':' . $type,
                     'label' => $GLOBALS['LANG']->sL($label),
-                    'icon' => self::getIconForTableAndType($table, $type),
+                    'icon' => $icon,
                 ];
 
                 if ($typeCount > 1) {
@@ -96,5 +64,38 @@ class SelectItemsProcFunc
             }
         }
         $params['items'] = $items;
+    }
+
+    public static function getLabelForTableAndType(string $table, string|int $type): string
+    {
+        $fallbackLabel = $GLOBALS['TCA'][$table]['ctrl']['title'];
+
+        $typeField = $GLOBALS['TCA'][$table]['ctrl']['type'] ?? null;
+        if (!$typeField) {
+            return $fallbackLabel;
+        }
+
+        $typeItems = $GLOBALS['TCA'][$table]['columns'][$typeField]['config']['items'] ?? [];
+        if (empty($typeItems)) {
+            return $fallbackLabel;
+        }
+
+        $index = array_search($type, array_column($typeItems, 'value'), false);
+        if ($index) {
+            $index = MathUtility::canBeInterpretedAsInteger($index) ? (int)$index : $index;
+            return $typeItems[$index]['label'] ?? $fallbackLabel;
+        }
+
+        return $fallbackLabel;
+    }
+
+    public static function getIconForTableAndType(string $table, string|int $type): string
+    {
+        $iconName = $type === 0 ? 'default' : $type;
+        if (isset($GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName])) {
+            return $GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName];
+        }
+
+        return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
     }
 }
