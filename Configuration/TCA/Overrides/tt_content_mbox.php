@@ -30,9 +30,11 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
         'bodytext' => [
             'config' => [
                 'enableRichtext' => false,
+                'required' => true,
             ],
         ],
         'layout' => [
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.label',
             'config' => [
                 'fieldWizard' => [
                     'selectIcons' => [
