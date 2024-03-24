@@ -1,0 +1,16 @@
+paths:
+  - Configuration/TypoScript
+sniffs:
+  - class: Indentation
+    parameters:
+      useSpaces: true
+      indentPerLevel: 2
+      indentConditions: true
+  - class: DeadCode
+  - class: OperatorWhitespace
+  - class: DuplicateAssignment
+  - class: RepeatingRValue
+    disabled: true
+  - class: EmptySection
+  - class: NestingConsistency
+    disabled: true
