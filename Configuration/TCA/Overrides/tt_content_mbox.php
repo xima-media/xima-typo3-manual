@@ -1,6 +1,7 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Xima\XimaTypo3Manual\Preview\MboxPreviewRenderer;
 
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
@@ -69,3 +70,5 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
         ],
     ],
 ];
+
+$GLOBALS['TCA']['tt_content']['types']['mbox']['previewRenderer'] = MboxPreviewRenderer::class;
