@@ -2,8 +2,11 @@
 
 namespace Xima\XimaTypo3Manual\EventListener;
 
+use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownDivider;
+use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownHeader;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItem;
 use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -51,14 +54,19 @@ final readonly class ModifyButtonBarEventListener
         if (count($manualPages)) {
             $dropdown = $event->getButtonBar()->makeDropDownButton();
             $dropdown->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
-            $dropdown->setTitle('Open manual page');
+            $dropdown->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.title'));
             $dropdown->setShowLabelText(true);
             $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+            $dropdown->addItem(
+                GeneralUtility::makeInstance(DropDownHeader::class)
+                    ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.header'))
+            );
             foreach ($manualPages as $manualPage) {
                 // manual page
                 if (isset($manualPage['title'])) {
                     $dropdown->addItem(
                         GeneralUtility::makeInstance(DropDownItem::class)
+                            ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                             ->setLabel($manualPage['title'])
                             ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
                                 ['id' => $manualPage['uid']]))
@@ -68,12 +76,21 @@ final readonly class ModifyButtonBarEventListener
                 if (isset($manualPage['header'])) {
                     $dropdown->addItem(
                         GeneralUtility::makeInstance(DropDownItem::class)
+                            ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                             ->setLabel($manualPage['header'])
                             ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
                                 ['id' => $manualPage['pid']]))
                     );
                 }
             }
+            $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
+            $dropdown->addItem( GeneralUtility::makeInstance(DropDownItem::class)
+                ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual'))
+                ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
+                ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
+                ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL))
+            );
+
             $buttons['right'][] = [$dropdown];
         } else {
             $manualButton = $event->getButtonBar()->makeLinkButton();
@@ -89,13 +106,12 @@ final readonly class ModifyButtonBarEventListener
 
     protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        $sql = sprintf('select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
-            $recordTable, $recordUid, $recordTable, $recordType);
-
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tt_content');
-        $result = $connection->executeQuery($sql)->fetchAllAssociative();
-
-        if (!$result) {
+        try {
+            $sql = sprintf('select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
+                $recordTable, $recordUid, $recordTable, $recordType);
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tt_content');
+            $result = $connection->executeQuery($sql)->fetchAllAssociative();
+        } catch (Exception) {
             return [];
         }
 
@@ -104,13 +120,12 @@ final readonly class ModifyButtonBarEventListener
 
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        $sql = sprintf('select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
-            $recordTable, $recordUid, $recordTable, $recordType);
-
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
-        $result = $connection->executeQuery($sql)->fetchAllAssociative();
-
-        if (!$result) {
+        try {
+            $sql = sprintf('select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
+                $recordTable, $recordUid, $recordTable, $recordType);
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
+            $result = $connection->executeQuery($sql)->fetchAllAssociative();
+        } catch (Exception) {
             return [];
         }
 

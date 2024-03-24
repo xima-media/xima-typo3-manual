@@ -53,6 +53,15 @@
 			<trans-unit id="button.dropdown">
 				<source>Editor manual</source>
 			</trans-unit>
+			<trans-unit id="button.dropdown.all.title">
+				<source>Open manual</source>
+			</trans-unit>
+			<trans-unit id="button.dropdown.all">
+				<source>Open manual</source>
+			</trans-unit>
+			<trans-unit id="button.dropdown.header">
+				<source>Associated chapters</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

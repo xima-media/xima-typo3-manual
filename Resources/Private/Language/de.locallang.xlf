@@ -70,6 +70,18 @@
 				<source />
 				<target>Handbuch</target>
 			</trans-unit>
+			<trans-unit id="button.dropdown.all.title">
+				<source />
+				<target>Handbuch öffnen</target>
+			</trans-unit>
+			<trans-unit id="button.dropdown.all">
+				<source />
+				<target>Handbuch öffnen</target>
+			</trans-unit>
+			<trans-unit id="button.dropdown.header">
+				<source />
+				<target>Zugehörige Kapitel</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
