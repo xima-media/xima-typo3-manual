@@ -1,6 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			message: "#^Parameter \\#1 \\$item of method TYPO3\\\\CMS\\\\Backend\\\\Template\\\\Components\\\\Buttons\\\\DropDownButton\\:\\:addItem\\(\\) expects TYPO3\\\\CMS\\\\Backend\\\\Template\\\\Components\\\\Buttons\\\\DropDown\\\\DropDownItemInterface, TYPO3\\\\CMS\\\\Backend\\\\Template\\\\Components\\\\Buttons\\\\DropDown\\\\AbstractDropDownItem given\\.$#"
-			count: 3
-			path: Classes/EventListener/ModifyButtonBarEventListener.php
+	ignoreErrors: []
