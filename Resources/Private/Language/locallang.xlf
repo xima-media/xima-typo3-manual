@@ -32,6 +32,9 @@
 			<trans-unit id="wizard.mbox.description">
 				<source>Color hint with icon</source>
 			</trans-unit>
+			<trans-unit id="mbox.layout.label">
+				<source>Style</source>
+			</trans-unit>
 			<trans-unit id="mbox.layout.default">
 				<source>Default</source>
 			</trans-unit>
