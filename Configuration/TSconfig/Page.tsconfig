@@ -81,8 +81,7 @@ mod.tx_bwicons {
 }
 
 RTE {
-    default {
-        preset = xima_typo3_manual
-    }
+  default {
+    preset = xima_typo3_manual
+  }
 }
-

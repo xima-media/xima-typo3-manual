@@ -22,7 +22,7 @@ main {
 }
 
 p a, p a:visited {
-    color: var(--link-color, #0000FF);
+    color: var(--link-color, #00f);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -292,7 +292,7 @@ details[open] > summary:before {
 }
 
 nav a.active {
-    color: var(--link-color, #0000FF);
+    color: var(--link-color, #00f);
 }
 
 /**
@@ -328,4 +328,50 @@ span.badge--blue {
 span.badge--red {
     background-color: #f2cece;
     color: #502121;
+}
+
+
+/* mbox */
+.frame-layout-0 {
+    --mbox-bg: #e0e0e0;
+    --mbox-border-color: #adadad;
+}
+
+.frame-layout-1 {
+    --mbox-bg: #e9f2fa;
+    --mbox-border-color: #c5ddf3;
+}
+
+.frame-layout-2 {
+    --mbox-bg: #dbebdb;
+    --mbox-border-color: #9fcb9f;
+}
+
+.frame-layout-3 {
+    --mbox-bg: #fcf1e2;
+    --mbox-border-color: #f6dab1;
+}
+
+.frame-layout-4 {
+    --mbox-bg: #f7e2e2;
+    --mbox-border-color: #e9b1b1;
+}
+
+blockquote {
+    display: grid;
+    grid-template-columns: 2rem auto;
+    gap: 1.25rem;
+    align-items: center;
+    background: var(--mbox-bg);
+    border-left-color: var(--mbox-border-color);
+}
+
+blockquote .icon {
+    background-color: var(--mbox-border-color);
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    justify-content: center;
+    align-content: center;
 }
