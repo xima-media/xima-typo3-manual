@@ -55,15 +55,21 @@ class ManualController extends ActionController
             $this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_tabs_tab')
         );
 
+        $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $languageId = $this->getCurrentLanguage(
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
-        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('p' . $pageId)->withAdditionalQueryParameters(['context' => 'backend'])->withLanguage($languageId)->buildUri();
+        $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('p' . $pageId)->withAdditionalQueryParameters(['context' => $context])->withLanguage($languageId)->buildUri();
         $this->registerDocHeader($pageId, $languageId);
+
+        if ($context === 'iframe') {
+            $this->moduleTemplate->getDocHeaderComponent()->disable();
+        }
 
         $this->moduleTemplate->assign('url', $targetUrl);
         $this->moduleTemplate->assign('pid', $pageId);
+        $this->moduleTemplate->assign('context', $context);
 
         return $this->moduleTemplate->renderResponse();
     }
