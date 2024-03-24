@@ -2,6 +2,7 @@
 	"name": "xima/xima-typo3-manual",
 	"description": "TYPO3 extension to create editor manuals right in the TYPO3 backend.",
 	"type": "typo3-cms-extension",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Maik Schneider",
