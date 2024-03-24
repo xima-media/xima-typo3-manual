@@ -8,6 +8,7 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownDivider;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownHeader;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItem;
+use TYPO3\CMS\Backend\Template\Components\Buttons\DropDownButton;
 use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
@@ -31,6 +32,24 @@ final readonly class ModifyButtonBarEventListener
             return;
         }
 
+        // extract manual pages that fit current view
+        $manualPages = $this->getManualPages($uri, $request, $pageId);
+
+        $buttons = $event->getButtons();
+        $buttons['right'] ??= [];
+
+        if (count($manualPages)) {
+            $button = $this->getDropdownManualButton($event, $manualPages);
+        } else {
+            $button = $this->getSmallManualButton($event, $pageId);
+        }
+
+        $buttons['right'][] = [$button];
+        $event->setButtons($buttons);
+    }
+
+    public function getManualPages(string $uri, ServerRequestInterface $request, int $pageId): array
+    {
         $manualPages = [];
 
         // edit record view
@@ -48,60 +67,7 @@ final readonly class ModifyButtonBarEventListener
             array_push($manualPages, ...$this->getManualPagesForRecord($pageId, 'pages', 'doktype'));
         }
 
-        $buttons = $event->getButtons();
-        $buttons['right'] ??= [];
-
-        if (count($manualPages)) {
-            $dropdown = $event->getButtonBar()->makeDropDownButton();
-            $dropdown->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
-            $dropdown->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.title'));
-            $dropdown->setShowLabelText(true);
-            $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-            $dropdown->addItem(
-                GeneralUtility::makeInstance(DropDownHeader::class)
-                    ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.header'))
-            );
-            foreach ($manualPages as $manualPage) {
-                // manual page
-                if (isset($manualPage['title'])) {
-                    $dropdown->addItem(
-                        GeneralUtility::makeInstance(DropDownItem::class)
-                            ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
-                            ->setLabel($manualPage['title'])
-                            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
-                                ['id' => $manualPage['uid']]))
-                    );
-                }
-                // manual element
-                if (isset($manualPage['header'])) {
-                    $dropdown->addItem(
-                        GeneralUtility::makeInstance(DropDownItem::class)
-                            ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
-                            ->setLabel($manualPage['header'])
-                            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
-                                ['id' => $manualPage['pid']]))
-                    );
-                }
-            }
-            $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
-            $dropdown->addItem( GeneralUtility::makeInstance(DropDownItem::class)
-                ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual'))
-                ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
-                ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
-                ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL))
-            );
-
-            $buttons['right'][] = [$dropdown];
-        } else {
-            $manualButton = $event->getButtonBar()->makeLinkButton();
-            $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId]));
-            $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
-            $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-
-            $buttons['right'][] = [$manualButton];
-        }
-
-        $event->setButtons($buttons);
+        return $manualPages;
     }
 
     protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
@@ -130,5 +96,66 @@ final readonly class ModifyButtonBarEventListener
         }
 
         return $result;
+    }
+
+    public function getDropdownManualButton(
+        ModifyButtonBarEvent $event,
+        array $manualPages
+    ): DropDownButton {
+        // create dropdown button
+        $dropdown = $event->getButtonBar()->makeDropDownButton();
+        $dropdown->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
+        $dropdown->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.title'));
+        $dropdown->setShowLabelText(true);
+        $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+        // headline
+        $dropdown->addItem(
+            GeneralUtility::makeInstance(DropDownHeader::class)
+                ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.header'))
+        );
+        // chapter items
+        foreach ($manualPages as $manualPage) {
+            // manual page
+            if (isset($manualPage['title'])) {
+                $dropdown->addItem(
+                    GeneralUtility::makeInstance(DropDownItem::class)
+                        ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
+                        ->setLabel($manualPage['title'])
+                        ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
+                            ['id' => $manualPage['uid']]))
+                );
+            }
+            // manual element
+            if (isset($manualPage['header'])) {
+                $dropdown->addItem(
+                    GeneralUtility::makeInstance(DropDownItem::class)
+                        ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
+                        ->setLabel($manualPage['header'])
+                        ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
+                            ['id' => $manualPage['pid']]))
+                );
+            }
+        }
+        // divider
+        $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
+        // all manual
+        $dropdown->addItem(GeneralUtility::makeInstance(DropDownItem::class)
+            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual'))
+            ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
+            ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
+            ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL))
+        );
+        return $dropdown;
+    }
+
+    public function getSmallManualButton(
+        ModifyButtonBarEvent $event,
+        int $pageId
+    ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
+        $manualButton = $event->getButtonBar()->makeLinkButton();
+        $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId]));
+        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
+        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+        return $manualButton;
     }
 }
