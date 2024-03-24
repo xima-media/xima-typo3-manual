@@ -11,3 +11,13 @@
 .typo3-module-xima_typo3_manual .module-body iframe {
     height: 100%;
 }
+.element-preview-mtext a:hover {
+    text-decoration: none;
+}
+
+.element-preview-mtext img[data-icon-name] {
+    max-height: 16px;
+    margin-right: 2px;
+    position: relative;
+    top: -2px;
+}
