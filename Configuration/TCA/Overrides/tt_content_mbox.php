@@ -32,7 +32,40 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
             ],
         ],
         'layout' => [
-
+            'config' => [
+                'fieldWizard' => [
+                    'selectIcons' => [
+                        'disabled' => false,
+                    ],
+                ],
+                'items' => [
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.default',
+                        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-default.svg',
+                        'value' => 0,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.info',
+                        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-info.svg',
+                        'value' => 1,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.success',
+                        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-success.svg',
+                        'value' => 2,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.warning',
+                        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-warning.svg',
+                        'value' => 3,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.layout.error',
+                        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-error.svg',
+                        'value' => 4,
+                    ],
+                ],
+            ],
         ],
     ],
 ];

@@ -32,6 +32,24 @@
 			<trans-unit id="wizard.mbox.description">
 				<source>Color hint with icon</source>
 			</trans-unit>
+			<trans-unit id="mbox.layout.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="mbox.layout.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="mbox.layout.info">
+				<source>Info</source>
+			</trans-unit>
+			<trans-unit id="mbox.layout.success">
+				<source>Success</source>
+			</trans-unit>
+			<trans-unit id="mbox.layout.warning">
+				<source>Warning</source>
+			</trans-unit>
+			<trans-unit id="mbox.layout.error">
+				<source>Error</source>
+			</trans-unit>
 			<trans-unit id="wizard.mtext.title">
 				<source>Text with image</source>
 			</trans-unit>

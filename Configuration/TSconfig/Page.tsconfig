@@ -81,20 +81,7 @@ mod.tx_bwicons {
 }
 
 RTE {
-    default {
-        preset = xima_typo3_manual
-    }
-}
-
-TCEFORM {
-  tt_content {
-    layout {
-      altLabels {
-        0 = default
-        1 = info
-        2 = success
-        3 = danger
-      }
-    }
+  default {
+    preset = xima_typo3_manual
   }
 }
