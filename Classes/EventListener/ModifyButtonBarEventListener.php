@@ -14,6 +14,7 @@ use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 final class ModifyButtonBarEventListener
@@ -32,6 +33,10 @@ final class ModifyButtonBarEventListener
         if (str_contains($uri, 'help/manual') || (!$pageId && !str_contains($uri, 'record/edit'))) {
             return;
         }
+
+        /** @var PageRenderer $pageRenderer */
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
 
         // extract manual pages that fit current view
         $manualPages = $this->getManualPages($uri, $request, $pageId);
@@ -134,9 +139,10 @@ final class ModifyButtonBarEventListener
             $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
                 ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                 ->setLabel($title)
+                ->setAttributes(['data-manual-modal' => 'open'])
                 ->setHref($this->uriBuilder->buildUriFromRoute(
                     'xima_typo3_manual',
-                    ['id' => $pid]
+                    ['id' => $pid, 'context' => 'iframe']
                 ));
             $dropdown->addItem($dropdownItem);
         }
@@ -147,9 +153,10 @@ final class ModifyButtonBarEventListener
         // generic manual link
         /** @var DropDownItemInterface $dropdownItem */
         $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
-            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual'))
+            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => 0, 'context' => 'iframe']))
             ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
             ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
+            ->setAttributes(['data-manual-modal' => 'open'])
             ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL));
         $dropdown->addItem($dropdownItem);
 
@@ -161,10 +168,11 @@ final class ModifyButtonBarEventListener
         int $pageId
     ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
         $manualButton = $event->getButtonBar()->makeLinkButton();
-        $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId]));
+        $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId, 'context' => 'iframe']));
         $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
         $manualButton->setShowLabelText(true);
         $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+        $manualButton->setDataAttributes(['manual-modal' => 'open']);
         return $manualButton;
     }
 }
