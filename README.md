@@ -26,3 +26,7 @@ This extension introduces a dedicated page type within TYPO3 backend, specifical
    * Include **static PageTS** "XIMA Manual"
 
 3. Create new **Root-TypoScript** template for this page + include static TypoScript of this extension
+
+## License
+
+This project is licensed under [GNU General Public License 2.0 (or later)](LICENSE.md).

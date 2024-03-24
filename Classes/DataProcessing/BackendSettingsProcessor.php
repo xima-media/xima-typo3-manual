@@ -7,7 +7,6 @@ use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
 
 class BackendSettingsProcessor implements DataProcessorInterface
 {
-
     /**
      * @param mixed[] $contentObjectConfiguration
      * @param mixed[] $processorConfiguration
