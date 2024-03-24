@@ -32,7 +32,7 @@ $tempFields = [
             'appearance' => [
                 'expandAll' => true,
             ],
-            'itemsProcFunc' => \Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc::class . '->getItems'
+            'itemsProcFunc' => \Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc::class . '->getItems',
         ],
     ],
 ];

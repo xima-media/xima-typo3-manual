@@ -44,5 +44,8 @@
 			"php-http/discovery": true,
 			"helhum/dotenv-connector": true
 		}
+	},
+	"scripts": {
+		"php:fixer": "php vendor/bin/php-cs-fixer --config=php-cs-fixer.php fix"
 	}
 }

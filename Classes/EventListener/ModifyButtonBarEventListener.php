@@ -73,8 +73,13 @@ final class ModifyButtonBarEventListener
     protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
         try {
-            $sql = sprintf('select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
-                $recordTable, $recordUid, $recordTable, $recordType);
+            $sql = sprintf(
+                'select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
+                $recordTable,
+                $recordUid,
+                $recordTable,
+                $recordType
+            );
             $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tt_content');
             $result = $connection->executeQuery($sql)->fetchAllAssociative();
         } catch (Exception) {
@@ -87,8 +92,13 @@ final class ModifyButtonBarEventListener
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
         try {
-            $sql = sprintf('select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
-                $recordTable, $recordUid, $recordTable, $recordType);
+            $sql = sprintf(
+                'select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
+                $recordTable,
+                $recordUid,
+                $recordTable,
+                $recordType
+            );
             $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
             $result = $connection->executeQuery($sql)->fetchAllAssociative();
         } catch (Exception) {
@@ -121,8 +131,10 @@ final class ModifyButtonBarEventListener
                     GeneralUtility::makeInstance(DropDownItem::class)
                         ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                         ->setLabel($manualPage['title'])
-                        ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
-                            ['id' => $manualPage['uid']]))
+                        ->setHref($this->uriBuilder->buildUriFromRoute(
+                            'xima_typo3_manual',
+                            ['id' => $manualPage['uid']]
+                        ))
                 );
             }
             // manual element
@@ -131,15 +143,18 @@ final class ModifyButtonBarEventListener
                     GeneralUtility::makeInstance(DropDownItem::class)
                         ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                         ->setLabel($manualPage['header'])
-                        ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual',
-                            ['id' => $manualPage['pid']]))
+                        ->setHref($this->uriBuilder->buildUriFromRoute(
+                            'xima_typo3_manual',
+                            ['id' => $manualPage['pid']]
+                        ))
                 );
             }
         }
         // divider
         $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
         // all manual
-        $dropdown->addItem(GeneralUtility::makeInstance(DropDownItem::class)
+        $dropdown->addItem(
+            GeneralUtility::makeInstance(DropDownItem::class)
             ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual'))
             ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
             ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
