@@ -154,7 +154,8 @@ final readonly class ModifyButtonBarEventListener
     ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
         $manualButton = $event->getButtonBar()->makeLinkButton();
         $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId]));
-        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
+        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
+        $manualButton->setShowLabelText(true);
         $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
         return $manualButton;
     }
