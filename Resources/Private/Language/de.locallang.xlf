@@ -50,6 +50,26 @@
 				<source />
 				<target>Textelement mit Überschrift und Fließtext</target>
 			</trans-unit>
+			<trans-unit id="tab.manual_relations">
+				<source />
+				<target>Verlinkte Elemente</target>
+			</trans-unit>
+			<trans-unit id="palettes.manual_relations">
+				<source />
+				<target>Verlinkungen erstellen</target>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_relation">
+				<source />
+				<target>Verfügbare Elemente</target>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_relation.other">
+				<source />
+				<target>Sonstige</target>
+			</trans-unit>
+			<trans-unit id="button.dropdown">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

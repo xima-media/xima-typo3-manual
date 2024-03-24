@@ -24,7 +24,7 @@ $GLOBALS['TCA']['tt_content']['palettes']['mtext'] = [
 $GLOBALS['TCA']['tt_content']['types']['mtext'] = [
     'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     --palette--;;mtext,
-                --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:manual_relations,
+                --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tab.manual_relations,
                     --palette--;;manual-relations,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                     --palette--;;language,colPos',

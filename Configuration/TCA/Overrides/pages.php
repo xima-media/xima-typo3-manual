@@ -61,7 +61,7 @@ ArrayUtility::mergeRecursiveWithOverrule(
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                         --palette--;;standard,
                         --palette--;;title,
-                    --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:manual_relations,
+                    --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tab.manual_relations,
                         --palette--;;manual-relations,
                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.resources,
                         --palette--;;media,

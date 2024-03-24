@@ -50,7 +50,7 @@ final readonly class ModifyButtonBarEventListener
 
         if (count($manualPages)) {
             $dropdown = $event->getButtonBar()->makeDropDownButton();
-            $dropdown->setLabel('Manual');
+            $dropdown->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
             $dropdown->setTitle('Open manual page');
             $dropdown->setShowLabelText(true);
             $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
@@ -78,7 +78,7 @@ final readonly class ModifyButtonBarEventListener
         } else {
             $manualButton = $event->getButtonBar()->makeLinkButton();
             $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId]));
-            $manualButton->setTitle('Manual');
+            $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
             $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
 
             $buttons['right'][] = [$manualButton];

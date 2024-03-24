@@ -9,7 +9,6 @@ class SelectItemsProcFunc
     public function getItems(&$params): void
     {
         $items = [];
-
         $tablesToSkip = [
             'sys_category',
             'be_groups',
@@ -57,7 +56,7 @@ class SelectItemsProcFunc
                 if ($typeCount > 1) {
                     $item['group'] = $GLOBALS['LANG']->sL($GLOBALS['TCA'][$table]['ctrl']['title']);
                 } else {
-                    $item['group'] = 'Other';
+                    $item['group'] = $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tx_ximatypo3manual_relation.other');
                 }
 
                 $items[] = $item;

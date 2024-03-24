@@ -38,20 +38,20 @@
 			<trans-unit id="wizard.mtext.description">
 				<source>Text element with heading and body text</source>
 			</trans-unit>
-			<trans-unit id="manual_relations">
-				<source>Links</source>
+			<trans-unit id="tab.manual_relations">
+				<source>Related records</source>
 			</trans-unit>
 			<trans-unit id="palettes.manual_relations">
-				<source>Relations</source>
+				<source>Linking elements</source>
 			</trans-unit>
 			<trans-unit id="tx_ximatypo3manual_relation">
-				<source>Relation</source>
+				<source>Relations</source>
 			</trans-unit>
-			<trans-unit id="tx_ximatypo3manual_relation.table">
-				<source>Table</source>
+			<trans-unit id="tx_ximatypo3manual_relation.other">
+				<source>Other</source>
 			</trans-unit>
-			<trans-unit id="tx_ximatypo3manual_relation.table.default">
-				<source>All</source>
+			<trans-unit id="button.dropdown">
+				<source>Editor manual</source>
 			</trans-unit>
 		</body>
 	</file>
