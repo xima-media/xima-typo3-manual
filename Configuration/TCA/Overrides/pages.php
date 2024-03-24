@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 ExtensionManagementUtility::registerPageTSConfigFile(
     'xima_typo3_manual',
     'Configuration/TSconfig/Page.tsconfig',
-    'Xima Manual'
+    'XIMA Manual'
 );
 
 ExtensionManagementUtility::addTcaSelectItem(
