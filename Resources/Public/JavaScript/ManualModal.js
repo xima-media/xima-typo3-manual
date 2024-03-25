@@ -14,7 +14,7 @@ class ManualModal {
           staticBackdrop: true,
           buttons: [
             {
-              text: TYPO3.lang['wizard.mbox.description'],
+              text: TYPO3.lang['button.modal.footer.open"'],
               name: 'open',
               icon: 'actions-window-open',
               active: true,
@@ -24,7 +24,7 @@ class ManualModal {
               }
             },
             {
-              text: 'Close',
+              text: TYPO3.lang['button.modal.footer.close"'],
               name: 'close',
               icon: 'actions-close',
               btnClass: 'btn-secondary',
