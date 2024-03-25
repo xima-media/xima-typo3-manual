@@ -2,6 +2,7 @@
 
 namespace Xima\XimaTypo3Manual\Service;
 
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,6 +55,9 @@ class RecordCreationService
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     protected static function getSortingForNewRootPage()
     {
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');

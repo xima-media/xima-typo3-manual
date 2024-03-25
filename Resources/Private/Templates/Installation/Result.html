@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+
+<h1>XIMA TYPO3 Manual</h1>
+<f:if condition="{result.rootPageUid}">
+    <f:be.infobox title="Manual created" state="0">
+        Successfully created the new manual:
+        <f:be.link route="web_layout" parameters="{id: result.rootPageUid}">
+            <core:icon identifier="apps-pagetree-manual-root" size="small" />
+            New Manual
+        </f:be.link>
+    </f:be.infobox>
+</f:if>
+
+<f:if condition="!{result.rootPageUid}">
+    <f:be.infobox state="2" title="Error">An error occurred while trying to install the manual. See error log for more information.</f:be.infobox>
+</f:if>

@@ -2,31 +2,42 @@
 <f:layout name="Module" />
 <f:section name="Content">
 
-    <h1>XIMA TYPO3 Manual</h1>
-    <f:be.infobox title="No manual found" state="-1">
-        There is currently no manual page found in the system.
-    </f:be.infobox>
+    <div class="manual-installation-step" data-step="1">
+        <h1>XIMA TYPO3 Manual</h1>
+        <f:be.infobox title="No manual found" state="-1">
+            There is currently no manual page found in the system.
+        </f:be.infobox>
 
-    <h2 class="mt-4 mb-2">Create new manual from preset</h2>
-
-    <div class="card-container">
-        <div class="card card-size-fixed-small">
-            <div class="card-header">
-                <div class="card-icon">
-                    <core:icon identifier="apps-pagetree-manual-root" size="large" />
+        <h2 class="mt-4 mb-2">Create new manual from preset</h2>
+        <div class="card-container">
+            <div class="card card-size-fixed-small">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <core:icon identifier="apps-pagetree-manual-root" size="large" />
+                    </div>
+                    <div class="card-header-body">
+                        <h2 class="card-title">Empty Manual</h2>
+                        <span class="card-subtitle">Do it by yourself</span>
+                    </div>
                 </div>
-                <div class="card-header-body">
-                    <h2 class="card-title">Empty Manual</h2>
-                    <span class="card-subtitle">Do it by yourself</span>
+                <div class="card-body">
+                    <p>This creates a new site root with pre-configured TypoScript template, PageTS and site
+                        configuration.</p>
                 </div>
-            </div>
-            <div class="card-body">
-                <p>This creates a new site root with pre-configured TypoScript template, PageTS and site configuration.</p>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="btn btn-primary">Create new manual</a>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary install" data-preset="1">Create new manual</a>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="manual-installation-step hidden" data-step="2">
+        <h1>Creating manual..</h1>
+        <div class="px-4 py-4">
+            <core:icon identifier="spinner-circle" size="medium"></core:icon>
+        </div>
+    </div>
+
+    <div class="manual-installation-step hidden" data-step="3"></div>
 
 </f:section>
