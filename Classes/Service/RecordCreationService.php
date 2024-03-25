@@ -2,6 +2,7 @@
 
 namespace Xima\XimaTypo3Manual\Service;
 
+use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
@@ -17,10 +18,14 @@ class RecordCreationService
 
         /** @var DataHandler $dataHandler */
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler->enableLogging = false;
+        $dataHandler->bypassAccessCheckForRecords = true;
+        $dataHandler->bypassWorkspaceRestrictions = true;
         $dataHandler->start($data, []);
         $dataHandler->process_datamap();
 
         $rootPageUid = $dataHandler->substNEWwithIDs['NEW1'];
+        $this->createSiteConfiguration($rootPageUid);
 
         return [
             'rootPageUid' => $rootPageUid,
@@ -37,7 +42,6 @@ class RecordCreationService
                     'title' => 'New Manual',
                     'doktype' => 701,
                     'is_siteroot' => 1,
-                    'slug' => '/',
                     'tsconfig_includes' => 'EXT:xima_typo3_manual/Configuration/TSconfig/Page.tsconfig',
                 ],
             ],
@@ -68,5 +72,41 @@ class RecordCreationService
             $uid = (int)$lastPage;
         }
         return $uid;
+    }
+
+    protected function createSiteConfiguration(
+        int $rootPageUid,
+        string $title = 'manual demo'
+    ): void {
+        $port = $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() ? ':' . $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() : '';
+        $domain = $GLOBALS['TYPO3_REQUEST']->getUri()->getScheme() . '://' . $GLOBALS['TYPO3_REQUEST']->getUri()->getHost() . $port . '/';
+
+        $siteConfiguration = GeneralUtility::makeInstance(SiteConfiguration::class);
+        $siteIdentifier = 'manual-demo-' . $rootPageUid;
+        $configuration = [
+            'base' => $domain . 'manual-demo-' . $rootPageUid,
+            'rootPageId' => $rootPageUid,
+            'routes' => [],
+            'websiteTitle' => $title . ' ' . $rootPageUid,
+            'baseVariants' => [],
+            'errorHandling' => [],
+            'languages' => [
+                [
+                    'title' => 'English',
+                    'enabled' => true,
+                    'languageId' => 0,
+                    'base' => '/',
+                    'typo3Language' => 'default',
+                    'locale' => 'en_US.UTF-8',
+                    'iso-639-1' => 'en',
+                    'navigationTitle' => 'English',
+                    'hreflang' => 'en-us',
+                    'direction' => 'ltr',
+                    'flag' => 'us',
+                    'websiteTitle' => '',
+                ],
+            ],
+        ];
+        $siteConfiguration->write($siteIdentifier, $configuration);
     }
 }
