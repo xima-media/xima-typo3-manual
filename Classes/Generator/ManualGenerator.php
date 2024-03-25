@@ -1,6 +1,6 @@
 <?php
 
-namespace Xima\XimaTypo3Manual\Service;
+namespace Xima\XimaTypo3Manual\Generator;
 
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Database\Connection;
@@ -10,11 +10,14 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
-class RecordCreationService
+class ManualGenerator
 {
-    public function createNewManual(): array
+    public function createManualFromPreset(string $presetIdentifier): array
     {
-        $data = self::getNewRootPageData();
+        $data = $this->getDataForPreset($presetIdentifier);
+        if (empty($data)) {
+            return [];
+        }
 
         /** @var DataHandler $dataHandler */
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
@@ -32,7 +35,15 @@ class RecordCreationService
         ];
     }
 
-    protected static function getNewRootPageData(): array
+    protected function getDataForPreset(string $presetIdentifier): array
+    {
+        if ($presetIdentifier === '1') {
+            return self::getEmptyManualPresetData();
+        }
+        return [];
+    }
+
+    protected static function getEmptyManualPresetData(): array
     {
         return [
             'pages' => [

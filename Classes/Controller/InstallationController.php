@@ -13,7 +13,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use Xima\XimaTypo3Manual\Service\RecordCreationService;
+use Xima\XimaTypo3Manual\Generator\ManualGenerator;
 
 class InstallationController extends ActionController
 {
@@ -56,9 +56,9 @@ class InstallationController extends ActionController
         if (!$this->getBackendUser()->isAdmin()) {
             throw new AccessDeniedException('Only admin users are allowed to create a manual', 1711376718);
         }
-
-        $recordCreationService = GeneralUtility::makeInstance(RecordCreationService::class);
-        $result = $recordCreationService->createNewManual();
+        $presetIdentifier = $request->getParsedBody()['preset'] ?? 0;
+        $generator = GeneralUtility::makeInstance(ManualGenerator::class);
+        $result = $generator->createManualFromPreset($presetIdentifier);
 
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Templates/Installation/Result.html');
