@@ -39,12 +39,13 @@ class ManualController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
+        $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
         if (!$this->isManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
         }
         if (!$pageId) {
-            $uri = $this->uriBuilder->uriFor('index', [], 'Installation');
+            $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
             return new RedirectResponse($uri);
         }
 
@@ -60,7 +61,6 @@ class ManualController extends ActionController
 
         $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
 
-        $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $languageId = $this->getCurrentLanguage(
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
