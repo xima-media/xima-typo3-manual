@@ -11,7 +11,28 @@ class ManualModal {
           title: 'Manual',
           content: url,
           size: Modal.sizes.large,
-          staticBackdrop: true
+          staticBackdrop: true,
+          buttons: [
+            {
+              text: TYPO3.lang['wizard.mbox.description'],
+              name: 'open',
+              icon: 'actions-window-open',
+              active: true,
+              btnClass: 'btn-primary',
+              trigger: function() {
+                window.open(url, '_blank').focus();
+              }
+            },
+            {
+              text: 'Close',
+              name: 'close',
+              icon: 'actions-close',
+              btnClass: 'btn-secondary',
+              trigger: function(event, modal) {
+                modal.hideModal();
+              }
+            }
+          ]
         });
       })
     })

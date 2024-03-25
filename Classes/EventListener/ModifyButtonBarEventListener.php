@@ -37,6 +37,7 @@ final class ModifyButtonBarEventListener
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
+        $pageRenderer->addInlineLanguageLabelFile('EXT:xima-typo3-manual/Resources/Private/Language/locallang.xlf');
 
         // extract manual pages that fit current view
         $manualPages = $this->getManualPages($uri, $request, $pageId);
