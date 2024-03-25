@@ -25,6 +25,7 @@ $tempFields = [
     'tx_ximatypo3manual_relations' => [
         'exclude' => true,
         'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tx_ximatypo3manual_relation',
+        'description' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tx_ximatypo3manual_relation.description',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectCheckBox',
