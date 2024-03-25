@@ -13,6 +13,8 @@ use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
@@ -37,23 +39,26 @@ class ManualController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
-
-        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
-        $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
-
         if (!$this->isManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
         }
+        if (!$pageId) {
+            $uri = $this->uriBuilder->uriFor('index', [], 'Installation');
+            return new RedirectResponse($uri);
+        }
 
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
+        $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setBodyTag('<body class="typo3-module-xima_typo3_manual">');
         $this->moduleTemplate->setTitle(
             $this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_tabs_tab')
         );
+
+        $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
 
         $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $languageId = $this->getCurrentLanguage(
@@ -72,11 +77,6 @@ class ManualController extends ActionController
         $this->moduleTemplate->assign('context', $context);
 
         return $this->moduleTemplate->renderResponse();
-    }
-
-    protected function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
     }
 
     protected function isManualRootPage(int $pageUid): bool
@@ -100,6 +100,11 @@ class ManualController extends ActionController
             ->fetchOne();
 
         return $page ?: 0;
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 
     protected function getCurrentLanguage(int $pageId, string $languageParam = null): int
@@ -210,5 +215,10 @@ class ManualController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
+    }
+
+    protected function installAction(): ResponseInterface
+    {
+        return new HtmlResponse('No manual installed');
     }
 }
