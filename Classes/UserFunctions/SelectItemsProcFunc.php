@@ -65,6 +65,7 @@ class SelectItemsProcFunc
                 $items[] = $item;
             }
         }
+        $items = array_merge($items, $this::getPlugins());
         $params['items'] = $items;
     }
 
@@ -99,5 +100,20 @@ class SelectItemsProcFunc
         }
 
         return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
+    }
+
+    public static function getPlugins(): array {
+        $pluginItems = [];
+        foreach ($GLOBALS['TCA']['tt_content']['columns']['list_type']['config']['items'] as $item) {
+            if ($item['value']) {
+                $pluginItems[] = [
+                    'value' => 'tt_content:list:' . $item['value'],
+                    'label' => $GLOBALS['LANG']->sL($item['label']),
+                    'icon' => $item['icon'],
+                    'group' => 'Plugin-In'
+                ];
+            }
+        }
+        return $pluginItems;
     }
 }

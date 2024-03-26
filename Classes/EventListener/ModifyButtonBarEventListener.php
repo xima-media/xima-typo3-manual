@@ -66,6 +66,9 @@ final class ModifyButtonBarEventListener
             $recordType = $GLOBALS['TCA'][$recordTable]['ctrl']['type'] ?? '0';
             array_push($manualPages, ...$this->getManualElementsForRecord($recordUid, $recordTable, $recordType));
             array_push($manualPages, ...$this->getManualPagesForRecord($recordUid, $recordTable, $recordType));
+            if ($recordTable === 'tt_content') {
+                array_push($manualPages, ...$this->getManualPagesForPlugin($recordUid));
+            }
         }
 
         // page view, list view, etc.
@@ -104,6 +107,22 @@ final class ModifyButtonBarEventListener
                 $recordUid,
                 $recordTable,
                 $recordType
+            );
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
+            $result = $connection->executeQuery($sql)->fetchAllAssociative();
+        } catch (Exception) {
+            return [];
+        }
+
+        return $result;
+    }
+
+    protected function getManualPagesForPlugin(int $recordUid): array
+    {
+        try {
+            $sql = sprintf(
+                'select p.uid, p.title from tt_content r, pages p where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0 and r.CType="list" and r.list_type!=""',
+                $recordUid
             );
             $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
             $result = $connection->executeQuery($sql)->fetchAllAssociative();
