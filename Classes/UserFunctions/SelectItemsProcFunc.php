@@ -36,6 +36,9 @@ class SelectItemsProcFunc
             'sys_workspace',
             'sys_file_collection',
         ];
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['xima_typo3_manual']['relations']['additionalTablesToSkip'] ?? null)) {
+            $tablesToSkip = array_merge($tablesToSkip, $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['xima_typo3_manual']['relations']['additionalTablesToSkip']);
+        }
 
         $tables = array_keys($GLOBALS['TCA']);
         foreach ($tables as $table) {
