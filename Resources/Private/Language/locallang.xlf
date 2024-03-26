@@ -71,6 +71,9 @@
 			<trans-unit id="tx_ximatypo3manual_relation.other">
 				<source>Other</source>
 			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_relation.description">
+				<source>This functionality offers the possibility to link available TYPO3 page types, content elements or other elements, so that when editing such an element in the TYPO3 backend, a quick open function to this section of the manual is enabled via the "Manual" button in the header area.</source>
+			</trans-unit>
 			<trans-unit id="button.dropdown">
 				<source>Editor manual</source>
 			</trans-unit>
