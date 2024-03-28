@@ -17,8 +17,7 @@ class ManualModal {
               text: TYPO3.lang['button.modal.footer.open'],
               name: 'open',
               icon: 'actions-window-open',
-              active: true,
-              btnClass: 'btn-primary',
+              btnClass: 'btn-secondary',
               trigger: function() {
                 window.open(url, '_blank').focus();
               }
@@ -27,7 +26,8 @@ class ManualModal {
               text: TYPO3.lang['button.modal.footer.close'],
               name: 'close',
               icon: 'actions-close',
-              btnClass: 'btn-secondary',
+              active: true,
+              btnClass: 'btn-primary',
               trigger: function(event, modal) {
                 modal.hideModal();
               }
