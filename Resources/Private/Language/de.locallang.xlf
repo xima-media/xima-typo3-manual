@@ -110,6 +110,14 @@
 				<source />
 				<target>Zugehörige Kapitel</target>
 			</trans-unit>
+			<trans-unit id="button.modal.footer.open">
+				<source />
+				<target>In neuem Tab öffnen</target>
+			</trans-unit>
+			<trans-unit id="button.modal.footer.close">
+				<source />
+				<target>Schließen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

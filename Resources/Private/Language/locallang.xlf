@@ -86,6 +86,12 @@
 			<trans-unit id="button.dropdown.header">
 				<source>Associated chapters</source>
 			</trans-unit>
+			<trans-unit id="button.modal.footer.open">
+				<source>Open in new tab</source>
+			</trans-unit>
+			<trans-unit id="button.modal.footer.close">
+				<source>Close</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
