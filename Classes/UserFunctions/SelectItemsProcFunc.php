@@ -65,10 +65,11 @@ class SelectItemsProcFunc
                 $items[] = $item;
             }
         }
+        $items = array_merge($items, $this::getPlugins());
         $params['items'] = $items;
     }
 
-    public static function getLabelForTableAndType(string $table, string|int $type): string
+    protected static function getLabelForTableAndType(string $table, string|int $type): string
     {
         $fallbackLabel = $GLOBALS['TCA'][$table]['ctrl']['title'];
 
@@ -91,7 +92,7 @@ class SelectItemsProcFunc
         return $fallbackLabel;
     }
 
-    public static function getIconForTableAndType(string $table, string|int $type): string
+    protected static function getIconForTableAndType(string $table, string|int $type): string
     {
         $iconName = $type === 0 ? 'default' : $type;
         if (isset($GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName])) {
@@ -99,5 +100,21 @@ class SelectItemsProcFunc
         }
 
         return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
+    }
+
+    protected static function getPlugins(): array
+    {
+        $pluginItems = [];
+        foreach ($GLOBALS['TCA']['tt_content']['columns']['list_type']['config']['items'] as $item) {
+            if ($item['value']) {
+                $pluginItems[] = [
+                    'value' => 'tt_content:list:' . $item['value'],
+                    'label' => $GLOBALS['LANG']->sL($item['label']),
+                    'icon' => $item['icon'],
+                    'group' => 'Plugin',
+                ];
+            }
+        }
+        return $pluginItems;
     }
 }

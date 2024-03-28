@@ -67,6 +67,10 @@ final class ModifyButtonBarEventListener
             $recordType = $GLOBALS['TCA'][$recordTable]['ctrl']['type'] ?? '0';
             array_push($manualPages, ...$this->getManualElementsForRecord($recordUid, $recordTable, $recordType));
             array_push($manualPages, ...$this->getManualPagesForRecord($recordUid, $recordTable, $recordType));
+            if ($recordTable === 'tt_content') {
+                array_push($manualPages, ...$this->getManualElementsForPlugin($recordUid));
+                array_push($manualPages, ...$this->getManualPagesForPlugin($recordUid));
+            }
         }
 
         // page view, list view, etc.
@@ -79,34 +83,58 @@ final class ModifyButtonBarEventListener
 
     protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        try {
-            $sql = sprintf(
+        return $this->fetchRecords(
+            sprintf(
                 'select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
                 $recordTable,
                 $recordUid,
                 $recordTable,
                 $recordType
-            );
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tt_content');
-            $result = $connection->executeQuery($sql)->fetchAllAssociative();
-        } catch (Exception) {
-            return [];
-        }
-
-        return $result;
+            ),
+            'tt_content'
+        );
     }
 
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        try {
-            $sql = sprintf(
+        return $this->fetchRecords(
+            sprintf(
                 'select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
                 $recordTable,
                 $recordUid,
                 $recordTable,
                 $recordType
-            );
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
+            ),
+            'pages'
+        );
+    }
+
+    protected function getManualElementsForPlugin(int $recordUid): array
+    {
+        return $this->fetchRecords(
+            sprintf(
+                'select c.uid, c.pid, c.header from tt_content r, tt_content c where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0 and r.CType="list" and r.list_type!=""',
+                $recordUid
+            ),
+            'tt_content'
+        );
+    }
+
+    protected function getManualPagesForPlugin(int $recordUid): array
+    {
+        return $this->fetchRecords(
+            sprintf(
+                'select p.uid, p.title from tt_content r, pages p where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0 and r.CType="list" and r.list_type!=""',
+                $recordUid
+            ),
+            'pages'
+        );
+    }
+
+    protected function fetchRecords(string $sql, string $table): array
+    {
+        try {
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
             $result = $connection->executeQuery($sql)->fetchAllAssociative();
         } catch (Exception) {
             return [];
