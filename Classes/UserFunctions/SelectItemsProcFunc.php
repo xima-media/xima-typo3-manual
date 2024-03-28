@@ -69,7 +69,7 @@ class SelectItemsProcFunc
         $params['items'] = $items;
     }
 
-    public static function getLabelForTableAndType(string $table, string|int $type): string
+    protected static function getLabelForTableAndType(string $table, string|int $type): string
     {
         $fallbackLabel = $GLOBALS['TCA'][$table]['ctrl']['title'];
 
@@ -92,7 +92,7 @@ class SelectItemsProcFunc
         return $fallbackLabel;
     }
 
-    public static function getIconForTableAndType(string $table, string|int $type): string
+    protected static function getIconForTableAndType(string $table, string|int $type): string
     {
         $iconName = $type === 0 ? 'default' : $type;
         if (isset($GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName])) {
@@ -102,7 +102,7 @@ class SelectItemsProcFunc
         return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
     }
 
-    public static function getPlugins(): array
+    protected static function getPlugins(): array
     {
         $pluginItems = [];
         foreach ($GLOBALS['TCA']['tt_content']['columns']['list_type']['config']['items'] as $item) {
@@ -111,7 +111,7 @@ class SelectItemsProcFunc
                     'value' => 'tt_content:list:' . $item['value'],
                     'label' => $GLOBALS['LANG']->sL($item['label']),
                     'icon' => $item['icon'],
-                    'group' => 'Plugin-In',
+                    'group' => 'Plugin',
                 ];
             }
         }
