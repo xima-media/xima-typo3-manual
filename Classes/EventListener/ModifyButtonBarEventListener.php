@@ -82,7 +82,7 @@ final class ModifyButtonBarEventListener
 
     protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        return $this->getRecords(
+        return $this->fetchRecords(
             sprintf(
                 'select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
                 $recordTable,
@@ -96,7 +96,7 @@ final class ModifyButtonBarEventListener
 
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
-        return $this->getRecords(
+        return $this->fetchRecords(
             sprintf(
                 'select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
                 $recordTable,
@@ -110,7 +110,7 @@ final class ModifyButtonBarEventListener
 
     protected function getManualElementsForPlugin(int $recordUid): array
     {
-        return $this->getRecords(
+        return $this->fetchRecords(
             sprintf(
                 'select c.uid, c.pid, c.header from tt_content r, tt_content c where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0 and r.CType="list" and r.list_type!=""',
                 $recordUid
@@ -121,7 +121,7 @@ final class ModifyButtonBarEventListener
 
     protected function getManualPagesForPlugin(int $recordUid): array
     {
-        return $this->getRecords(
+        return $this->fetchRecords(
             sprintf(
                 'select p.uid, p.title from tt_content r, pages p where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0 and r.CType="list" and r.list_type!=""',
                 $recordUid
@@ -130,7 +130,7 @@ final class ModifyButtonBarEventListener
         );
     }
 
-    protected function getRecords(string $sql, string $table): array
+    protected function fetchRecords(string $sql, string $table): array
     {
         try {
             $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
