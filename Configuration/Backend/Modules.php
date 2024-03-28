@@ -1,5 +1,6 @@
 <?php
 
+use Xima\XimaTypo3Manual\Controller\InstallationController;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
 return [
@@ -17,6 +18,7 @@ return [
         'extensionName' => 'xima_typo3_manual',
         'controllerActions' => [
             ManualController::class => 'index',
+            InstallationController::class => 'index',
         ],
     ],
 ];
