@@ -4,11 +4,12 @@
 <f:if condition="{result.rootPageUid}">
     <f:be.infobox title="{f:translate(key:'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.title')}" state="0">
         <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.message" />
-        <f:be.link route="web_layout" parameters="{id: result.rootPageUid}">
-            <core:icon identifier="apps-pagetree-manual-root" size="small" />
-            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.newManualTitle" />
-        </f:be.link>
     </f:be.infobox>
+
+    <f:be.link class="btn btn-default" route="web_layout" parameters="{id: result.rootPageUid}">
+        <core:icon identifier="apps-pagetree-manual-root" size="small" />
+        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.openNewManual" />
+    </f:be.link>
 </f:if>
 
 <f:if condition="!{result.rootPageUid}">

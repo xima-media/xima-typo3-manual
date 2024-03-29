@@ -26,9 +26,21 @@ class Installation {
     request.post({
       preset: preset
     }).then(async data => {
-      const html = await data.resolve()
-      document.querySelector('.manual-installation-step[data-step="3"]').innerHTML = html
+      // insert html
+      document.querySelector('.manual-installation-step[data-step="3"]').innerHTML = await data.resolve()
+
+      // bind links (if opened in iframe)
+      document.querySelectorAll('.manual-installation-step[data-step="3"] a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault()
+          top.document.location.href = e.currentTarget.getAttribute('href')
+        })
+      })
+
+      // navigate to step 3
       this.navigateToStep(3)
+
+      // trigger page tree refresh
       top.document.dispatchEvent(new CustomEvent('typo3:pagetree:refresh'));
     })
   }
