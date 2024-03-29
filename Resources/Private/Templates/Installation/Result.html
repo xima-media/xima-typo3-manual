@@ -6,7 +6,7 @@
         <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.message" />
     </f:be.infobox>
 
-    <f:be.link class="btn btn-default" route="web_layout" parameters="{id: result.rootPageUid}">
+    <f:be.link class="btn btn-default" additionalAttributes="{data-page-uid: result.rootPageUid}" route="web_layout" parameters="{id: result.rootPageUid}">
         <core:icon identifier="apps-pagetree-manual-root" size="small" />
         <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.result.success.openNewManual" />
     </f:be.link>

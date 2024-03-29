@@ -30,18 +30,22 @@ class Installation {
       document.querySelector('.manual-installation-step[data-step="3"]').innerHTML = await data.resolve()
 
       // bind links (if opened in iframe)
-      document.querySelectorAll('.manual-installation-step[data-step="3"] a').forEach(link => {
+      document.querySelectorAll('.manual-installation-step[data-step="3"] a[data-page-uid]').forEach(link => {
         link.addEventListener('click', e => {
           e.preventDefault()
           top.document.location.href = e.currentTarget.getAttribute('href')
+          const event = new CustomEvent('typo3:pagetree:mountPoint', {
+            detail: {
+              pageId: parseInt(e.currentTarget.getAttribute('data-page-uid'))
+            },
+          })
+          top.document.dispatchEvent(event)
+          top.document.dispatchEvent(new CustomEvent('typo3:pagetree:selectFirstNode'))
         })
       })
 
       // navigate to step 3
       this.navigateToStep(3)
-
-      // trigger page tree refresh
-      top.document.dispatchEvent(new CustomEvent('typo3:pagetree:refresh'));
     })
   }
 }
