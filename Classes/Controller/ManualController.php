@@ -41,7 +41,7 @@ class ManualController extends ActionController
     {
         $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
-        if (!$this->isManualRootPage($pageId)) {
+        if (!$this->hasManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
         }
         if (!$pageId) {
@@ -79,7 +79,7 @@ class ManualController extends ActionController
         return $this->moduleTemplate->renderResponse();
     }
 
-    protected function isManualRootPage(int $pageUid): bool
+    public static function hasManualRootPage(int $pageUid): bool
     {
         $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
         return isset($rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
