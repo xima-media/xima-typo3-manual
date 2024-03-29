@@ -92,6 +92,48 @@
 			<trans-unit id="button.modal.footer.close">
 				<source>Close</source>
 			</trans-unit>
+			<trans-unit id="installation.noManualFound">
+				<source>No manual found</source>
+			</trans-unit>
+			<trans-unit id="installation.noManualFound.description">
+				<source>There is currently no manual page found in the system.</source>
+			</trans-unit>
+			<trans-unit id="installation.noManualFound.noAccess">
+				<source>There is no user manual configured. Contact your administrator for further details.</source>
+			</trans-unit>
+			<trans-unit id="installation.createFromPreset">
+				<source>Create new manual from preset</source>
+			</trans-unit>
+			<trans-unit id="installation.preset1.title">
+				<source>Empty Manual</source>
+			</trans-unit>
+			<trans-unit id="installation.preset1.subtitle">
+				<source>Do it by yourself</source>
+			</trans-unit>
+			<trans-unit id="installation.preset1.body">
+				<source>This creates a new site root with pre-configured TypoScript template, PageTS and site configuration.</source>
+			</trans-unit>
+			<trans-unit id="installation.preset1.button">
+				<source>Create new manual</source>
+			</trans-unit>
+			<translation id="installation.creating">
+				<source>Ceating</source>
+			</translation>
+			<translation id="installation.result.success.title">
+				<source>Manual created</source>
+			</translation>
+			<translation id="installation.result.success.message">
+				<source>The manual has been created successfully.</source>
+			</translation>
+			<translation id="installation.result.error.title">
+				<source>Error</source>
+			</translation>
+			<translation id="installation.result.error.message">
+				<source>An error occurred while creating the manual.</source>
+			</translation>
+			<translation id="installation.result.success.newManualTitle">
+				<source>New Manual</source>
+			</translation>
 		</body>
 	</file>
 </xliff>

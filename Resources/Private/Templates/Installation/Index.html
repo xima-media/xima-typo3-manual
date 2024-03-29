@@ -4,11 +4,13 @@
 
     <div class="manual-installation-step" data-step="1">
         <h1>XIMA TYPO3 Manual</h1>
-        <f:be.infobox title="No manual found" state="-1">
-            There is currently no manual page found in the system.
+        <f:be.infobox title="{f:translate(key:'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.noManualFound')}" state="-1">
+            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.noManualFound.description" />
         </f:be.infobox>
 
-        <h2 class="mt-4 mb-2">Create new manual from preset</h2>
+        <h2 class="mt-4 mb-2">
+            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.createFromPreset" />
+        </h2>
         <div class="card-container">
             <div class="card card-size-fixed-small">
                 <div class="card-header">
@@ -16,23 +18,34 @@
                         <core:icon identifier="apps-pagetree-manual-root" size="large" />
                     </div>
                     <div class="card-header-body">
-                        <h2 class="card-title">Empty Manual</h2>
-                        <span class="card-subtitle">Do it by yourself</span>
+                        <h2 class="card-title">
+                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.title" />
+                        </h2>
+                        <span class="card-subtitle">
+                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.subtitle" />
+                        </span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>This creates a new site root with pre-configured TypoScript template, PageTS and site
-                        configuration.</p>
+                    <p>
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.body" />
+                    </p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary install" data-preset="1">Create new manual</a>
+                    <button class="btn btn-primary install" data-preset="1">
+                        <core:icon identifier="actions-add" size="small" />
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.button" />
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="manual-installation-step hidden" data-step="2">
-        <h1>Creating manual..</h1>
+        <h1>
+            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.creating" />
+            ...
+        </h1>
         <div class="px-4 py-4">
             <core:icon identifier="spinner-circle" size="medium"></core:icon>
         </div>

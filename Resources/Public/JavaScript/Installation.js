@@ -6,7 +6,7 @@ class Installation {
   }
 
   bindEvents() {
-    document.querySelectorAll('a.install[data-preset]').forEach(btn => {
+    document.querySelectorAll('button.install[data-preset]').forEach(btn => {
       btn.addEventListener('click', this.onInstallClick.bind(this))
     })
   }

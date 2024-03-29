@@ -118,6 +118,62 @@
 				<source />
 				<target>Schließen</target>
 			</trans-unit>
+			<trans-unit id="installation.noManualFound">
+				<source />
+				<target>Kein Handbuch gefunden</target>
+			</trans-unit>
+			<trans-unit id="installation.noManualFound.description">
+				<source />
+				<target>Es wurde aktuell keine Handbuchseite im System gefunden.</target>
+			</trans-unit>
+			<trans-unit id="installation.noManualFound.noAccess">
+				<source />
+				<target>Es wurde aktuell keine Handbuchseite im System gefunden. Kontaktieren Sie Ihren Administrator für mehr Details.</target>
+			</trans-unit>
+			<trans-unit id="installation.createFromPreset">
+				<source />
+				<target>Neues Handbuch aus Voreinstellung erstellen</target>
+			</trans-unit>
+			<trans-unit id="installation.preset1.title">
+				<source />
+				<target>Leeres Handbuch</target>
+			</trans-unit>
+			<trans-unit id="installation.preset1.subtitle">
+				<source />
+				<target>Start from scratch</target>
+			</trans-unit>
+			<trans-unit id="installation.preset1.body">
+				<source />
+				<target>Dies erstellt eine neue Site-Root mit vorkonfiguriertem TypoScript-Template, PageTS und Site-Konfiguration.</target>
+			</trans-unit>
+			<trans-unit id="installation.preset1.button">
+				<source />
+				<target>Neues Handbuch erstellen</target>
+			</trans-unit>
+			<translation id="installation.creating">
+				<source />
+				<target>Erstelle</target>
+			</translation>
+			<translation id="installation.result.success.title">
+				<source />
+				<target>Handbuch erstellt</target>
+			</translation>
+			<translation id="installation.result.success.message">
+				<source />
+				<target>Das Handbuch wurde erfolgreich erstellt.</target>
+			</translation>
+			<translation id="installation.result.error.title">
+				<source />
+				<target>Error</target>
+			</translation>
+			<translation id="installation.result.error.message">
+				<source />
+				<target>Es trat ein Fehler während der Erstellung des Handbuchs auf.</target>
+			</translation>
+			<translation id="installation.result.success.newManualTitle">
+				<source />
+				<target>Neues Handbuch</target>
+			</translation>
 		</body>
 	</file>
 </xliff>
