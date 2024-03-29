@@ -5,6 +5,7 @@ namespace Xima\XimaTypo3Manual\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -66,7 +67,7 @@ class ManualController extends ActionController
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
         $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('p' . $pageId)->withAdditionalQueryParameters(['context' => $context])->withLanguage($languageId)->buildUri();
-        $this->registerDocHeader($pageId, $languageId);
+        $this->registerDocHeader($pageId, $languageId, $context);
 
         if ($context === 'iframe') {
             $this->moduleTemplate->getDocHeaderComponent()->disable();
@@ -159,7 +160,7 @@ class ManualController extends ActionController
         return $languages;
     }
 
-    protected function registerDocHeader(int $pageId, int $languageId): void
+    protected function registerDocHeader(int $pageId, int $languageId, string $context): void
     {
         $languages = $this->getPreviewLanguages($pageId);
         if (count($languages) > 1) {
@@ -215,6 +216,16 @@ class ManualController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
+
+        if ($context === 'backend' && $GLOBALS['BE_USER']->isAdmin()) {
+            $closePreviewButton = $buttonBar->makeLinkButton()
+                ->setHref($uriBuilder->buildUriFromRoute('web_layout', ['id' => $pageId]))
+                ->setClasses('xima-typo3-manual-edit')
+                ->setTitle($this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview.close'))
+                ->setShowLabelText(true)
+                ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
+            $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
+        }
     }
 
     protected function installAction(): ResponseInterface

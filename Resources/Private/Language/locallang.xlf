@@ -83,6 +83,12 @@
 			<trans-unit id="button.dropdown.all">
 				<source>Open manual</source>
 			</trans-unit>
+			<trans-unit id="button.preview">
+				<source>Preview manual</source>
+			</trans-unit>
+			<trans-unit id="button.preview.close">
+				<source>Close preview</source>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source>Associated chapters</source>
 			</trans-unit>

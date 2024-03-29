@@ -106,6 +106,14 @@
 				<source />
 				<target>Handbuch öffnen</target>
 			</trans-unit>
+			<trans-unit id="button.preview">
+				<source />
+				<target>Vorschau öffnen</target>
+			</trans-unit>
+			<trans-unit id="button.preview.close">
+				<source />
+				<target>Vorschau schließen</target>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source />
 				<target>Zugehörige Kapitel</target>

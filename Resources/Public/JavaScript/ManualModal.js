@@ -36,6 +36,18 @@ class ManualModal {
         });
       })
     })
+
+    document.querySelectorAll('a[data-manual-preview]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const event = new CustomEvent('typo3:pagetree:mountPoint', {
+          detail: {
+            pageId: parseInt(e.currentTarget.getAttribute('data-manual-preview'))
+          },
+        })
+        top.document.dispatchEvent(event)
+      })
+
+    })
   }
 }
 
