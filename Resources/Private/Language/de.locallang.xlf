@@ -150,30 +150,30 @@
 				<source />
 				<target>Neues Handbuch erstellen</target>
 			</trans-unit>
-			<translation id="installation.creating">
+			<trans-unit id="installation.creating">
 				<source />
 				<target>Erstelle</target>
-			</translation>
-			<translation id="installation.result.success.title">
+			</trans-unit>
+			<trans-unit id="installation.result.success.title">
 				<source />
 				<target>Handbuch erstellt</target>
-			</translation>
-			<translation id="installation.result.success.message">
+			</trans-unit>
+			<trans-unit id="installation.result.success.message">
 				<source />
 				<target>Das Handbuch wurde erfolgreich erstellt.</target>
-			</translation>
-			<translation id="installation.result.error.title">
+			</trans-unit>
+			<trans-unit id="installation.result.error.title">
 				<source />
 				<target>Error</target>
-			</translation>
-			<translation id="installation.result.error.message">
+			</trans-unit>
+			<trans-unit id="installation.result.error.message">
 				<source />
 				<target>Es trat ein Fehler während der Erstellung des Handbuchs auf.</target>
-			</translation>
-			<translation id="installation.result.success.newManualTitle">
+			</trans-unit>
+			<trans-unit id="installation.result.success.openNewManual">
 				<source />
-				<target>Neues Handbuch</target>
-			</translation>
+				<target>Zum neuen Handbuch</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
