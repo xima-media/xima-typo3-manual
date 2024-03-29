@@ -29,6 +29,7 @@ class Installation {
       const html = await data.resolve()
       document.querySelector('.manual-installation-step[data-step="3"]').innerHTML = html
       this.navigateToStep(3)
+      top.document.dispatchEvent(new CustomEvent('typo3:pagetree:refresh'));
     })
   }
 }
