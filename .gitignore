@@ -8,3 +8,4 @@ var
 Documentation-*
 .phpdoc
 node_modules
+.php-cs-fixer.cache

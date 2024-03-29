@@ -90,6 +90,10 @@
 				<source />
 				<target>Sonstige</target>
 			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_relation.description">
+				<source />
+				<target>Diese Funktionalität bietet die Möglichkeit verfügbare TYPO3 Seitentypen, Inhaltselemente oder weitere Elemente zu verlinken, damit bei der Bearbeitung eines solchen Elements im TYPO3 Backend über den "Handbuch" Button im Kopfbereich eine Schnell Öffnen Funktion auf diesen Abschnitt des Handbuchs ermöglicht wird.</target>
+			</trans-unit>
 			<trans-unit id="button.dropdown">
 				<source />
 				<target>Handbuch</target>
@@ -105,6 +109,14 @@
 			<trans-unit id="button.dropdown.header">
 				<source />
 				<target>Zugehörige Kapitel</target>
+			</trans-unit>
+			<trans-unit id="button.modal.footer.open">
+				<source />
+				<target>In neuem Tab öffnen</target>
+			</trans-unit>
+			<trans-unit id="button.modal.footer.close">
+				<source />
+				<target>Schließen</target>
 			</trans-unit>
 		</body>
 	</file>

@@ -8,7 +8,7 @@ return [
         'parent' => 'help',
         'position' => ['before' => '*'],
         'workspaces' => '*',
-        'access' => 'user,group',
+        'access' => 'user',
         'path' => '/module/help/manual',
         'aliases' => ['help_manual'],
         'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/icon-module.svg',
