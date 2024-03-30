@@ -34,13 +34,6 @@ class Installation {
         link.addEventListener('click', e => {
           e.preventDefault()
           top.document.location.href = e.currentTarget.getAttribute('href')
-          const event = new CustomEvent('typo3:pagetree:mountPoint', {
-            detail: {
-              pageId: parseInt(e.currentTarget.getAttribute('data-page-uid'))
-            },
-          })
-          top.document.dispatchEvent(event)
-          top.document.dispatchEvent(new CustomEvent('typo3:pagetree:selectFirstNode'))
         })
       })
 
