@@ -10,12 +10,14 @@ use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownHeader;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItem;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItemInterface;
 use TYPO3\CMS\Backend\Template\Components\Buttons\DropDownButton;
+use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Xima\XimaTypo3Manual\Controller\ManualController;
 
 final class ModifyButtonBarEventListener
 {
@@ -34,6 +36,8 @@ final class ModifyButtonBarEventListener
             return;
         }
 
+        $hasManualRootPage = ManualController::hasManualRootPage($pageId);
+
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
@@ -47,6 +51,8 @@ final class ModifyButtonBarEventListener
 
         if (count($manualPages)) {
             $button = $this->getDropdownManualButton($event, $manualPages);
+        } elseif ($hasManualRootPage) {
+            $button = $this->getPreviewManualButton($event, $pageId);
         } else {
             $button = $this->getSmallManualButton($event, $pageId);
         }
@@ -95,6 +101,18 @@ final class ModifyButtonBarEventListener
         );
     }
 
+    protected function fetchRecords(string $sql, string $table): array
+    {
+        try {
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
+            $result = $connection->executeQuery($sql)->fetchAllAssociative();
+        } catch (Exception) {
+            return [];
+        }
+
+        return $result;
+    }
+
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
         return $this->fetchRecords(
@@ -131,18 +149,6 @@ final class ModifyButtonBarEventListener
         );
     }
 
-    protected function fetchRecords(string $sql, string $table): array
-    {
-        try {
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
-            $result = $connection->executeQuery($sql)->fetchAllAssociative();
-        } catch (Exception) {
-            return [];
-        }
-
-        return $result;
-    }
-
     public function getDropdownManualButton(
         ModifyButtonBarEvent $event,
         array $manualPages
@@ -168,7 +174,13 @@ final class ModifyButtonBarEventListener
             $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
                 ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                 ->setLabel($title)
-                ->setAttributes(['data-manual-modal' => 'open'])
+                ->setAttributes([
+                    'data-manual-modal' => 'open',
+                    'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                        'xima_typo3_manual',
+                        ['id' => $pid, 'context' => 'backend']
+                    ),
+                ])
                 ->setHref($this->uriBuilder->buildUriFromRoute(
                     'xima_typo3_manual',
                     ['id' => $pid, 'context' => 'iframe']
@@ -185,11 +197,31 @@ final class ModifyButtonBarEventListener
             ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => 0, 'context' => 'iframe']))
             ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
             ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
-            ->setAttributes(['data-manual-modal' => 'open'])
+            ->setAttributes([
+                'data-manual-modal' => 'open',
+                'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                    'xima_typo3_manual',
+                    ['id' => 0, 'context' => 'backend']
+                ),
+            ])
             ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL));
         $dropdown->addItem($dropdownItem);
 
         return $dropdown;
+    }
+
+    private function getPreviewManualButton(ModifyButtonBarEvent $event, int $pageId): LinkButton
+    {
+        $manualButton = $event->getButtonBar()->makeLinkButton();
+        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
+            'xima_typo3_manual',
+            ['id' => $pageId, 'context' => 'backend']
+        ));
+        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview'));
+        $manualButton->setShowLabelText(true);
+        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+        $manualButton->setDataAttributes(['manual-preview' => ManualController::getRootPageUid($pageId)]);
+        return $manualButton;
     }
 
     public function getSmallManualButton(
@@ -197,11 +229,20 @@ final class ModifyButtonBarEventListener
         int $pageId
     ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
         $manualButton = $event->getButtonBar()->makeLinkButton();
-        $manualButton->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => $pageId, 'context' => 'iframe']));
+        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
+            'xima_typo3_manual',
+            ['id' => $pageId, 'context' => 'iframe']
+        ));
         $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
         $manualButton->setShowLabelText(true);
         $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-        $manualButton->setDataAttributes(['manual-modal' => 'open']);
+        $manualButton->setDataAttributes([
+            'manual-modal' => 'open',
+            'manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                'xima_typo3_manual',
+                ['id' => $pageId, 'context' => 'backend']
+            ),
+        ]);
         return $manualButton;
     }
 }

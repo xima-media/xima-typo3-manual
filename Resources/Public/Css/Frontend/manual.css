@@ -186,43 +186,6 @@ figcaption {
     display: none;
 }
 
-@media print {
-    .show-for-print {
-        display: block;
-    }
-
-    nav, a.to-top {
-        display: none !important;
-    }
-
-    h2 {
-        font-size: 1.5rem
-    }
-
-    h3 {
-        font-size: 1.25rem;
-    }
-
-    figure.image {
-        max-height: 80vh;
-        object-fit: contain;
-    }
-
-    figure.image > img {
-        max-height: 80vh !important;
-        height: auto !important;
-        width: auto !important;
-    }
-
-    p > span {
-        -webkit-print-color-adjust: exact;
-    }
-
-    main {
-        display: block;
-    }
-}
-
 a.to-top {
     position: fixed;
     right: 10px;
@@ -374,4 +337,47 @@ blockquote .icon {
     display: grid;
     justify-content: center;
     align-content: center;
+}
+
+@media print {
+    .show-for-print {
+        display: block;
+    }
+
+    nav, a.to-top {
+        display: none !important;
+    }
+
+    h2 {
+        margin-top: 1rem;
+        font-size: 1.5rem
+    }
+
+    h3 {
+        margin-top: 1rem;
+        font-size: 1.25rem;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    figure.image {
+        max-height: 80vh;
+        object-fit: contain;
+    }
+
+    figure.image > img {
+        max-height: 80vh !important;
+        height: auto !important;
+        width: auto !important;
+    }
+
+    p > span {
+        -webkit-print-color-adjust: exact;
+    }
+
+    main {
+        display: block;
+    }
 }

@@ -5,6 +5,7 @@ namespace Xima\XimaTypo3Manual\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -13,6 +14,7 @@ use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
@@ -37,31 +39,34 @@ class ManualController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
-
-        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
-        $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+        $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
-
-        if (!$this->isManualRootPage($pageId)) {
+        if (!self::hasManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
+            if (!$pageId) {
+                $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
+                return new RedirectResponse($uri);
+            }
         }
 
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
+        $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setBodyTag('<body class="typo3-module-xima_typo3_manual">');
         $this->moduleTemplate->setTitle(
             $this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_tabs_tab')
         );
 
-        $context = $this->request->getQueryParams()['context'] ?? 'backend';
+        $this->getLanguageService()->includeLLFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+
         $languageId = $this->getCurrentLanguage(
             $pageId,
             $this->request->getParsedBody()['language'] ?? $this->request->getQueryParams()['language'] ?? null
         );
         $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('p' . $pageId)->withAdditionalQueryParameters(['context' => $context])->withLanguage($languageId)->buildUri();
-        $this->registerDocHeader($pageId, $languageId);
+        $this->registerDocHeader($pageId, $languageId, $context);
 
         if ($context === 'iframe') {
             $this->moduleTemplate->getDocHeaderComponent()->disable();
@@ -74,12 +79,7 @@ class ManualController extends ActionController
         return $this->moduleTemplate->renderResponse();
     }
 
-    protected function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
-    }
-
-    protected function isManualRootPage(int $pageUid): bool
+    public static function hasManualRootPage(int $pageUid): bool
     {
         $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
         return isset($rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
@@ -100,6 +100,11 @@ class ManualController extends ActionController
             ->fetchOne();
 
         return $page ?: 0;
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 
     protected function getCurrentLanguage(int $pageId, string $languageParam = null): int
@@ -154,7 +159,7 @@ class ManualController extends ActionController
         return $languages;
     }
 
-    protected function registerDocHeader(int $pageId, int $languageId): void
+    protected function registerDocHeader(int $pageId, int $languageId, string $context): void
     {
         $languages = $this->getPreviewLanguages($pageId);
         if (count($languages) > 1) {
@@ -210,5 +215,30 @@ class ManualController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
+
+        if ($context === 'backend') {
+            $returnUid = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
+            if ($returnUid !== $pageId) {
+                $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.manual.close';
+                $class = 'xima-typo3-manual-close';
+            } else {
+                $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview.close';
+                $class = 'xima-typo3-manual-preview-stop';
+                $returnUid = $pageId;
+            }
+            $closePreviewButton = $buttonBar->makeLinkButton()
+                ->setHref($uriBuilder->buildUriFromRoute('web_layout', ['id' => $returnUid]))
+                ->setClasses($class)
+                ->setTitle($this->getLanguageService()->sL($label))
+                ->setShowLabelText(true)
+                ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
+            $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
+        }
+    }
+
+    public static function getRootPageUid(int $pageUid): int
+    {
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        return $rootline[0]['uid'] ?? 0;
     }
 }

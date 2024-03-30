@@ -85,3 +85,15 @@ RTE {
     preset = xima_typo3_manual
   }
 }
+
+mod.web_layout.BackendLayouts {
+  manualHomepage {
+    title = Manual Homepage
+    config {
+      backend_layout {
+        colCount = 0
+        rowCount = 0
+      }
+    }
+  }
+}
