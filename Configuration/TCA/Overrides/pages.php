@@ -66,7 +66,7 @@ ArrayUtility::mergeRecursiveWithOverrule(
                         --palette--;;manual-relations,
                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.resources,
                         --palette--;;media,
-                        --palette--;;config,is_siteroot,php_tree_stop,
+                        --palette--;;config,is_siteroot,
                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
                         --palette--;;visibility,',
             ],

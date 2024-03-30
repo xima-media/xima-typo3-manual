@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -38,22 +37,16 @@ class ManualController extends ActionController
     ) {
     }
 
-    public static function getRootPageUid(int $pageUid): int
-    {
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
-        return $rootline[0]['uid'] ?? 0;
-    }
-
     public function indexAction(): ResponseInterface
     {
         $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
         if (!self::hasManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
-        }
-        if (!$pageId) {
-            $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
-            return new RedirectResponse($uri);
+            if (!$pageId) {
+                $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
+                return new RedirectResponse($uri);
+            }
         }
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
@@ -225,15 +218,17 @@ class ManualController extends ActionController
 
         if ($context === 'backend') {
             $returnUid = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
-            if ($returnUid && $returnUid !== $pageId) {
+            if ($returnUid !== $pageId) {
                 $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.manual.close';
+                $class = 'xima-typo3-manual-close';
             } else {
                 $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview.close';
+                $class = 'xima-typo3-manual-preview-stop';
                 $returnUid = $pageId;
             }
             $closePreviewButton = $buttonBar->makeLinkButton()
                 ->setHref($uriBuilder->buildUriFromRoute('web_layout', ['id' => $returnUid]))
-                ->setClasses('xima-typo3-manual-edit')
+                ->setClasses($class)
                 ->setTitle($this->getLanguageService()->sL($label))
                 ->setShowLabelText(true)
                 ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
@@ -241,8 +236,9 @@ class ManualController extends ActionController
         }
     }
 
-    protected function installAction(): ResponseInterface
+    public static function getRootPageUid(int $pageUid): int
     {
-        return new HtmlResponse('No manual installed');
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        return $rootline[0]['uid'] ?? 0;
     }
 }

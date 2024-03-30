@@ -1,5 +1,8 @@
 const makeIdentifierActive = (href) => {
   const navItem = document.querySelector('nav a[href="' + href + '"]')
+  if (!navItem) {
+    return
+  }
   // remove active states
   document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'))
   document.querySelectorAll('details').forEach(item => item.removeAttribute('open'))

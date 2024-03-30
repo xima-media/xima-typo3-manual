@@ -174,7 +174,13 @@ final class ModifyButtonBarEventListener
             $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
                 ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
                 ->setLabel($title)
-                ->setAttributes(['data-manual-modal' => 'open'])
+                ->setAttributes([
+                    'data-manual-modal' => 'open',
+                    'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                        'xima_typo3_manual',
+                        ['id' => $pid, 'context' => 'backend']
+                    ),
+                ])
                 ->setHref($this->uriBuilder->buildUriFromRoute(
                     'xima_typo3_manual',
                     ['id' => $pid, 'context' => 'iframe']
@@ -191,7 +197,13 @@ final class ModifyButtonBarEventListener
             ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => 0, 'context' => 'iframe']))
             ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
             ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
-            ->setAttributes(['data-manual-modal' => 'open'])
+            ->setAttributes([
+                'data-manual-modal' => 'open',
+                'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                    'xima_typo3_manual',
+                    ['id' => 0, 'context' => 'backend']
+                ),
+            ])
             ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL));
         $dropdown->addItem($dropdownItem);
 

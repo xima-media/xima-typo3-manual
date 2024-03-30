@@ -55,7 +55,6 @@ class ManualGenerator
                     'is_siteroot' => 1,
                     'tsconfig_includes' => 'EXT:xima_typo3_manual/Configuration/TSconfig/Page.tsconfig',
                     'backend_layout' => 'pagets__manualHomepage',
-                    'php_tree_stop' => 1,
                 ],
             ],
             'sys_template' => [
