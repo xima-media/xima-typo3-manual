@@ -38,11 +38,17 @@ class ManualController extends ActionController
     ) {
     }
 
+    public static function getRootPageUid(int $pageUid): int
+    {
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        return $rootline[0]['uid'] ?? 0;
+    }
+
     public function indexAction(): ResponseInterface
     {
         $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
-        if (!$this->hasManualRootPage($pageId)) {
+        if (!self::hasManualRootPage($pageId)) {
             $pageId = $this->getUidOfFirstManualPage();
         }
         if (!$pageId) {
@@ -217,11 +223,18 @@ class ManualController extends ActionController
             ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
         $buttonBar->addButton($showButton);
 
-        if ($context === 'backend' && $GLOBALS['BE_USER']->isAdmin()) {
+        if ($context === 'backend') {
+            $returnUid = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
+            if ($returnUid && $returnUid !== $pageId) {
+                $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.manual.close';
+            } else {
+                $label = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview.close';
+                $returnUid = $pageId;
+            }
             $closePreviewButton = $buttonBar->makeLinkButton()
-                ->setHref($uriBuilder->buildUriFromRoute('web_layout', ['id' => $pageId]))
+                ->setHref($uriBuilder->buildUriFromRoute('web_layout', ['id' => $returnUid]))
                 ->setClasses('xima-typo3-manual-edit')
-                ->setTitle($this->getLanguageService()->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview.close'))
+                ->setTitle($this->getLanguageService()->sL($label))
                 ->setShowLabelText(true)
                 ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
             $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);

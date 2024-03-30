@@ -89,6 +89,9 @@
 			<trans-unit id="button.preview.close">
 				<source>Close preview</source>
 			</trans-unit>
+			<trans-unit id="button.manual.close">
+				<source>Close manual</source>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source>Associated chapters</source>
 			</trans-unit>

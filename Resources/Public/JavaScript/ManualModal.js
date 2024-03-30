@@ -6,6 +6,7 @@ class ManualModal {
       item.addEventListener('click', e => {
         e.preventDefault()
         const url = e.currentTarget.getAttribute('href')
+        const backendUrl = e.currentTarget.getAttribute('data-manual-backend-url')
         Modal.advanced({
           type: Modal.types.iframe,
           title: 'Manual',
@@ -19,7 +20,7 @@ class ManualModal {
               icon: 'actions-window-open',
               btnClass: 'btn-secondary',
               trigger: function() {
-                window.open(url, '_blank').focus();
+                window.open(backendUrl, '_blank').focus();
               }
             },
             {

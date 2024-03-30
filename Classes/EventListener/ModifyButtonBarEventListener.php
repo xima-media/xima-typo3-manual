@@ -101,6 +101,18 @@ final class ModifyButtonBarEventListener
         );
     }
 
+    protected function fetchRecords(string $sql, string $table): array
+    {
+        try {
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
+            $result = $connection->executeQuery($sql)->fetchAllAssociative();
+        } catch (Exception) {
+            return [];
+        }
+
+        return $result;
+    }
+
     protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
     {
         return $this->fetchRecords(
@@ -135,18 +147,6 @@ final class ModifyButtonBarEventListener
             ),
             'pages'
         );
-    }
-
-    protected function fetchRecords(string $sql, string $table): array
-    {
-        try {
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
-            $result = $connection->executeQuery($sql)->fetchAllAssociative();
-        } catch (Exception) {
-            return [];
-        }
-
-        return $result;
     }
 
     public function getDropdownManualButton(
@@ -198,6 +198,20 @@ final class ModifyButtonBarEventListener
         return $dropdown;
     }
 
+    private function getPreviewManualButton(ModifyButtonBarEvent $event, int $pageId): LinkButton
+    {
+        $manualButton = $event->getButtonBar()->makeLinkButton();
+        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
+            'xima_typo3_manual',
+            ['id' => $pageId, 'context' => 'backend']
+        ));
+        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview'));
+        $manualButton->setShowLabelText(true);
+        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
+        $manualButton->setDataAttributes(['manual-preview' => ManualController::getRootPageUid($pageId)]);
+        return $manualButton;
+    }
+
     public function getSmallManualButton(
         ModifyButtonBarEvent $event,
         int $pageId
@@ -210,21 +224,13 @@ final class ModifyButtonBarEventListener
         $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
         $manualButton->setShowLabelText(true);
         $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-        $manualButton->setDataAttributes(['manual-modal' => 'open']);
-        return $manualButton;
-    }
-
-    private function getPreviewManualButton(ModifyButtonBarEvent $event, int $pageId): LinkButton
-    {
-        $manualButton = $event->getButtonBar()->makeLinkButton();
-        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
-            'xima_typo3_manual',
-            ['id' => $pageId, 'context' => 'backend']
-        ));
-        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview'));
-        $manualButton->setShowLabelText(true);
-        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-        $manualButton->setDataAttributes(['manual-preview' => $pageId]);
+        $manualButton->setDataAttributes([
+            'manual-modal' => 'open',
+            'manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
+                'xima_typo3_manual',
+                ['id' => $pageId, 'context' => 'backend']
+            ),
+        ]);
         return $manualButton;
     }
 }

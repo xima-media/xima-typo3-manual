@@ -114,6 +114,10 @@
 				<source />
 				<target>Vorschau schließen</target>
 			</trans-unit>
+			<trans-unit id="button.manual.close">
+				<source />
+				<target>Handbuch schließen</target>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source />
 				<target>Zugehörige Kapitel</target>
