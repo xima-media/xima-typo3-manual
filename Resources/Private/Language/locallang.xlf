@@ -59,11 +59,14 @@
 			<trans-unit id="wizard.mtext.description">
 				<source>Text element with heading and body text</source>
 			</trans-unit>
+			<trans-unit id="msteps">
+				<source>Content Slider</source>
+			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source>Slides</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
-				<source>Content slider</source>
+				<source>Content Slider</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
 				<source>Multistep wizard for content with headline, body text and image</source>

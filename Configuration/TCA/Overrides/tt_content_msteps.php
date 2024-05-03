@@ -6,7 +6,7 @@ ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'Standard',
+        'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps',
         'msteps',
         'content-carousel-item-textandimage',
     ],

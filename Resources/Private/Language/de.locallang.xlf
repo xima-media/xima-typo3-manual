@@ -74,6 +74,10 @@
 				<source />
 				<target>Textelement mit Überschrift und Fließtext</target>
 			</trans-unit>
+			<trans-unit id="msteps">
+				<source />
+				<target>Inhaltsslider</target>
+			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source />
 				<target>Folien</target>
