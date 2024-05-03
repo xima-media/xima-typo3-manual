@@ -1,0 +1,11 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+<div class="element-preview-mtext">
+    <be:link.editRecord uid="{data.uid}" table="tt_content">
+        <f:format.raw>{data.bodytext->f:format.stripTags(allowedTags: '<p><span><strong><u><i><b><img>')}</f:format.raw>
+        <div>
+            <f:for each="{files}" as="file">
+                <f:image maxWidth="100" maxHeight="100" image="{file}"/>
+            </f:for>
+        </div>
+    </be:link.editRecord>
+</div>

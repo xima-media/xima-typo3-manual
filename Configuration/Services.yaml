@@ -11,7 +11,15 @@ services:
   Xima\XimaTypo3Manual\Preview\MtextPreviewRenderer:
     public: true
 
+  Xima\XimaTypo3Manual\Preview\MstepsPreviewRenderer:
+    public: true
+
   Xima\XimaTypo3Manual\EventListener\ModifyButtonBarEventListener:
     tags:
       - name: event.listener
         identifier: 'xima-typo3-manual/event-listener/modify-button-bar'
+
+  Xima\XimaTypo3Manual\EventListener\ContentUsedOnPageEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'xima-typo3-manual/event-listener/content-used-on-page'
