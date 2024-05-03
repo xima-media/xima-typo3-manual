@@ -1,56 +1,73 @@
 class Slider {
-  constructor(sliderContainer) {
-    this.sliderContainer = sliderContainer;
-    this.slides = Array.from(this.sliderContainer.querySelectorAll('.slide'));
-    this.currentSlideIndex = 0;
-
-    this.prevButton = this.sliderContainer.querySelector('.prev-button');
-    this.nextButton = this.sliderContainer.querySelector('.next-button');
-
-    this.prevButton.addEventListener('click', this.showPrevSlide.bind(this));
-    this.nextButton.addEventListener('click', this.showNextSlide.bind(this));
-
-    this.createIndicators();
-    this.showSlide(this.currentSlideIndex);
+  constructor() {
+    this.initializeSlider();
+    this.addEventListeners();
   }
 
-  createIndicators() {
-    const indicatorsContainer = this.sliderContainer.querySelector('.indicators');
+  initializeSlider() {
+    this.containers = Array.from(document.querySelectorAll('.slider-container'));
+    this.slides = this.containers.map(container => Array.from(container.querySelectorAll('.slide')));
+    this.indicators = this.containers.map(container => Array.from(container.querySelectorAll('.indicator')));
+    this.currentSlideIndices = this.slides.map(() => 0);
 
-    this.slides.forEach((slide, index) => {
-      const indicator = document.createElement('span');
-      indicator.classList.add('indicator');
-      indicator.textContent = `${index+1}`;
-      indicator.addEventListener('click', () => this.showSlide(index));
-      indicatorsContainer.appendChild(indicator);
+    this.slides.forEach((slides, containerIndex) => {
+      slides.forEach((slide, index) => {
+        this.setSlideDisplay(slide, index);
+        this.setIndicatorActive(containerIndex, index);
+      });
     });
-    this.indicators = Array.from(this.sliderContainer.querySelectorAll('.indicator'));
   }
 
-  showSlide(index) {
-    this.slides.forEach(slide => slide.style.display = 'none');
-    this.slides[index].style.display = 'flex';
+  setSlideDisplay(slide, index) {
+    slide.style.display = index === 0 ? 'flex' : 'none';
+  }
 
-    this.indicators.forEach((indicator, i) => {
-      if (i === index) {
-        indicator.classList.add('active');
-      } else {
-        indicator.classList.remove('active');
-      }
+  setIndicatorActive(containerIndex, index) {
+    if (index === 0) {
+      this.indicators[containerIndex][index].classList.add('active');
+    }
+  }
+
+  addEventListeners() {
+    this.containers.forEach((container, containerIndex) => {
+      const prevButton = container.querySelector('.prev-button');
+      const nextButton = container.querySelector('.next-button');
+
+      prevButton.addEventListener('click', () => this.showPreviousSlide(containerIndex));
+      nextButton.addEventListener('click', () => this.showNextSlide(containerIndex));
+
+      this.indicators[containerIndex].forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          this.showSlide(containerIndex, index);
+        });
+      });
+    });
+  }
+
+  showSlide(containerIndex, index) {
+    this.currentSlideIndices[containerIndex] = index;
+    this.slides[containerIndex].forEach((slide, i) => {
+      slide.style.display = i === index ? 'flex' : 'none';
     });
 
-    this.currentSlideIndex = index;
+    this.updateIndicators(containerIndex, index);
   }
 
-  showNextSlide() {
-    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
-    this.showSlide(this.currentSlideIndex);
+  updateIndicators(containerIndex, index) {
+    this.indicators[containerIndex].forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === index);
+    });
   }
 
-  showPrevSlide() {
-    this.currentSlideIndex = (this.currentSlideIndex - 1 + this.slides.length) % this.slides.length;
-    this.showSlide(this.currentSlideIndex);
+  showPreviousSlide(containerIndex) {
+    const prevIndex = (this.currentSlideIndices[containerIndex] - 1 + this.slides[containerIndex].length) % this.slides[containerIndex].length;
+    this.showSlide(containerIndex, prevIndex);
+  }
+
+  showNextSlide(containerIndex) {
+    const nextIndex = (this.currentSlideIndices[containerIndex] + 1) % this.slides[containerIndex].length;
+    this.showSlide(containerIndex, nextIndex);
   }
 }
 
-export default new Slider(document.querySelector('.slider-container'));
+export default new Slider();
