@@ -1,0 +1,93 @@
+.slider-container {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.slider {
+    height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-container{
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    height: 750px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.slide {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide.active {
+    display: flex;
+}
+
+.indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #eee;
+    padding: 10px;
+    background-color: #eee;
+}
+
+.indicator {
+    display: flex;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    background-color: #eee;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.indicator.active {
+    background-color: #666;
+    color: #fff;
+}
+
+.prev-button,
+.next-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    color: #666;
+    background: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.prev-button:hover,
+.next-button:hover {
+    background: #666;
+    color: #fff;
+}
+
+.prev-button{
+    left: -25px;
+}
+
+.next-button{
+    right: -25px;
+}
