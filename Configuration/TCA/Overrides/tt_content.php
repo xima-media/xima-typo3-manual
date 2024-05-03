@@ -38,7 +38,7 @@ $tempFields = [
                     'CType' => [
                         'config' => [
                             'default' => 'mtext',
-                            'items' => []
+                            'items' => [],
                         ],
                     ],
                     'colPos' => [
