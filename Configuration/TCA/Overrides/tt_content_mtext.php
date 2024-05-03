@@ -18,7 +18,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mtext'] = 'content-be
 
 $GLOBALS['TCA']['tt_content']['palettes']['mtext'] = [
     'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mtext.palette',
-    'showitem' => 'header,--linebreak--,bodytext,--linebreak--,assets,--linebreak--,imageorient',
+    'showitem' => 'CType,--linebreak--,header,--linebreak--,bodytext,--linebreak--,assets,--linebreak--,imageorient',
 ];
 
 $GLOBALS['TCA']['tt_content']['types']['mtext'] = [
@@ -27,7 +27,7 @@ $GLOBALS['TCA']['tt_content']['types']['mtext'] = [
                 --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tab.manual_relations,
                     --palette--;;manual-relations,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
-                    --palette--;;language,colPos',
+                    --palette--;;language',
     'columnsOverrides' => [
         'bodytext' => [
             'config' => [
