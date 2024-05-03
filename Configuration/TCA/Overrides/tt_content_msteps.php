@@ -29,7 +29,7 @@ $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
                     --palette--;;language,colPos',
     'columnsOverrides' => [
         'tx_ximatypo3manual_children' => [
-            'label' => 'Slides',
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.elements',
         ],
     ],
 ];

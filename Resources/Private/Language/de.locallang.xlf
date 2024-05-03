@@ -74,13 +74,17 @@
 				<source />
 				<target>Textelement mit Überschrift und Fließtext</target>
 			</trans-unit>
+			<trans-unit id="msteps.elements">
+				<source />
+				<target>Folien</target>
+			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
 				<source />
 				<target>Inhaltsslider</target>
 			</trans-unit>
-				<trans-unit id="wizard.msteps.description">
+			<trans-unit id="wizard.msteps.description">
 				<source />
-			<target>Multistep-Wizard für Inhalte mit Überschrift, Fließtext und Bild</target>
+				<target>Multistep-Wizard für Inhalte mit Überschrift, Fließtext und Bild</target>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
@@ -104,7 +108,7 @@
 			</trans-unit>
 			<trans-unit id="tx_ximatypo3manual_children">
 				<source />
-				<target>Kinder</target>
+				<target>Elemente</target>
 			</trans-unit>
 			<trans-unit id="button.dropdown">
 				<source />
