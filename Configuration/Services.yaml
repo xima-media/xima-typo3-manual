@@ -11,9 +11,6 @@ services:
   Xima\XimaTypo3Manual\Preview\MtextPreviewRenderer:
     public: true
 
-  Xima\XimaTypo3Manual\Preview\MstepsPreviewRenderer:
-    public: true
-
   Xima\XimaTypo3Manual\EventListener\ModifyButtonBarEventListener:
     tags:
       - name: event.listener
