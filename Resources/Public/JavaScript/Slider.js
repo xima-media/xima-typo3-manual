@@ -9,23 +9,6 @@ class Slider {
     this.slides = this.containers.map(container => Array.from(container.querySelectorAll('.slide')));
     this.indicators = this.containers.map(container => Array.from(container.querySelectorAll('.indicator')));
     this.currentSlideIndices = this.slides.map(() => 0);
-
-    this.slides.forEach((slides, containerIndex) => {
-      slides.forEach((slide, index) => {
-        this.setSlideDisplay(slide, index);
-        this.setIndicatorActive(containerIndex, index);
-      });
-    });
-  }
-
-  setSlideDisplay(slide, index) {
-    slide.style.display = index === 0 ? 'flex' : 'none';
-  }
-
-  setIndicatorActive(containerIndex, index) {
-    if (index === 0) {
-      this.indicators[containerIndex][index].classList.add('active');
-    }
   }
 
   addEventListeners() {

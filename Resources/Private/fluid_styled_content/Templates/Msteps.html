@@ -4,13 +4,13 @@
     <div class="slider-container">
         <div class="indicators">
             <f:for each="{slides}" as="slide" iteration="iterator">
-                <span class="indicator" data-index="{iterator.index}">{iterator.index}</span>
+                <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.index}</span>
             </f:for>
         </div>
         <div class="slider">
-            <f:for each="{slides}" as="slide">
+            <f:for each="{slides}" as="slide" iteration="iterator">
                 <div class="slide-container">
-                    <div class="slide" id="slide-{slide.data.uid}">
+                    <div class="slide" style="display:{f:if(condition: iterator.isFirst, then: 'flex', else: 'none')};" id="slide-{slide.data.uid}">
                         <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
                     </div>
                 </div>
