@@ -10,11 +10,12 @@
         <div class="slider">
             <f:for each="{slides}" as="slide" iteration="iterator">
                 <div class="slide-container">
-                    <div class="slide" style="display:{f:if(condition: iterator.isFirst, then: 'flex', else: 'none')};" id="slide-{slide.data.uid}">
+                    <div class="slide {f:if(condition: iterator.isFirst, then: 'active')}" id="slide-{slide.data.uid}">
                         <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
                     </div>
                 </div>
             </f:for>
+
         </div>
         <button class="prev-button">&#10094;</button>
         <button class="next-button">&#10095;</button>
