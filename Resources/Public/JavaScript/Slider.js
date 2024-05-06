@@ -29,10 +29,7 @@ class Slider {
 
   showSlide(containerIndex, index) {
     this.currentSlideIndices[containerIndex] = index;
-    this.slides[containerIndex].forEach((slide, i) => {
-      slide.style.display = i === index ? 'flex' : 'none';
-    });
-
+    this.containers[containerIndex].style.setProperty('--slider-current', index);
     this.updateIndicators(containerIndex, index);
   }
 
@@ -43,8 +40,10 @@ class Slider {
   }
 
   showPreviousSlide(containerIndex) {
+
     const prevIndex = (this.currentSlideIndices[containerIndex] - 1 + this.slides[containerIndex].length) % this.slides[containerIndex].length;
     this.showSlide(containerIndex, prevIndex);
+
   }
 
   showNextSlide(containerIndex) {

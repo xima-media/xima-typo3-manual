@@ -1,24 +1,22 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default"/>
 <f:section name="Main">
-    <div class="slider-container">
+    <div class="slider-container" style="--slider-count:{slides->f:count()}; --slider-current:0;">
         <div class="indicators">
+            <button class="prev-button">&#10094;</button>
             <f:for each="{slides}" as="slide" iteration="iterator">
                 <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.index}</span>
             </f:for>
+            <button class="next-button">&#10095;</button>
         </div>
         <div class="slider">
             <f:for each="{slides}" as="slide" iteration="iterator">
-                <div class="slide-container">
-                    <div class="slide {f:if(condition: iterator.isFirst, then: 'active')}" id="slide-{slide.data.uid}">
-                        <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                    </div>
+                <div class="slide {f:if(condition: iterator.isFirst, then: 'active')}" id="slide-{slide.data.uid}">
+                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
                 </div>
             </f:for>
-
         </div>
-        <button class="prev-button">&#10094;</button>
-        <button class="next-button">&#10095;</button>
     </div>
+
 </f:section>
 </html>
