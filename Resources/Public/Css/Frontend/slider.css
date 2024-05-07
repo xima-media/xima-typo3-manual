@@ -10,10 +10,6 @@
     display: grid;
     width: calc(100% * var(--slider-count));
     grid-template-columns: repeat(var(--slider-count), 1fr);
-    place-items: center;
-    place-content: center;
-    align-items: center;
-    justify-content: center;
     transform: translateX(calc((-100% / var(--slider-count)) * var(--slider-current)));
     transition: transform ease-in 0.5s;
 }
@@ -56,6 +52,16 @@
     color: #fff;
 }
 
+.controls{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-radius: 0 0 5px 5px;
+    background-color: #eee;
+}
+
 .prev-button,
 .next-button {
     display: flex;
@@ -80,8 +86,7 @@
 
 @media print {
     .indicators,
-    .prev-button,
-    .next-button {
+    .controls {
         display: none;
     }
 
