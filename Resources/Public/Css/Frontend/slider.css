@@ -37,7 +37,6 @@
     padding: 10px;
     margin: 0 5px;
     color: #333;
-    background-color: #eee;
     border-radius: 50%;
     cursor: pointer;
     text-align: center;
@@ -74,14 +73,14 @@
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    color: #666;
-    font-weight: bold;
+    color: #333;
     text-align: center;
 }
 
 .prev-button:hover,
 .next-button:hover {
-    background-color: #ccc;
+    background-color: #666;
+    color: #fff;
 }
 
 @media print {
