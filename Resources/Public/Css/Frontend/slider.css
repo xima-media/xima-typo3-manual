@@ -93,12 +93,14 @@
     .slider {
         display: flex;
         flex-direction: column;
+        transform: none;
     }
 
     .slide {
         display: block;
         flex: 1;
         width: 100%;
+        padding: 15px;
         border-bottom: 1px dotted #ccc;
     }
 
