@@ -9,7 +9,6 @@ use Xima\XimaTypo3Manual\Model\Repository\GlossaryRepository;
 
 class ContentParser implements SingletonInterface
 {
-
     /**
      * ToDo: Make these configurable
      */
@@ -23,12 +22,12 @@ class ContentParser implements SingletonInterface
         'h3',
         'h4',
         'h5',
-        'h6'
+        'h6',
     ];
     private static array $restrictedParentClasses = [
         'frame-type-mtext',
         'frame-type-mbox',
-        'frame-type-bw_focuspoint_images_svg'
+        'frame-type-bw_focuspoint_images_svg',
     ];
 
     public function __construct(protected GlossaryRepository $glossaryRepository)
@@ -46,7 +45,6 @@ class ContentParser implements SingletonInterface
          * - disable the TYPO3 glossary for certain pages
          * - caching for the glossary entries?
          * - respect case-sensitive and synonyms!
-         *
          */
         $dom = new DOMDocument();
         $dom->preserveWhiteSpace = false;
