@@ -1,0 +1,9 @@
+dfn {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    font-style: normal;
+}
+
+dfn:hover {
+    cursor: help;
+}

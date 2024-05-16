@@ -63,6 +63,8 @@ page {
     focuspoint.inline = 1
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
     manual.inline = 1
+    glossary = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/glossary.css
+    glossary.inline = 1
   }
 
   includeJSFooter {

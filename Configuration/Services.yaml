@@ -15,3 +15,9 @@ services:
     tags:
       - name: event.listener
         identifier: 'xima-typo3-manual/event-listener/modify-button-bar'
+
+  Xima\XimaTypo3Manual\EventListener\AfterCacheableContentIsGeneratedEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'xima-typo3-manual/event-listener/content-modifier'
+        event: TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent

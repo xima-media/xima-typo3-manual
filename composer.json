@@ -15,6 +15,7 @@
 		"php": "^8.1",
 		"ext-dom": "*",
 		"ext-fileinfo": "*",
+		"ext-libxml": "*",
 		"ext-simplexml": "*",
 		"blueways/bw-focuspoint-images": "^4.0",
 		"blueways/bw-icons": "dev-12.x-dev",
