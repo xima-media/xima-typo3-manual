@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -37,12 +38,18 @@ class ManualController extends ActionController
     ) {
     }
 
+    public static function getRootPageUid(int $pageUid): int
+    {
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        return $rootline[0]['uid'] ?? 0;
+    }
+
     public function indexAction(): ResponseInterface
     {
         $context = $this->request->getQueryParams()['context'] ?? 'backend';
         $pageId = (int)($this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0);
         if (!self::hasManualRootPage($pageId)) {
-            $pageId = $this->getUidOfFirstManualPage();
+            $pageId = $this->getUidOfFirstAccessibleManualPage();
             if (!$pageId) {
                 $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
                 return new RedirectResponse($uri);
@@ -85,10 +92,10 @@ class ManualController extends ActionController
         return isset($rootline[0]['doktype']) && $rootline[0]['doktype'] === 701;
     }
 
-    protected function getUidOfFirstManualPage(): int
+    protected function getUidOfFirstAccessibleManualPage(): int
     {
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
-        $page = $qb->select('uid')
+        $pages = $qb->select('uid')
             ->from('pages')
             ->where(
                 $qb->expr()->and(
@@ -97,9 +104,16 @@ class ManualController extends ActionController
                 )
             )
             ->executeQuery()
-            ->fetchOne();
+            ->fetchAllAssociative();
 
-        return $page ?: 0;
+        foreach ($pages as $row) {
+            $access = BackendUtility::readPageAccess($row['uid'], $GLOBALS['BE_USER']->getPagePermsClause(Permission::PAGE_SHOW));
+            if ($access !== false) {
+                return $row['uid'];
+            }
+        }
+
+        return 0;
     }
 
     protected function getLanguageService(): LanguageService
@@ -234,11 +248,5 @@ class ManualController extends ActionController
                 ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
             $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
         }
-    }
-
-    public static function getRootPageUid(int $pageUid): int
-    {
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
-        return $rootline[0]['uid'] ?? 0;
     }
 }
