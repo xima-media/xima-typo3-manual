@@ -5,7 +5,7 @@ namespace Xima\XimaTypo3Manual\Service;
 use DOMDocument;
 use DOMXPath;
 use TYPO3\CMS\Core\SingletonInterface;
-use Xima\XimaTypo3Manual\Model\Repository\GlossaryRepository;
+use Xima\XimaTypo3Manual\Domain\Repository\TermRepository;
 
 class ContentParser implements SingletonInterface
 {
@@ -30,7 +30,7 @@ class ContentParser implements SingletonInterface
         'frame-type-bw_focuspoint_images_svg',
     ];
 
-    public function __construct(protected GlossaryRepository $glossaryRepository)
+    public function __construct(protected TermRepository $termRepository)
     {
     }
 
@@ -52,12 +52,12 @@ class ContentParser implements SingletonInterface
         @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $nodes = $this->fetchDomTags($dom);
-        $glossaryEntries = $this->glossaryRepository->findAll();
+        $glossaryEntries = $this->termRepository->findAll();
 
         foreach ($nodes as $node) {
             foreach ($glossaryEntries as $entry) {
-                $term = $entry['term'];
-                $description = $entry['description'];
+                $term = $entry->getTitle();
+                $description = $entry->getDescription();
 
                 if (strpos($node->nodeValue, $term) !== false) {
                     // Split the node's text around the term
@@ -73,8 +73,8 @@ class ContentParser implements SingletonInterface
                         // If this is not the last part, add a 'dfn' element
                         if ($i < count($parts) - 1) {
                             $newElement = $dom->createElement('dfn', $term);
-                            $newElement->setAttribute('title', $description);
-                            $newElement->setAttribute('class', 'xima-typo3-manual--glossary');
+                            $newElement->setAttribute('data-tooltip', $description);
+                            $newElement->setAttribute('class', 'xima-typo3-manual--glossary simptip-position-top simptip-multiline');
                             $fragment->appendChild($newElement);
                         }
                     }

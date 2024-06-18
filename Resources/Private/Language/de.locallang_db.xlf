@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file source-language="en" datatype="plaintext" original="messages">
+		<body>
+			<trans-unit id="tx_ximatypo3manual_domain_model_term">
+				<source />
+				<target>Handbuch Glossareintrag</target>
+			</trans-unit>
+			<trans-unit id="tx_ximamedia_domain_model_medium.title">
+				<source />
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_ximamedia_domain_model_medium.description">
+				<source />
+				<target>Beschreibung</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

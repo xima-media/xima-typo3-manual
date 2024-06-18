@@ -7,3 +7,53 @@ dfn {
 dfn:hover {
     cursor: help;
 }
+
+/* https://codepen.io/design8383/pen/nBMgEL */
+.xima-typo3-manual--glossary {
+    position: relative;
+    display: inline-block;
+}
+
+.xima-typo3-manual--glossary:before, .xima-typo3-manual--glossary:after {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 999999;
+}
+
+.xima-typo3-manual--glossary:before {
+    content: '';
+    position: absolute;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: #323232;
+    left: 50%;
+    bottom: 100%;
+    margin-bottom: -5px;
+}
+
+.xima-typo3-manual--glossary:after {
+    font-size: 13px;
+    content: attr(data-tooltip);
+    height: auto;
+    width: 250px;
+    padding: 11px;
+    line-height: 19px;
+    white-space: normal;
+    background-color: #323232;
+    color: #ecf0f1;
+    left: 50%;
+    margin-left: -18px;
+    bottom: 100%;
+    margin-bottom: 7px;
+}
+
+.xima-typo3-manual--glossary:hover, .xima-typo3-manual--glossary:focus {
+    background-color: transparent;
+}
+
+.xima-typo3-manual--glossary:hover:before, .xima-typo3-manual--glossary:hover:after, .xima-typo3-manual--glossary:focus:before, .xima-typo3-manual--glossary:focus:after {
+    visibility: visible;
+    opacity: 1;
+}
