@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:tx_ximatypo3manual_domain_model_term',

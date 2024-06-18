@@ -9,7 +9,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class TermRepository extends Repository
 {
-
     public function initializeObject(): void
     {
         /** @var QuerySettingsInterface $querySettings */
