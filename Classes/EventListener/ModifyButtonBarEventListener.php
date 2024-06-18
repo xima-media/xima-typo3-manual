@@ -178,12 +178,12 @@ final class ModifyButtonBarEventListener
                     'data-manual-modal' => 'open',
                     'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
                         'xima_typo3_manual',
-                        ['id' => $pid, 'context' => 'backend']
+                        ['id' => $pid, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
                     ),
                 ])
                 ->setHref($this->uriBuilder->buildUriFromRoute(
                     'xima_typo3_manual',
-                    ['id' => $pid, 'context' => 'iframe']
+                    ['id' => $pid, 'context' => 'iframe', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
                 ));
             $dropdown->addItem($dropdownItem);
         }
@@ -201,7 +201,7 @@ final class ModifyButtonBarEventListener
                 'data-manual-modal' => 'open',
                 'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
                     'xima_typo3_manual',
-                    ['id' => 0, 'context' => 'backend']
+                    ['id' => 0, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
                 ),
             ])
             ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL));
@@ -215,7 +215,7 @@ final class ModifyButtonBarEventListener
         $manualButton = $event->getButtonBar()->makeLinkButton();
         $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
             'xima_typo3_manual',
-            ['id' => $pageId, 'context' => 'backend']
+            ['id' => $pageId, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
         ));
         $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview'));
         $manualButton->setShowLabelText(true);
@@ -231,7 +231,7 @@ final class ModifyButtonBarEventListener
         $manualButton = $event->getButtonBar()->makeLinkButton();
         $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
             'xima_typo3_manual',
-            ['id' => $pageId, 'context' => 'iframe']
+            ['id' => $pageId, 'context' => 'iframe', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
         ));
         $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
         $manualButton->setShowLabelText(true);
@@ -240,7 +240,7 @@ final class ModifyButtonBarEventListener
             'manual-modal' => 'open',
             'manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
                 'xima_typo3_manual',
-                ['id' => $pageId, 'context' => 'backend']
+                ['id' => $pageId, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
             ),
         ]);
         return $manualButton;

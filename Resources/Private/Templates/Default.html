@@ -1,6 +1,24 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
 
 <main style="--link-color:{backendSettings.loginHighlightColor}">
+    <nav class="service-navigation">
+        <nav class="language-menu">
+            <ul>
+                <f:for each="{languageNavigation}" as="language">
+                    <li {f:if(condition: '{language.active}', then: 'class="active"')}>
+                        <div>
+                            <a href="{language.link}" title="{language.title}">
+                                <core:icon identifier="{language.flag}"/> {language.title}
+                            </a>
+                            <core:icon identifier="actions-caret-down" size="small" />
+                        </div>
+                    </li>
+                </f:for>
+            </ul>
+        </nav>
+    </nav>
+
     <section class="section cover">
         <f:if condition="{backendSettings.loginLogo}">
             <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
@@ -89,7 +107,9 @@
         <h2 id="p{page.data.uid}">
             {page.title}
             <f:if condition="{context} == 'frontend'">
-                <a href="#p{page.data.uid}"><core:icon identifier="actions-link" size="small"/></a>
+                <a href="#p{page.data.uid}">
+                    <core:icon identifier="actions-link" size="small"/>
+                </a>
             </f:if>
             <f:if condition="{context} == 'backend'">
                 <be:link.editRecord uid="{page.data.uid}" table="pages" returnUrl="" fields="title" class="edit-record">

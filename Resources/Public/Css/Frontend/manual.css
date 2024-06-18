@@ -339,6 +339,73 @@ blockquote .icon {
     align-content: center;
 }
 
+/* Service navigation */
+.service-navigation {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+}
+
+.language-menu ul {
+    width: auto;
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+
+.language-menu ul li {
+    display: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.language-menu ul li div {
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+}
+
+.language-menu ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.language-menu ul li a:hover {
+    color: var(--link-color, #00f);
+}
+
+.language-menu ul:hover li, .language-menu ul li:nth-child(1) {
+    display: block;
+}
+
+.language-menu span[class*="icon-flags"] {
+    margin-right: .5rem;
+}
+
+.language-menu .icon-actions-caret-down svg {
+    max-width: 15px;
+    max-height: 15px;
+    margin-top: .25rem;
+    margin-left: .5rem;
+}
+
+.language-menu ul li .icon-actions-caret-down {
+    display: none;
+}
+
+.language-menu ul li:nth-child(1) .icon-actions-caret-down {
+    display: block;
+}
+
+.language-menu ul li:nth-child(1) a {
+    pointer-events: none;
+}
+
+/* Print */
+
 @media print {
     .show-for-print {
         display: block;

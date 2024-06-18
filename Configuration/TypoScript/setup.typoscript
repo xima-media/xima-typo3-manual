@@ -51,6 +51,13 @@ page {
 
       # Backend settings
       20 = Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor
+
+      # Language menu
+      30 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
+      30 {
+        languages = auto
+        as = languageNavigation
+      }
     }
   }
 
