@@ -44,7 +44,7 @@ page {
             as = chapters
             table = tt_content
             pidInList.field = uid
-            where = header!=""
+            where = header!="" and colPos=0
           }
         }
       }
@@ -63,11 +63,15 @@ page {
     focuspoint.inline = 1
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
     manual.inline = 1
+    slider = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/slider.css
+    slider.inline = 1
   }
 
   includeJSFooter {
     navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
     navigation.type = module
+    slider = EXT:xima_typo3_manual/Resources/Public/JavaScript/Slider.js
+    slider.type = module
   }
 }
 
@@ -82,6 +86,21 @@ tt_content {
   mtext.templateName = Mtext
   mbox =< tt_content.textmedia
   mbox.templateName = Mbox
+  msteps =< tt_content.textmedia
+  msteps.templateName = Msteps
+  msteps {
+    dataProcessing {
+      30 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+      30 {
+        as = slides
+        table = tt_content
+        pidInList.field = pid
+        where = {#tx_ximatypo3manual_parent}=###uid###
+        markers.uid.field = uid
+        orderBy = sorting
+      }
+    }
+  }
 }
 
 lib.contentElement.variables.context = TEXT
@@ -90,12 +109,41 @@ lib.contentElement.variables.context.override.data = GP:context
 
 lib.dynamicContent = COA
 lib.dynamicContent {
+  10 = LOAD_REGISTER
+  10.colPos.cObject = TEXT
+  10.colPos.cObject {
+    field = colPos
+    ifEmpty.cObject = TEXT
+    ifEmpty.cObject {
+      value.current = 1
+      ifEmpty = 0
+    }
+  }
+
   20 = CONTENT
   20 {
     table = tt_content
     select {
       orderBy = sorting
       pidInList.field = pid
+      where = {#colPos}={register:colPos}
+      where.insertData = 1
+    }
+  }
+
+  90 = RESTORE_REGISTER
+}
+
+lib.singleContent = COA
+lib.singleContent {
+  20 = CONTENT
+  20 {
+    table = tt_content
+    select {
+      pidInList = {field:pid}
+      pidInList.insertData = 1
+      where = {#uid}={field:uid}
+      where.insertData = 1
     }
   }
 }

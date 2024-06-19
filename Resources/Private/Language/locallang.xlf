@@ -59,6 +59,18 @@
 			<trans-unit id="wizard.mtext.description">
 				<source>Text element with heading and body text</source>
 			</trans-unit>
+			<trans-unit id="msteps">
+				<source>Content Slider</source>
+			</trans-unit>
+			<trans-unit id="msteps.elements">
+				<source>Slides</source>
+			</trans-unit>
+			<trans-unit id="wizard.msteps.title">
+				<source>Content Slider</source>
+			</trans-unit>
+			<trans-unit id="wizard.msteps.description">
+				<source>Multistep wizard for content with headline, body text and image</source>
+			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source>Related records</source>
 			</trans-unit>
@@ -73,6 +85,9 @@
 			</trans-unit>
 			<trans-unit id="tx_ximatypo3manual_relation.description">
 				<source>This functionality offers the possibility to link available TYPO3 page types, content elements or other elements, so that when editing such an element in the TYPO3 backend, a quick open function to this section of the manual is enabled via the "Manual" button in the header area.</source>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_children">
+				<source>Elements</source>
 			</trans-unit>
 			<trans-unit id="button.dropdown">
 				<source>Editor manual</source>

@@ -58,6 +58,7 @@ class ManualController extends ActionController
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Slider.js');
         $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
 
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
