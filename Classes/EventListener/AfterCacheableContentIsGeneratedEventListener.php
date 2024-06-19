@@ -11,12 +11,23 @@ final class AfterCacheableContentIsGeneratedEventListener
     {
     }
 
+    /**
+     * @throws \DOMException
+     */
     public function __invoke(AfterCacheableContentIsGeneratedEvent $event): void
     {
-        if ($event->getController()->page['doktype'] === 701) {
+        if ($event->getController()->page['doktype'] === 701 && !$this->parserIsDisabled()) {
             $event->getController()->content = $this->contentParser->process(
                 $event->getController()->content,
             );
         }
+    }
+
+    private function parserIsDisabled(): bool
+    {
+        $setup = $GLOBALS['TSFE']->tmpl->setup;
+        $extensionConfiguration = $setup['plugin.']['tx_ximatypo3manual.'];
+        $settings = $extensionConfiguration['settings.'];
+        return ($settings['disableGlossaryTermParser'] ?? false);
     }
 }

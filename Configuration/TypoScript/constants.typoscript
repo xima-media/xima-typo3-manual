@@ -24,4 +24,17 @@ plugin.tx_bwfocuspointimages {
     partialRootPath = EXT:fluid_styled_content/Resources/Private/Partials/
     layoutRootPath = EXT:fluid_styled_content/Resources/Private/Layouts/
   }
+}a
+
+plugin.tx_ximatypo3manual {
+  persistence {
+    # cat=xima_typo3_manual/settings/a; type=string; label=Default storage PID
+    storagePid =
+  }
+
+  settings {
+    # cat=xima_typo3_manual/settings/p; type=boolean; label=Disable glossary term parser (default: enabled)
+    disableGlossaryTermParser = 0
+  }
 }
+

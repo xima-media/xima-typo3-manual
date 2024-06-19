@@ -116,3 +116,13 @@ page.footerData.1637328467 >
   lib.contentElement.variables.context.value = pdf
   tt_content.bw_focuspoint_images_svg.variables.context.value = pdf
 [END]
+
+plugin.tx_ximatypo3manual {
+  persistence {
+    storagePid = {$plugin.tx_ximatypo3manual.persistence.storagePid}
+  }
+
+  settings {
+    disableGlossaryTermParser = {$plugin.tx_ximatypo3manual.settings.disableGlossaryTermParser}
+  }
+}
