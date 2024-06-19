@@ -35,6 +35,12 @@ plugin.tx_ximatypo3manual {
   settings {
     # cat=xima_typo3_manual/settings/p; type=boolean; label=Disable glossary term parser (default: enabled)
     disableGlossaryTermParser = 0
+    # cat=xima_typo3_manual/settings/p; type=boolean; label=Disable glossary term cache (default: enabled)
+    useGlossaryTermCache = 1
+    # cat=xima_typo3_manual/settings/p; type=string; label=Ignore glossary terms within the following parent tags
+    ignoreParentTags = head,a,img,script,h1,h2,h3,h4,h5,h6,code,pre
+    # cat=xima_typo3_manual/settings/p; type=boolean; label=Only regard glossary terms within the following parent classes
+    restrictedParentClasses = frame-type-mtext,frame-type-mbox,frame-type-bw_focuspoint_images_svg
   }
 }
 

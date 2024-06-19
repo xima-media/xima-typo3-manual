@@ -4,6 +4,7 @@ namespace Xima\XimaTypo3Manual\Service;
 
 use DOMDocument;
 use DOMXPath;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -12,41 +13,22 @@ use Xima\XimaTypo3Manual\Domain\Repository\TermRepository;
 
 class ContentParser implements SingletonInterface
 {
-    /**
-     * ToDo: Make these configurable
-     */
-    private static array $ignoreParentTags = [
-        'head',
-        'a',
-        'img',
-        'script',
-        'h1',
-        'h2',
-        'h3',
-        'h4',
-        'h5',
-        'h6',
-    ];
-    private static array $restrictedParentClasses = [
-        'frame-type-mtext',
-        'frame-type-mbox',
-        'frame-type-bw_focuspoint_images_svg',
-    ];
+    protected array $configuration = [];
 
-    public function __construct(protected TermRepository $termRepository)
+    public function __construct(protected TermRepository $termRepository, protected FrontendInterface $termCache)
     {
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
 
         $setup = $GLOBALS['TSFE']->tmpl->setup;
-        $extensionConfiguration = $setup['plugin.']['tx_ximatypo3manual.'];
+        $this->configuration = $setup['plugin.']['tx_ximatypo3manual.'];
 
         $querySettings->setStoragePageIds(
             GeneralUtility::trimExplode(
                 ',',
-                $extensionConfiguration['persistence.']['storagePid'] ?? ''
+                $this->configuration['persistence.']['storagePid'] ?? ''
             )
         );
-        $querySettings->setRespectStoragePage((bool)$extensionConfiguration['persistence.']['storagePid']);
+        $querySettings->setRespectStoragePage((bool)$this->configuration['persistence.']['storagePid']);
 
         $context = GeneralUtility::makeInstance(Context::class);
         $languageAspect = $context->getAspect('language');
@@ -62,9 +44,7 @@ class ContentParser implements SingletonInterface
     {
         /**
          * ToDo:
-         * - disable the parser globally
          * - disable the TYPO3 glossary for certain pages
-         * - caching for the glossary entries?
          * - respect case-sensitive and synonyms!
          */
         $dom = new DOMDocument();
@@ -73,9 +53,16 @@ class ContentParser implements SingletonInterface
         @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $nodes = $this->fetchDomTags($dom);
-        $glossaryEntries = $this->termRepository->findAll();
+        $glossaryEntries = $this->getTerms();
+        if (empty($glossaryEntries)) {
+            return $html;
+        }
 
         foreach ($nodes as $node) {
+            // Skip empty nodes
+            if (str_replace([" ", "\r", "\n"], '', $node->nodeValue) === '') {
+                continue;
+            }
             foreach ($glossaryEntries as $entry) {
                 $term = $entry->getTitle();
                 $description = $entry->getDescription();
@@ -119,22 +106,45 @@ class ContentParser implements SingletonInterface
         $query = '//text()[(';
 
         // Only regard manual page content elements
-        foreach (self::$restrictedParentClasses as $i => $class) {
+        $restrictedParentClasses = explode(',',$this->configuration['settings.']['restrictedParentClasses']);
+        foreach ($restrictedParentClasses as $i => $class) {
             $query .= "ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' $class ')]";
-            if ($i < count(self::$restrictedParentClasses) - 1) {
+            if ($i < count($restrictedParentClasses) - 1) {
                 $query .= ' or ';
             }
         }
         $query .= ') and not(';
         // Ignore certain parent tags
-        foreach (self::$ignoreParentTags as $i => $tag) {
+        $ignoreParentTags = explode(',',$this->configuration['settings.']['ignoreParentTags']);
+        foreach ($ignoreParentTags as $i => $tag) {
             $query .= "ancestor::$tag";
-            if ($i < count(self::$ignoreParentTags) - 1) {
+            if ($i < count($ignoreParentTags) - 1) {
                 $query .= ' or ';
             }
         }
         $query .= ')]';
 
         return $xpath->query($query);
+    }
+
+    protected function getTerms(): array
+    {
+        if (!($this->configuration['settings.']['useGlossaryTermCache'] ?? true)) {
+            $terms = $this->termRepository->findAll();
+        } else {
+            $cacheIdentifierParts = [
+                'glossarytermcache',
+                $this->configuration['persistence.']['storagePid'],
+                GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId()
+            ];
+            $cacheIdentifier = sha1(implode('-', $cacheIdentifierParts));
+            $terms = $this->termCache->get($cacheIdentifier) ?: [];
+
+            if (empty($this->terms)) {
+                $terms = $this->termRepository->findAll()->toArray();
+                $this->termCache->set($cacheIdentifier, $terms, ['ximatypo3manual_glossarytermcache']);
+            }
+        }
+        return $terms;
     }
 }

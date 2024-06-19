@@ -4,6 +4,11 @@ services:
     autoconfigure: true
     public: false
 
+  cache.ximatypo3manual_glossarytermcache:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: [ '@TYPO3\CMS\Core\Cache\CacheManager', 'getCache' ]
+    arguments: [ 'ximatypo3manual_glossarytermcache' ]
+
   Xima\XimaTypo3Manual\:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'
@@ -21,3 +26,7 @@ services:
       - name: event.listener
         identifier: 'xima-typo3-manual/event-listener/content-modifier'
         event: TYPO3\CMS\Frontend\Event\AfterCacheableContentIsGeneratedEvent
+
+  Xima\XimaTypo3Manual\Service\ContentParser:
+    arguments:
+      $termCache: '@cache.ximatypo3manual_glossarytermcache'

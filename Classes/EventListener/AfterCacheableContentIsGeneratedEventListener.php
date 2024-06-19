@@ -28,6 +28,6 @@ final class AfterCacheableContentIsGeneratedEventListener
         $setup = $GLOBALS['TSFE']->tmpl->setup;
         $extensionConfiguration = $setup['plugin.']['tx_ximatypo3manual.'];
         $settings = $extensionConfiguration['settings.'];
-        return ($settings['disableGlossaryTermParser'] ?? false);
+        return $settings['disableGlossaryTermParser'] ?? false;
     }
 }

@@ -124,5 +124,8 @@ plugin.tx_ximatypo3manual {
 
   settings {
     disableGlossaryTermParser = {$plugin.tx_ximatypo3manual.settings.disableGlossaryTermParser}
+    useGlossaryTermCache = {$plugin.tx_ximatypo3manual.settings.useGlossaryTermCache}
+    ignoreParentTags = {$plugin.tx_ximatypo3manual.settings.ignoreParentTags}
+    restrictedParentClasses = {$plugin.tx_ximatypo3manual.settings.restrictedParentClasses}
   }
 }
