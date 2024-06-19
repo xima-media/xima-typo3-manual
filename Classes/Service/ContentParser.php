@@ -4,7 +4,10 @@ namespace Xima\XimaTypo3Manual\Service;
 
 use DOMDocument;
 use DOMXPath;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use Xima\XimaTypo3Manual\Domain\Repository\TermRepository;
 
 class ContentParser implements SingletonInterface
@@ -32,6 +35,24 @@ class ContentParser implements SingletonInterface
 
     public function __construct(protected TermRepository $termRepository)
     {
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+
+        $setup = $GLOBALS['TSFE']->tmpl->setup;
+        $extensionConfiguration = $setup['plugin.']['tx_ximatypo3manual.'];
+
+        $querySettings->setStoragePageIds(
+            GeneralUtility::trimExplode(
+                ',',
+                $extensionConfiguration['persistence.']['storagePid'] ?? ''
+            )
+        );
+        $querySettings->setRespectStoragePage((bool)$extensionConfiguration['persistence.']['storagePid']);
+
+        $context = GeneralUtility::makeInstance(Context::class);
+        $languageAspect = $context->getAspect('language');
+        $querySettings->setLanguageAspect($languageAspect);
+        $querySettings->setRespectSysLanguage(true);
+        $this->termRepository->setDefaultQuerySettings($querySettings);
     }
 
     /**
