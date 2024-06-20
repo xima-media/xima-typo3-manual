@@ -25,7 +25,7 @@ return [
         '0' => [
             'showitem' => '
          --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-            title, description,
+            title, synonyms, description, link,
          --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
             hidden,
       ',
@@ -43,6 +43,14 @@ return [
                 'required' => true,
             ],
         ],
+        'synonyms' => [
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:tx_ximatypo3manual_domain_model_term.synonyms',
+            'config' => [
+                'type' => 'input',
+                'size' => 40,
+                'eval' => 'trim',
+            ],
+        ],
         'description' => [
             'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:tx_ximatypo3manual_domain_model_term.description',
             'config' => [
@@ -51,6 +59,18 @@ return [
                 'cols' => 40,
                 'max' => 1000,
                 'eval' => 'trim',
+            ],
+        ],
+        'link' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang_db.xlf:tx_ximatypo3manual_domain_model_term.link',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputLink',
+                'size' => 30,
+                'max' => 255,
+                'eval' => 'trim',
+                'softref' => 'typolink',
             ],
         ],
         'sys_language_uid' => [

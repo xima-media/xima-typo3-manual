@@ -10,6 +10,8 @@ class Term extends AbstractEntity
 {
     protected string $title = '';
     protected string $description = '';
+    protected string $synonyms = '';
+    protected string $link = '';
 
     public function getTitle(): string
     {
@@ -29,5 +31,25 @@ class Term extends AbstractEntity
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getSynonyms(): string
+    {
+        return $this->synonyms;
+    }
+
+    public function setSynonyms(string $synonyms): void
+    {
+        $this->synonyms = $synonyms;
+    }
+
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
     }
 }

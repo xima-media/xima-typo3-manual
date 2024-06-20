@@ -12,6 +12,12 @@
 			<trans-unit id="tx_ximatypo3manual_domain_model_term.description">
 				<source>Description</source>
 			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_domain_model_term.synonyms">
+				<source>Synonyms</source>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_domain_model_term.link">
+				<source>Link</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -14,6 +14,14 @@
 				<source />
 				<target>Beschreibung</target>
 			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_domain_model_term.synonyms">
+				<source />
+				<target>Synonyme</target>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_domain_model_term.link">
+				<source />
+				<target>Link</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
