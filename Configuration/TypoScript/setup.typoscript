@@ -63,6 +63,8 @@ page {
     focuspoint.inline = 1
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
     manual.inline = 1
+    glossary = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/glossary.css
+    glossary.inline = 1
   }
 
   includeJSFooter {
@@ -114,3 +116,16 @@ page.footerData.1637328467 >
   lib.contentElement.variables.context.value = pdf
   tt_content.bw_focuspoint_images_svg.variables.context.value = pdf
 [END]
+
+plugin.tx_ximatypo3manual {
+  persistence {
+    storagePid = {$plugin.tx_ximatypo3manual.persistence.storagePid}
+  }
+
+  settings {
+    disableGlossaryTermParser = {$plugin.tx_ximatypo3manual.settings.disableGlossaryTermParser}
+    useGlossaryTermCache = {$plugin.tx_ximatypo3manual.settings.useGlossaryTermCache}
+    ignoreParentTags = {$plugin.tx_ximatypo3manual.settings.ignoreParentTags}
+    restrictedParentClasses = {$plugin.tx_ximatypo3manual.settings.restrictedParentClasses}
+  }
+}
