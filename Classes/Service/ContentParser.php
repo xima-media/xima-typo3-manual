@@ -17,24 +17,11 @@ class ContentParser implements SingletonInterface
 
     public function __construct(protected TermRepository $termRepository, protected FrontendInterface $termCache)
     {
-        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
-
         $setup = $GLOBALS['TSFE']->tmpl->setup;
+        if (!isset($setup['plugin.']['tx_ximatypo3manual.'])) {
+            return;
+        }
         $this->configuration = $setup['plugin.']['tx_ximatypo3manual.'];
-
-        $querySettings->setStoragePageIds(
-            GeneralUtility::trimExplode(
-                ',',
-                $this->configuration['persistence.']['storagePid'] ?? ''
-            )
-        );
-        $querySettings->setRespectStoragePage((bool)$this->configuration['persistence.']['storagePid']);
-
-        $context = GeneralUtility::makeInstance(Context::class);
-        $languageAspect = $context->getAspect('language');
-        $querySettings->setLanguageAspect($languageAspect);
-        $querySettings->setRespectSysLanguage(true);
-        $this->termRepository->setDefaultQuerySettings($querySettings);
     }
 
     /**
@@ -45,7 +32,7 @@ class ContentParser implements SingletonInterface
         /**
          * ToDo:
          * - disable the TYPO3 glossary for certain pages
-         * - respect case-sensitive and synonyms!
+         * - maybe respect case-sensitive
          */
         $dom = new DOMDocument();
         $dom->preserveWhiteSpace = false;
@@ -60,38 +47,27 @@ class ContentParser implements SingletonInterface
 
         foreach ($nodes as $node) {
             // Skip empty nodes
-            if (str_replace([" ", "\r", "\n"], '', $node->nodeValue) === '') {
+            if (str_replace([' ', "\r", "\n", "\t"], '', $node->nodeValue) === '') {
                 continue;
             }
+
+            // Collect all terms that match the node's content
+            $matchedTerms = [];
             foreach ($glossaryEntries as $entry) {
-                $term = $entry->getTitle();
-                $description = $entry->getDescription();
-
-                if (strpos($node->nodeValue, $term) !== false) {
-                    // Split the node's text around the term
-                    $parts = explode($term, $node->nodeValue);
-
-                    // Create a new fragment to hold the new nodes
-                    $fragment = $dom->createDocumentFragment();
-
-                    foreach ($parts as $i => $part) {
-                        // Add the text part to the fragment
-                        $fragment->appendChild($dom->createTextNode($part));
-
-                        // If this is not the last part, add a 'dfn' element
-                        if ($i < count($parts) - 1) {
-                            $newElement = $dom->createElement('dfn', $term);
-                            $newElement->setAttribute('data-tooltip', $description);
-                            $newElement->setAttribute('class', 'xima-typo3-manual--glossary simptip-position-top simptip-multiline');
-                            $fragment->appendChild($newElement);
+                $search = $entry->getTitle();
+                if (str_contains($node->nodeValue, $search)) {
+                    $matchedTerms[$search] = $entry;
+                }
+                if ($entry->getSynonyms() !== '') {
+                    foreach (GeneralUtility::trimExplode(',', $entry->getSynonyms()) as $synonym) {
+                        if (str_contains($node->nodeValue, $synonym)) {
+                            $matchedTerms[$synonym] = $entry;
                         }
                     }
-
-                    // Replace the original node with the fragment
-                    if ($node->parentNode) {
-                        $node->parentNode->replaceChild($fragment, $node);
-                    }
                 }
+            }
+            if (!empty($matchedTerms)) {
+                $this->checkNodeByMatchedTerms($dom, $node, $matchedTerms);
             }
         }
 
@@ -106,7 +82,7 @@ class ContentParser implements SingletonInterface
         $query = '//text()[(';
 
         // Only regard manual page content elements
-        $restrictedParentClasses = explode(',',$this->configuration['settings.']['restrictedParentClasses']);
+        $restrictedParentClasses = explode(',', $this->configuration['settings.']['restrictedParentClasses']);
         foreach ($restrictedParentClasses as $i => $class) {
             $query .= "ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' $class ')]";
             if ($i < count($restrictedParentClasses) - 1) {
@@ -115,7 +91,7 @@ class ContentParser implements SingletonInterface
         }
         $query .= ') and not(';
         // Ignore certain parent tags
-        $ignoreParentTags = explode(',',$this->configuration['settings.']['ignoreParentTags']);
+        $ignoreParentTags = explode(',', $this->configuration['settings.']['ignoreParentTags']);
         foreach ($ignoreParentTags as $i => $tag) {
             $query .= "ancestor::$tag";
             if ($i < count($ignoreParentTags) - 1) {
@@ -129,13 +105,29 @@ class ContentParser implements SingletonInterface
 
     protected function getTerms(): array
     {
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+
+        $querySettings->setStoragePageIds(
+            GeneralUtility::trimExplode(
+                ',',
+                $this->configuration['persistence.']['storagePid'] ?? ''
+            )
+        );
+        $querySettings->setRespectStoragePage((bool)$this->configuration['persistence.']['storagePid']);
+
+        $context = GeneralUtility::makeInstance(Context::class);
+        $languageAspect = $context->getAspect('language');
+        $querySettings->setLanguageAspect($languageAspect);
+        $querySettings->setRespectSysLanguage(true);
+        $this->termRepository->setDefaultQuerySettings($querySettings);
+
         if (!($this->configuration['settings.']['useGlossaryTermCache'] ?? true)) {
             $terms = $this->termRepository->findAll();
         } else {
             $cacheIdentifierParts = [
                 'glossarytermcache',
                 $this->configuration['persistence.']['storagePid'],
-                GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId()
+                GeneralUtility::makeInstance(Context::class)->getAspect('language')->getId(),
             ];
             $cacheIdentifier = sha1(implode('-', $cacheIdentifierParts));
             $terms = $this->termCache->get($cacheIdentifier) ?: [];
@@ -146,5 +138,44 @@ class ContentParser implements SingletonInterface
             }
         }
         return $terms;
+    }
+
+    protected function checkNodeByMatchedTerms(DOMDocument $dom, mixed &$node, array $matchedTerms): void
+    {
+        // Split the node's text around the matched terms
+        $escapedSeparators = array_map('preg_quote', array_keys($matchedTerms));
+        $pattern = '/(' . implode('|', $escapedSeparators) . ')/i';
+        preg_match_all($pattern, $node->nodeValue, $parts, PREG_OFFSET_CAPTURE);
+
+        // Create a new fragment to hold the new nodes
+        $fragment = $dom->createDocumentFragment();
+
+        $lastPosition = 0;
+        foreach ($parts[0] as $part) {
+            $position = $part[1];
+            $matchedTerm = $part[0];
+
+            // add segment before the matched term
+            if ($position > $lastPosition) {
+                $fragment->appendChild($dom->createTextNode(substr($node->nodeValue, $lastPosition, $position - $lastPosition)));
+            }
+
+            // Add matched term
+            $newElement = $dom->createElement('dfn', $matchedTerm);
+            $newElement->setAttribute('data-tooltip', $matchedTerms[$matchedTerm]->getDescription());
+            $newElement->setAttribute('class', 'xima-typo3-manual--glossary');
+            $fragment->appendChild($newElement);
+            $lastPosition = $position + strlen($matchedTerm);
+        }
+
+        // add segment after the last matched term
+        if ($lastPosition < strlen($node->nodeValue)) {
+            $fragment->appendChild($dom->createTextNode(substr($node->nodeValue, $lastPosition)));
+        }
+
+        // Replace the original node with the fragment
+        if ($node->parentNode) {
+            $node->parentNode->replaceChild($fragment, $node);
+        }
     }
 }
