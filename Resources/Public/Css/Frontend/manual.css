@@ -263,7 +263,7 @@ nav a.active {
  */
 section.cover {
     display: grid;
-    justify-content: center;
+    justify-items: center;
     padding: calc(2 * var(--space)) 0;
     gap: calc(2 * var(--space));
 }
