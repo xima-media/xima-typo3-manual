@@ -40,10 +40,8 @@ class Slider {
   }
 
   showPreviousSlide(containerIndex) {
-
     const prevIndex = (this.currentSlideIndices[containerIndex] - 1 + this.slides[containerIndex].length) % this.slides[containerIndex].length;
     this.showSlide(containerIndex, prevIndex);
-
   }
 
   showNextSlide(containerIndex) {
