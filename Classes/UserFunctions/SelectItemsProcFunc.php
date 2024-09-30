@@ -45,7 +45,7 @@ class SelectItemsProcFunc
             if (in_array($table, $tablesToSkip, true)) {
                 continue;
             }
-            foreach ($GLOBALS['TCA'][$table]['types'] as $type => $typeConfig) {
+            foreach ($GLOBALS['TCA'][$table]['types'] ?? [] as $type => $typeConfig) {
                 $label = self::getLabelForTableAndType($table, $type);
                 $icon = self::getIconForTableAndType($table, $type);
                 $typeCount = count($GLOBALS['TCA'][$table]['types']);
