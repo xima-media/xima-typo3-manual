@@ -1,0 +1,12 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+<div class="element-preview-mtext">
+    <be:link.editRecord uid="{data.uid}" table="tt_content">
+        <f:if condition="{steps->f:count()}">
+            <ol>
+                <f:for each="{steps}" as="step">
+                    <li>{step.header}</li>
+                </f:for>
+            </ol>
+        </f:if>
+    </be:link.editRecord>
+</div>

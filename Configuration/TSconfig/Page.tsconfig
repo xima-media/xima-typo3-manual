@@ -21,6 +21,15 @@ mod.wizards.newContentElement.wizardItems {
         }
       }
 
+      tt_content_msteps {
+        iconIdentifier = content-carousel-item-textandimage
+        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.msteps.title
+        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.msteps.description
+        tt_content_defValues {
+          CType = msteps
+        }
+      }
+
       bw_focuspoint_images_svg {
         iconIdentifier = bw_focuspoint_images_svg
         title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title
@@ -31,7 +40,7 @@ mod.wizards.newContentElement.wizardItems {
       }
     }
 
-    show = tt_content_mtext,tt_content_mbox,bw_focuspoint_images_svg
+    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,bw_focuspoint_images_svg
   }
 
   common.show =
@@ -44,10 +53,11 @@ mod.wizards.newContentElement.wizardItems {
   ext-news.show =
 }
 
-TCEFORM.tt_content.CType.removeItems >
+TCEFORM.tt_content.CType.keepItems = mtext,mbox,msteps,bw_focuspoint_images_svg
 TCEFORM.tt_content.assets.config.maxitems = 1
 TCEFORM.tt_content.imageorient.disabled = 0
 TCEFORM.tt_content.imageorient.removeItems = 1,2,9,10,17,18
+TCEFORM.tt_content.colPos.addItems.1 = Content Slider
 
 mod.tx_bwfocuspointimages.settings.fields {
 

@@ -1,0 +1,30 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Default"/>
+    <f:section name="Main">
+        <div class="slider-container" style="--slider-count:{slides->f:count()}; --slider-current:0;">
+            <div class="indicators">
+                <f:for each="{slides}" as="slide" iteration="iterator">
+                    <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.cycle}</span>
+                </f:for>
+            </div>
+            <div class="slider">
+                <f:for each="{slides}" as="slide" iteration="iterator">
+                    <div class="slide {f:if(condition: iterator.isFirst, then: 'active')}" id="slide-{slide.data.uid}">
+                        <div class="slide_print">
+                            <span class="slide_indicator">{iterator.cycle}</span>
+                            <span class="slide_line"></span>
+                        </div>
+
+                        <div class="slide_content">
+                            <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                        </div>
+                    </div>
+                </f:for>
+            </div>
+            <div class="controls">
+                <button class="prev-button"><core:icon identifier="actions-chevron-left" size="small" /></button>
+                <button class="next-button"><core:icon identifier="actions-chevron-right" size="small" /></button>
+            </div>
+        </div>
+    </f:section>
+</html>

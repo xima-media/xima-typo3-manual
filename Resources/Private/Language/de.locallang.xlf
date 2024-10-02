@@ -74,6 +74,22 @@
 				<source />
 				<target>Textelement mit Überschrift und Fließtext</target>
 			</trans-unit>
+			<trans-unit id="msteps">
+				<source />
+				<target>Inhaltsslider</target>
+			</trans-unit>
+			<trans-unit id="msteps.elements">
+				<source />
+				<target>Schritte</target>
+			</trans-unit>
+			<trans-unit id="wizard.msteps.title">
+				<source />
+				<target>Inhaltsslider</target>
+			</trans-unit>
+			<trans-unit id="wizard.msteps.description">
+				<source />
+				<target>Slider für Inhalte mit Überschrift, Fließtext und Bild</target>
+			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
 				<target>Verlinkte Elemente</target>
@@ -93,6 +109,10 @@
 			<trans-unit id="tx_ximatypo3manual_relation.description">
 				<source />
 				<target>Diese Funktionalität bietet die Möglichkeit verfügbare TYPO3 Seitentypen, Inhaltselemente oder weitere Elemente zu verlinken, damit bei der Bearbeitung eines solchen Elements im TYPO3 Backend über den "Handbuch" Button im Kopfbereich eine Schnell Öffnen Funktion auf diesen Abschnitt des Handbuchs ermöglicht wird.</target>
+			</trans-unit>
+			<trans-unit id="tx_ximatypo3manual_children">
+				<source />
+				<target>Elemente</target>
 			</trans-unit>
 			<trans-unit id="button.dropdown">
 				<source />
