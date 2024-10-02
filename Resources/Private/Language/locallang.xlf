@@ -66,10 +66,10 @@
 				<source>Slides</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
-				<source>Content Slider</source>
+				<source>Slider element</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
-				<source>Multistep wizard for content with headline, body text and image</source>
+				<source>Slider that showcases content elements in individual slides</source>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source>Related records</source>

@@ -84,11 +84,11 @@
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
 				<source />
-				<target>Inhaltsslider</target>
+				<target>Slider</target>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
 				<source />
-				<target>Slider für Inhalte mit Überschrift, Fließtext und Bild</target>
+				<target>Zeigt Inhaltselemente in einzelnen Schritten an</target>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
