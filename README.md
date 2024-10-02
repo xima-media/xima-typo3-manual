@@ -4,7 +4,10 @@
 
 # TYPO3 extension `xima_typo3_manual`
 
+![Latest version](https://typo3-badges.dev/badge/xima_typo3_manual/version/shields.svg)
 [![Supported TYPO3 versions](https://typo3-badges.dev/badge/xima_typo3_manual/typo3/shields.svg)](https://extensions.typo3.org/extension/xima_typo3_manual)
+![Total downloads](https://typo3-badges.dev/badge/xima_typo3_manual/downloads/shields.svg)
+[![Composer](https://typo3-badges.dev/badge/xima_typo3_manual/composer/shields.svg)](https://packagist.org/packages/xima/xima-typo3-manual)
 
 </div>
 
