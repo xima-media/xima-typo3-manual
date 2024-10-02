@@ -6,7 +6,7 @@
     overflow: hidden;
 }
 
-.slider {
+.slider-container .slider {
     display: grid;
     width: calc(100% * var(--slider-count));
     grid-template-columns: repeat(var(--slider-count), 1fr);
@@ -14,11 +14,11 @@
     transition: transform ease-in 0.5s;
 }
 
-.slide {
+.slider-container .slide {
     padding: 40px;
 }
 
-.indicators {
+.slider-container .indicators {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +28,7 @@
     background-color: var(--link-color, #eee);
 }
 
-.indicator {
+.slider-container .indicator {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,21 +42,21 @@
     text-align: center;
 }
 
-.slide_print{
+.slider-container .slide_print{
     display: none;
 }
 
 
-.indicator:hover {
+.slider-container .indicator:hover {
     background: #ccc;
 }
 
-.indicator.active {
+.slider-container .indicator.active {
     background-color: #666;
     color: #fff;
 }
 
-.controls{
+.slider-container .controls{
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -66,8 +66,7 @@
     background-color: var(--link-color, #eee);
 }
 
-.prev-button,
-.next-button {
+.slider-container .controls button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,8 +81,12 @@
     text-align: center;
 }
 
-.prev-button:hover,
-.next-button:hover {
+.slider-container .controls button svg {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.slider-container .controls button:hover {
     background-color: #666;
     color: #fff;
 }
