@@ -31,8 +31,6 @@ class Navigation {
         setTimeout(() => makeIdentifierActive(href), 50)
       })
     })
-
-    this.languageMenu()
   }
 
   bindObserver() {
@@ -50,15 +48,6 @@ class Navigation {
       }
     });
   }, {rootMargin: '-5%', threshold: 1});
-
-  languageMenu() {
-    document.querySelectorAll(".language-menu ul").forEach(function (menu) {
-      const active = menu.querySelector('li.active')
-      if (active) {
-        menu.insertBefore(active, menu.firstChild)
-      }
-    })
-  }
 
 }
 
