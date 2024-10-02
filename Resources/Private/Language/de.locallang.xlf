@@ -80,7 +80,7 @@
 			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source />
-				<target>Folien</target>
+				<target>Schritte</target>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
 				<source />
@@ -88,7 +88,7 @@
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
 				<source />
-				<target>Multistep-Wizard für Inhalte mit Überschrift, Fließtext und Bild</target>
+				<target>Slider für Inhalte mit Überschrift, Fließtext und Bild</target>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
