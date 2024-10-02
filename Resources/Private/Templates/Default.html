@@ -1,23 +1,37 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
-{namespace core = TYPO3\CMS\Core\ViewHelpers}
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+
+<f:if condition="{languageNavigation->f:count()} > 1">
+    <nav class="language-menu">
+        <ul>
+            <f:for each="{languageNavigation}" as="language">
+                <f:if condition="{language.active}">
+                    <li>
+                        <a href="{language.link}" title="{language.title}">
+                            <core:icon identifier="{language.flag}" />
+                            {language.title}
+                            <core:icon identifier="actions-caret-down" size="small" />
+                        </a>
+                        <ul>
+                            <f:for each="{languageNavigation}" as="language2">
+                                <f:if condition="!{language2.active}">
+                                    <li>
+                                        <a href="{language2.link}" title="{language2.title}">
+                                            <core:icon identifier="{language2.flag}" />
+                                            {language2.title}
+                                        </a>
+                                    </li>
+                                </f:if>
+                            </f:for>
+                        </ul>
+                    </li>
+                </f:if>
+            </f:for>
+        </ul>
+    </nav>
+</f:if>
 
 <main style="--link-color:{backendSettings.loginHighlightColor}">
-    <nav class="service-navigation">
-        <nav class="language-menu">
-            <ul>
-                <f:for each="{languageNavigation}" as="language">
-                    <li {f:if(condition: '{language.active}', then: 'class="active"')}>
-                        <div>
-                            <a href="{language.link}" title="{language.title}">
-                                <core:icon identifier="{language.flag}"/> {language.title}
-                            </a>
-                            <core:icon identifier="actions-caret-down" size="small" />
-                        </div>
-                    </li>
-                </f:for>
-            </ul>
-        </nav>
-    </nav>
 
     <section class="section cover">
         <f:if condition="{backendSettings.loginLogo}">
