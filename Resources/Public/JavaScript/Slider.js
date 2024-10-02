@@ -1,53 +1,46 @@
 class Slider {
-  constructor() {
-    this.initializeSlider();
+  constructor(container) {
+    this.container = container;
+
+    this.currentSlideIndex = 0;
+    this.slideCount = container.querySelectorAll('.slide').length;
     this.addEventListeners();
   }
 
-  initializeSlider() {
-    this.containers = Array.from(document.querySelectorAll('.slider-container'));
-    this.slides = this.containers.map(container => Array.from(container.querySelectorAll('.slide')));
-    this.indicators = this.containers.map(container => Array.from(container.querySelectorAll('.indicator')));
-    this.currentSlideIndices = this.slides.map(() => 0);
-  }
-
   addEventListeners() {
-    this.containers.forEach((container, containerIndex) => {
-      const prevButton = container.querySelector('.prev-button');
-      const nextButton = container.querySelector('.next-button');
+    this.container.querySelector('.prev-button').addEventListener('click', this.showPreviousSlide.bind(this));
+    this.container.querySelector('.next-button').addEventListener('click', this.showNextSlide.bind(this));
 
-      prevButton.addEventListener('click', () => this.showPreviousSlide(containerIndex));
-      nextButton.addEventListener('click', () => this.showNextSlide(containerIndex));
-
-      this.indicators[containerIndex].forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-          this.showSlide(containerIndex, index);
-        });
+    this.container.querySelectorAll('.indicator').forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        this.showSlide(index);
       });
     });
   }
 
-  showSlide(containerIndex, index) {
-    this.currentSlideIndices[containerIndex] = index;
-    this.containers[containerIndex].style.setProperty('--slider-current', index);
-    this.updateIndicators(containerIndex, index);
+  showSlide(index) {
+    this.currentSlideIndex = index;
+    this.container.style.setProperty('--slider-current', index);
+    this.updateIndicators(index);
   }
 
-  updateIndicators(containerIndex, index) {
-    this.indicators[containerIndex].forEach((indicator, i) => {
+  updateIndicators(index) {
+    this.container.querySelectorAll('.indicator').forEach((indicator, i) => {
       indicator.classList.toggle('active', i === index);
     });
   }
 
-  showPreviousSlide(containerIndex) {
-    const prevIndex = (this.currentSlideIndices[containerIndex] - 1 + this.slides[containerIndex].length) % this.slides[containerIndex].length;
-    this.showSlide(containerIndex, prevIndex);
+  showPreviousSlide() {
+    const prevIndex = (this.currentSlideIndex - 1 + this.slideCount) % this.slideCount;
+    this.showSlide(prevIndex);
   }
 
-  showNextSlide(containerIndex) {
-    const nextIndex = (this.currentSlideIndices[containerIndex] + 1) % this.slides[containerIndex].length;
-    this.showSlide(containerIndex, nextIndex);
+  showNextSlide() {
+    const nextIndex = (this.currentSlideIndex + 1) % this.slideCount;
+    this.showSlide(nextIndex);
   }
 }
 
-export default new Slider();
+document.querySelectorAll('.slider-container').forEach(container => {
+  new Slider(container);
+});
