@@ -25,7 +25,7 @@
     padding: 10px;
     border-bottom: 1px solid #ccc;
     border-radius: 5px 5px 0 0;
-    background-color: var(--link-color, #eee);
+    background-color: #eee;
 }
 
 .slider-container .indicator {
@@ -52,7 +52,7 @@
 }
 
 .slider-container .indicator.active {
-    background-color: #666;
+    background-color: var(--link-color, #eee);
     color: #fff;
 }
 
@@ -63,14 +63,13 @@
     padding: 10px;
     border-top: 1px solid #ccc;
     border-radius: 0 0 5px 5px;
-    background-color: var(--link-color, #eee);
+    background-color: #eee;
 }
 
 .slider-container .controls button {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
     width: 30px;
     height: 30px;
     margin: 0 5px;
@@ -87,7 +86,7 @@
 }
 
 .slider-container .controls button:hover {
-    background-color: #666;
+    background-color: var(--link-color, #666);
     color: #fff;
 }
 
