@@ -345,6 +345,7 @@ blockquote .icon {
     position: fixed;
     right: .5rem;
     top: .5rem;
+    z-index: 2;
 }
 
 .language-menu ul, .language-menu ul li {
