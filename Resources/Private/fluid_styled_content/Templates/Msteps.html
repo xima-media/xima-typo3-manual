@@ -2,10 +2,14 @@
     <f:layout name="Default"/>
     <f:section name="Main">
         <div class="slider-container" style="--slider-count:{slides->f:count()}; --slider-current:0;">
-            <div class="indicators">
-                <f:for each="{slides}" as="slide" iteration="iterator">
-                    <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.cycle}</span>
-                </f:for>
+            <div class="slider-controls">
+                <button class="prev-button"><core:icon identifier="actions-chevron-left" size="small" /></button>
+                <div class="indicators">
+                    <f:for each="{slides}" as="slide" iteration="iterator">
+                        <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.cycle}</span>
+                    </f:for>
+                </div>
+                <button class="next-button"><core:icon identifier="actions-chevron-right" size="small" /></button>
             </div>
             <div class="slider">
                 <f:for each="{slides}" as="slide" iteration="iterator">
@@ -21,8 +25,13 @@
                     </div>
                 </f:for>
             </div>
-            <div class="controls">
+            <div class="slider-controls slider-controls--bottom">
                 <button class="prev-button"><core:icon identifier="actions-chevron-left" size="small" /></button>
+                <div class="indicators">
+                    <f:for each="{slides}" as="slide" iteration="iterator">
+                        <span class="indicator {f:if(condition: iterator.isFirst, then: 'active')}" data-index="{iterator.index}">{iterator.cycle}</span>
+                    </f:for>
+                </div>
                 <button class="next-button"><core:icon identifier="actions-chevron-right" size="small" /></button>
             </div>
         </div>
