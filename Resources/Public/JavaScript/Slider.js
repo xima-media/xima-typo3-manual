@@ -8,12 +8,14 @@ class Slider {
   }
 
   addEventListeners() {
-    this.container.querySelector('.prev-button').addEventListener('click', this.showPreviousSlide.bind(this));
-    this.container.querySelector('.next-button').addEventListener('click', this.showNextSlide.bind(this));
+    this.container.querySelectorAll('.prev-button').forEach(button => button.addEventListener('click', this.showPreviousSlide.bind(this)));
+    this.container.querySelectorAll('.next-button').forEach(button => button.addEventListener('click', this.showNextSlide.bind(this)));
 
-    this.container.querySelectorAll('.indicator').forEach((indicator, index) => {
-      indicator.addEventListener('click', () => {
-        this.showSlide(index);
+    this.container.querySelectorAll('.slider-controls').forEach((control) => {
+      control.querySelectorAll('.indicator').forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          this.showSlide(index);
+        });
       });
     });
   }
@@ -25,8 +27,10 @@ class Slider {
   }
 
   updateIndicators(index) {
-    this.container.querySelectorAll('.indicator').forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === index);
+    this.container.querySelectorAll('.slider-controls').forEach((control) => {
+      control.querySelectorAll('.indicator').forEach((indicator, i) => {
+        indicator.classList.toggle('active', i === index);
+      });
     });
   }
 
