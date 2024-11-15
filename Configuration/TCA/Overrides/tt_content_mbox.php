@@ -18,7 +18,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mbox'] = 'content-ide
 
 $GLOBALS['TCA']['tt_content']['palettes']['mbox'] = [
     'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mbox.palette',
-    'showitem' => 'layout,--linebreak--,bodytext',
+    'showitem' => 'header,--linebreak--,layout,--linebreak--,bodytext',
 ];
 
 $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
