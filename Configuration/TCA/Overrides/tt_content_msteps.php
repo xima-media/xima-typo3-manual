@@ -18,7 +18,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['msteps'] = 'content-c
 
 $GLOBALS['TCA']['tt_content']['palettes']['msteps'] = [
     'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.palette',
-    'showitem' => 'header,--linebreak--,tx_ximatypo3manual_children',
+    'showitem' => 'CType,--linebreak--,header,--linebreak--,tx_ximatypo3manual_children',
 ];
 
 $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
