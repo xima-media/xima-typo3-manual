@@ -101,7 +101,11 @@ appear in the doc header. These links are opened in a modal:
   used: ```$GLOBALS['EXTENSIONS']['backend']```
 * Manual title: The `websiteTitle` of the generated site configuration is used
 
+## Contribute
+
 You want to customize more? Open an issue or create a pull request!
+
+Please have a look at [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
