@@ -16,19 +16,26 @@
 		"ext-dom": "*",
 		"ext-fileinfo": "*",
 		"ext-simplexml": "*",
-		"blueways/bw-focuspoint-images": "^4.0",
-		"blueways/bw-icons": "dev-12.x-dev || ^3.0.0",
+		"blueways/bw-focuspoint-images": "^5.0",
+		"blueways/bw-icons": "^4.0",
 		"dompdf/dompdf": "^2.0 || ^3.0",
-		"typo3/cms-core": "^12.4",
-		"typo3/cms-rte-ckeditor": "^12.0"
+		"typo3/cms-core": "^12.4 || ^13.4",
+		"typo3/cms-rte-ckeditor": "^12.4 || ^13.4"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.52",
-		"helmich/typo3-typoscript-lint": "^3.2",
 		"roave/security-advisories": "dev-latest",
-		"saschaegerer/phpstan-typo3": "^1.10",
-		"symfony/translation": "^6.3 || ^7.0",
-		"typo3/cms-base-distribution": "^12.4"
+		"typo3/cms-base-distribution": "^12.4 || ^13.4",
+		"typo3/cms-lowlevel": "^12.4 || ^13.4",
+		"armin/editorconfig-cli": "^2.0",
+		"bk2k/bootstrap-package": "^15.0",
+		"ergebnis/composer-normalize": "^2.45",
+		"friendsofphp/php-cs-fixer": "^3.6.0",
+		"helhum/typo3-console": "^8.2",
+		"helmich/typo3-typoscript-lint": "^3.3",
+		"nikic/php-parser": "^4.19 || ^5.4",
+		"saschaegerer/phpstan-typo3": "^1.10 || ^2.1",
+		"ssch/typo3-rector": "^2.13 || ^3.3",
+		"symfony/translation": "^7.2"
 	},
 	"extra": {
 		"typo3/cms": {
@@ -41,13 +48,16 @@
 		}
 	},
 	"config": {
-		"sort-packages": true,
 		"allow-plugins": {
-			"typo3/cms-composer-installers": true,
-			"typo3/class-alias-loader": true,
+			"ergebnis/composer-normalize": true,
+			"helhum/dotenv-connector": true,
 			"php-http/discovery": true,
-			"helhum/dotenv-connector": true
-		}
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true
+		},
+		"lock": false,
+		"sort-packages": true,
+		"vendor-dir": "vendor"
 	},
 	"scripts": {
 		"php:lint": "find *.php . -name '*.php' ! -path './vendor/*'  ! -path './var/*' ! -path '*node_modules/*' -print0 | xargs -0 -n 1 -P 4 php -l",
