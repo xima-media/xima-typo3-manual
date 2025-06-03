@@ -165,7 +165,7 @@ tt_content.bw_focuspoint_images_svg.variables {
 
 page.footerData.1637328467 >
 
-[getTSFE()?.type == 1664618986]
+[request && request.getPageArguments()?.getPageType() == 1664618986]
   lib.contentElement.variables.context.value = pdf
   tt_content.bw_focuspoint_images_svg.variables.context.value = pdf
 [END]

@@ -72,5 +72,3 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
         ],
     ],
 ];
-
-$GLOBALS['TCA']['tt_content']['types']['mbox']['previewRenderer'] = MboxPreviewRenderer::class;

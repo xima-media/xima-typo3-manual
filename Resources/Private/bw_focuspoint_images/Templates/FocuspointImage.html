@@ -53,13 +53,13 @@
                     <a href="#focuspoint-{data.uid}-{i.cycle}">
                         <f:if condition="{point.type}=='marking'">
                             <rect x="{point.x}%"
-                                  y="{point.y}%"
-                                  stroke="{color}"
-                                  stroke-width="2px"
-                                  class="focuspoint__svg__rect marking"
-                                  width="{point.width}%"
-                                  height="{point.height}%"
-                                  fill="transparent"/>
+                                y="{point.y}%"
+                                stroke="{color}"
+                                stroke-width="2px"
+                                class="focuspoint__svg__rect marking"
+                                width="{point.width}%"
+                                height="{point.height}%"
+                                fill="transparent"/>
                         </f:if>
                     </a>
 
@@ -67,13 +67,13 @@
                         <a href="#focuspoint-{data.uid}-{i.cycle}">
 
                             <text x="{point.textX}%"
-                                  y="{point.textY}%"
-                                  class="default"
-                                  fill="#FFF"
-                                  font-size="13"
-                                  filter="url(#solid)"
-                                  alignment-baseline="middle"
-                                  text-anchor="middle">
+                                y="{point.textY}%"
+                                class="default"
+                                fill="#FFF"
+                                font-size="13"
+                                filter="url(#solid)"
+                                alignment-baseline="middle"
+                                text-anchor="middle">
                                 {point.title}
                             </text>
                         </a>
@@ -89,27 +89,27 @@
                                         fill="{color}"
                                         style="--margin:{point.width}%"/>
                                 <text style="--margin:{point.width}%"
-                                      class="marking right"
-                                      x="{point.x}%"
-                                      y="{point.textY}%"
-                                      fill="#FFF"
-                                      font-weight="bold"
-                                      font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
-                                      alignment-baseline="middle"
-                                      text-anchor="middle">
+                                    class="marking right"
+                                    x="{point.x}%"
+                                    y="{point.textY}%"
+                                    fill="#FFF"
+                                    font-weight="bold"
+                                    font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
+                                    alignment-baseline="middle"
+                                    text-anchor="middle">
                                     {i.cycle}
                                 </text>
                             </f:then>
                             <f:else>
                                 <circle r="13" cx="{point.x}%" cy="{point.textY}%" fill="{color}"/>
                                 <text x="{point.x}%"
-                                      y="{point.textY}%"
-                                      fill="#FFF"
-                                      class="marking"
-                                      font-weight="bold"
-                                      font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
-                                      alignment-baseline="middle"
-                                      text-anchor="middle">
+                                    y="{point.textY}%"
+                                    fill="#FFF"
+                                    class="marking"
+                                    font-weight="bold"
+                                    font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
+                                    alignment-baseline="middle"
+                                    text-anchor="middle">
                                     {i.cycle}
                                 </text>
                             </f:else>

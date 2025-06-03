@@ -49,8 +49,8 @@ class InstallationController extends ActionController
     }
 
     /**
-     * @throws AccessDeniedException
-     */
+    * @throws AccessDeniedException
+    */
     public function installPreset(ServerRequest $request): ResponseInterface
     {
         if (!$this->getBackendUser()->isAdmin()) {

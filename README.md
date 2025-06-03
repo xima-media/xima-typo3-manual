@@ -24,9 +24,9 @@ special doktype.
 * Directly open chapters in a modal while editing records
 * PDF download
 * Annotate screenshots with image editor:
-  See [bw_focuspoint_images](https://extensions.typo3.org/extension/bw_focuspoint_images)
+See [bw_focuspoint_images](https://extensions.typo3.org/extension/bw_focuspoint_images)
 * TYPO3 system icons available in RTE:
-  See [bw_icons](https://extensions.typo3.org/extension/bw_icons)
+See [bw_icons](https://extensions.typo3.org/extension/bw_icons)
 
 ## Requirements
 
@@ -68,7 +68,7 @@ configuration:
 * Check "**Use as Root Page**"
 * Include **static PageTS** "XIMA Manual"
 * Create new **Root-TypoScript** template for this page and include static
-  TypoScript of this extension
+TypoScript of this extension
 
 ## Usage
 
@@ -98,7 +98,7 @@ appear in the doc header. These links are opened in a modal:
 ## Customization
 
 * Link color and logo: Values of the backend are
-  used: ```$GLOBALS['EXTENSIONS']['backend']```
+used: ```$GLOBALS['EXTENSIONS']['backend']```
 * Manual title: The `websiteTitle` of the generated site configuration is used
 
 ## Contribute

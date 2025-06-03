@@ -105,7 +105,7 @@ class SelectItemsProcFunc
     protected static function getPlugins(): array
     {
         $pluginItems = [];
-        foreach ($GLOBALS['TCA']['tt_content']['columns']['list_type']['config']['items'] as $item) {
+        foreach ($GLOBALS['TCA']['tt_content']['columns']['list_type']['config']['items'] ?? [] as $item) {
             if ($item['value']) {
                 $pluginItems[] = [
                     'value' => 'tt_content:list:' . $item['value'],

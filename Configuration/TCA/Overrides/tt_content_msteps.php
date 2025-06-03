@@ -34,5 +34,3 @@ $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
         ],
     ],
 ];
-
-$GLOBALS['TCA']['tt_content']['types']['msteps']['previewRenderer'] = MstepsPreviewRenderer::class;
