@@ -5,3 +5,11 @@
 #tx_viewpage_iframe {
     height: calc(100vh - 80px);
 }
+
+#tx_viewpage_iframe[data-context="iframe"] {
+    height: 100vh;
+}
+
+.typo3-module-xima_typo3_manual .module-body:has(#tx_viewpage_iframe[data-context="iframe"]) {
+    height: 100%;
+}
