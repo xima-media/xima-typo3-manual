@@ -30,7 +30,7 @@
         <f:format.html>{data.bodytext}</f:format.html>
     </div>
 
-    <f:if condition="{image}">
+    <f:for each="{images}" as="image" iteration="img-i">
         <div class="focuspoint">
 
             <f:image image="{image}"/>
@@ -48,7 +48,7 @@
                 </defs>
 
 
-                <f:for each="{points}" as="point" iteration="i">
+                <f:for each="{points.{img-i.index}}" as="point" iteration="i">
 
                     <a href="#focuspoint-{data.uid}-{i.cycle}">
                         <f:if condition="{point.type}=='marking'">
@@ -122,17 +122,17 @@
             </svg>
 
         </div>
-    </f:if>
 
-    <f:for each="{points}" as="point" iteration="i">
-        <f:if condition="{point.description}">
-            <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
-                <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
-                <p>
-                    <f:format.nl2br>{point.description}</f:format.nl2br>
-                </p>
-            </div>
-        </f:if>
+        <f:for each="{points.{img-i.index}}" as="point" iteration="i">
+            <f:if condition="{point.description}">
+                <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
+                    <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
+                    <p>
+                        <f:format.nl2br>{point.description}</f:format.nl2br>
+                    </p>
+                </div>
+            </f:if>
+        </f:for>
     </f:for>
 
 </f:section>
