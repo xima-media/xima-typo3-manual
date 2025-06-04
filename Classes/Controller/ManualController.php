@@ -85,7 +85,7 @@ class ManualController extends ActionController
         $this->moduleTemplate->assign('pid', $pageId);
         $this->moduleTemplate->assign('context', $context);
 
-        return $this->moduleTemplate->renderResponse();
+        return $this->moduleTemplate->renderResponse('Manual/Index');
     }
 
     public static function hasManualRootPage(int $pageUid): bool
