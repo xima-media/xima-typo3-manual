@@ -38,9 +38,6 @@
 			<trans-unit id="mbox.layout.default">
 				<source>Default</source>
 			</trans-unit>
-			<trans-unit id="mbox.layout.default">
-				<source>Default</source>
-			</trans-unit>
 			<trans-unit id="mbox.layout.info">
 				<source>Info</source>
 			</trans-unit>
