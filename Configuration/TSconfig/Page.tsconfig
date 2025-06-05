@@ -76,6 +76,7 @@ mod.tx_bwfocuspointimages.settings.fields {
       default = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.default
       marking = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.marking
     }
+    default = default
   }
 
   title {
