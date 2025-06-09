@@ -16,7 +16,7 @@
 		"ext-dom": "*",
 		"ext-fileinfo": "*",
 		"ext-simplexml": "*",
-		"blueways/bw-focuspoint-images": "^5.0",
+		"blueways/bw-focuspoint-images": "^6.0",
 		"blueways/bw-icons": "^4.0",
 		"dompdf/dompdf": "^2.0 || ^3.0",
 		"typo3/cms-core": "^12.4 || ^13.4",
