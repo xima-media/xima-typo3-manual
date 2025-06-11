@@ -89,10 +89,13 @@ pdf.10.variables.context.value = pdf
 pdf.includeJSFooter.navigation >
 
 tt_content {
+
   mtext =< tt_content.textmedia
   mtext.templateName = Mtext
+
   mbox =< tt_content.textmedia
   mbox.templateName = Mbox
+
   msteps =< tt_content.textmedia
   msteps.templateName = Msteps
   msteps {
@@ -106,6 +109,27 @@ tt_content {
         markers.uid.field = uid
         orderBy = sorting
       }
+    }
+  }
+
+  mannotation =< tt_content.textmedia
+  mannotation.templateName = Mannotation
+  mannotation {
+    dataProcessing {
+      30 = Blueways\BwFocuspointImages\DataProcessing\FocuspointProcessor
+      30 {
+        references.fieldName = assets
+        as = images
+      }
+    }
+
+    variables {
+      color = TEXT
+      color.value = #ff8700
+
+      context = TEXT
+      context.value = frontend
+      context.override.data = GP:context
     }
   }
 }
@@ -153,14 +177,6 @@ lib.singleContent {
       where.insertData = 1
     }
   }
-}
-
-tt_content.bw_focuspoint_images_svg.variables {
-  color = TEXT
-  color.value = #ff8700
-  context = TEXT
-  context.value = frontend
-  context.override.data = GP:context
 }
 
 page.footerData.1637328467 >

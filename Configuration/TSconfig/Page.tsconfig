@@ -30,17 +30,17 @@ mod.wizards.newContentElement.wizardItems {
         }
       }
 
-      bw_focuspoint_images_svg {
+      tt_content_mannotation {
         iconIdentifier = bw_focuspoint_images_svg
         title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title
         description = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description
         tt_content_defValues {
-          CType = bw_focuspoint_images_svg
+          CType = mannotation
         }
       }
     }
 
-    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,bw_focuspoint_images_svg
+    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,tt_content_mannotation
   }
 
   common.show =
@@ -54,7 +54,7 @@ mod.wizards.newContentElement.wizardItems {
 }
 
 TCEFORM.tt_content {
-  CType.keepItems = mtext,mbox,msteps,bw_focuspoint_images_svg
+  CType.keepItems = mtext,mbox,msteps,mannotation
   assets.config.maxitems = 1
   imageorient.disabled = 0
   imageorient.removeItems = 1,2,9,10,17,18
