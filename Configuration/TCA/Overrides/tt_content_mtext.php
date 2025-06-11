@@ -1,7 +1,6 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Xima\XimaTypo3Manual\Preview\MtextPreviewRenderer;
 
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',

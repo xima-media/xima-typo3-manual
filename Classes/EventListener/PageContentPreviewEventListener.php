@@ -34,7 +34,7 @@ final class PageContentPreviewEventListener
             $steps = $qb->select('header')
                 ->from('tt_content')
                 ->where(
-                    $qb->expr()->eq('tx_ximatypo3manual_parent', $record['uid'])
+                    $qb->expr()->eq('tx_ximatypo3manual_parent', $record['uid']),
                 )
                 ->orderBy('sorting', 'ASC')
                 ->executeQuery()

@@ -1,2 +1,25 @@
 parameters:
-		ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method TYPO3\\CMS\\Core\\Configuration\\SiteConfiguration\:\:write\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Generator/ManualGenerator.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\{non\-falsy\-string, non\-empty\-string\} will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: Classes/Middleware/EncodeImagesBase64Middleware.php
+
+		-
+			message: '#^Instanceof between SimpleXMLElement and SimpleXMLElement will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: Classes/Middleware/EncodeImagesBase64Middleware.php
+
+		-
+			message: '#^Call to static method TYPO3\\CMS\\Core\\Utility\\MathUtility\:\:canBeInterpretedAsInteger\(\) with int\<1, max\> will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: Classes/UserFunctions/SelectItemsProcFunc.php
