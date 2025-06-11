@@ -65,6 +65,7 @@ TCEFORM.tt_content {
   header_link.disabled = 1
   subheader.disabled = 1
   tx_bwicons_icon.disabled = 1
+  layout >
 }
 
 mod.tx_bwfocuspointimages.settings.fields {
