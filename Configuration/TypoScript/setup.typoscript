@@ -27,6 +27,7 @@ page {
       context.override.data = GP:context
       title = TEXT
       title.data = site:websiteTitle
+      title.override.data = siteLanguage:websiteTitle
     }
 
     dataProcessing {
