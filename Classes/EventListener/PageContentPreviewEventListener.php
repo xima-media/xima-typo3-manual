@@ -15,11 +15,13 @@ final class PageContentPreviewEventListener
             return;
         }
 
-        if ($event->getRecordType() === 'msteps') {
+        $record = $event->getRecord();
+
+        if ($record['CType'] === 'msteps') {
             $event->setPreviewContent($this->getMstepsPreviewHtml($event->getRecord()));
         }
 
-        if ($event->getRecordType() === 'mbox') {
+        if ($record['CType'] === 'mbox') {
             $event->setPreviewContent($this->getMboxPreviewHtml($event->getRecord()));
         }
     }
