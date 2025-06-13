@@ -20,7 +20,7 @@ class ManualGenerator
 
     protected ?int $rootPageUid = null;
 
-    public function __construct(private ?SiteWriter $siteWriter)
+    public function __construct(private ?SiteWriter $siteWriter = null)
     {
     }
 
