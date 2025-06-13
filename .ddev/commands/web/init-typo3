@@ -45,7 +45,7 @@ export TYPO3_PROJECT_NAME="EXT:xima-typo3-manual"
 
 # Set up environment
 _progress "Setting up TYPO3 installation"
-  "$typo3Binary" setup --no-interaction --force --quiet
+"$typo3Binary" setup --no-interaction --force --quiet
 _done
 
 # Import DB fixtures

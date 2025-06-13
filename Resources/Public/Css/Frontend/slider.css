@@ -58,7 +58,7 @@
 }
 
 .slider-container .slider-controls .indicator.active {
-    background-color: var(--link-color, #eee);
+    background-color: var(--link-color, #000);
     color: #fff;
 }
 

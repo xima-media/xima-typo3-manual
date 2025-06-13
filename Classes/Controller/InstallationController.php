@@ -21,7 +21,8 @@ class InstallationController extends ActionController
 
     public function __construct(
         private ModuleTemplateFactory $moduleTemplateFactory,
-        private PageRenderer $pageRenderer
+        private PageRenderer $pageRenderer,
+        private ManualGenerator $manualGenerator
     ) {
     }
 
@@ -40,7 +41,7 @@ class InstallationController extends ActionController
             return $moduleTemplate->renderResponse('NoAccess');
         }
 
-        return $moduleTemplate->renderResponse();
+        return $moduleTemplate->renderResponse('Installation/Index');
     }
 
     protected function getBackendUser(): BackendUserAuthentication
@@ -49,16 +50,15 @@ class InstallationController extends ActionController
     }
 
     /**
-     * @throws AccessDeniedException
-     */
+    * @throws AccessDeniedException
+    */
     public function installPreset(ServerRequest $request): ResponseInterface
     {
         if (!$this->getBackendUser()->isAdmin()) {
             throw new AccessDeniedException('Only admin users are allowed to create a manual', 1711376718);
         }
         $presetIdentifier = $request->getParsedBody()['preset'] ?? 0;
-        $generator = GeneralUtility::makeInstance(ManualGenerator::class);
-        $result = $generator->createManualFromPreset($presetIdentifier);
+        $result = $this->manualGenerator->createManualFromPreset($presetIdentifier);
 
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Templates/Installation/Result.html');

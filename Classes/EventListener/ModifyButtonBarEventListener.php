@@ -82,6 +82,7 @@ final class ModifyButtonBarEventListener
         // page view, list view, etc.
         if ($pageId) {
             array_push($manualPages, ...$this->getManualPagesForRecord($pageId, 'pages', 'doktype'));
+            array_push($manualPages, ...$this->getManualElementsForRecord($pageId, 'tt_content', 'CType'));
         }
 
         return $manualPages;
@@ -167,8 +168,9 @@ final class ModifyButtonBarEventListener
         );
 
         // chapter items
-        foreach ($manualPages as $manualPage) {
+        foreach ($manualPages as $key => $manualPage) {
             $title = $manualPage['title'] ?? $manualPage['header'];
+            $title = $title ?: $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.no-title') . ' ' . ($key + 1);
             $pid = $manualPage['pid'] ?? $manualPage['uid'];
             /** @var DropDownItemInterface $dropdownItem */
             $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)

@@ -52,4 +52,3 @@ class Navigation {
 }
 
 export default new Navigation()
-

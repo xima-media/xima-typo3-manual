@@ -11,6 +11,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
@@ -84,7 +85,7 @@ class ManualController extends ActionController
         $this->moduleTemplate->assign('pid', $pageId);
         $this->moduleTemplate->assign('context', $context);
 
-        return $this->moduleTemplate->renderResponse();
+        return $this->moduleTemplate->renderResponse('Manual/Index');
     }
 
     public static function hasManualRootPage(int $pageUid): bool
@@ -100,8 +101,8 @@ class ManualController extends ActionController
             ->from('pages')
             ->where(
                 $qb->expr()->and(
-                    $qb->expr()->eq('doktype', $qb->createNamedParameter(701, \PDO::PARAM_INT)),
-                    $qb->expr()->eq('is_siteroot', $qb->createNamedParameter(1, \PDO::PARAM_INT)),
+                    $qb->expr()->eq('doktype', $qb->createNamedParameter(701, Connection::PARAM_INT)),
+                    $qb->expr()->eq('is_siteroot', $qb->createNamedParameter(1, Connection::PARAM_INT)),
                 )
             )
             ->executeQuery()

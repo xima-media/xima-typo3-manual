@@ -1,7 +1,6 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Xima\XimaTypo3Manual\Preview\MstepsPreviewRenderer;
 
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
@@ -34,5 +33,3 @@ $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
         ],
     ],
 ];
-
-$GLOBALS['TCA']['tt_content']['types']['msteps']['previewRenderer'] = MstepsPreviewRenderer::class;

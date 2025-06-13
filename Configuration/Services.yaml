@@ -20,3 +20,8 @@ services:
     tags:
       - name: event.listener
         identifier: 'xima-typo3-manual/event-listener/content-used-on-page'
+
+  Xima\XimaTypo3Manual\EventListener\PageContentPreviewEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'xima-typo3-manual/event-listener/page-content-preview'
