@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use Xima\XimaTypo3Manual\Generator\Preset\EmptyManualPreset;
@@ -85,6 +86,11 @@ class ManualGenerator
     private function createSiteConfiguration(): void
     {
         $this->siteWriter->createNewBasicSite($this->getSiteIdentifier(), $this->rootPageUid, $this->getSiteBase());
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $site = $siteFinder->getSiteByPageId($this->rootPageUid);
+        $siteConfiguration = $site->getConfiguration();
+        $siteConfiguration['websiteTitle'] = $this->preset->getTitle();
+        $this->siteWriter->write($this->getSiteIdentifier(), $siteConfiguration);
     }
 
     private function getSiteIdentifier(): string
