@@ -3,19 +3,30 @@
 namespace Xima\XimaTypo3Manual\Generator;
 
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
+use TYPO3\CMS\Core\Configuration\SiteWriter;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use Xima\XimaTypo3Manual\Generator\Preset\EmptyManualPreset;
+use Xima\XimaTypo3Manual\Generator\Preset\PresetInterface;
 
 class ManualGenerator
 {
+    protected ?PresetInterface $preset = null;
+
+    protected ?int $rootPageUid = null;
+
+    public function __construct(private ?SiteWriter $siteWriter)
+    {
+    }
+
     public function createManualFromPreset(string $presetIdentifier): array
     {
-        $data = $this->getDataForPreset($presetIdentifier);
-        if (empty($data)) {
+        $this->preset = $this->getPresetByIdentifier($presetIdentifier);
+        if (!$this->preset) {
             return [];
         }
 
@@ -24,52 +35,37 @@ class ManualGenerator
         $dataHandler->enableLogging = false;
         $dataHandler->bypassAccessCheckForRecords = true;
         $dataHandler->bypassWorkspaceRestrictions = true;
-        $dataHandler->start($data, []);
+        $dataHandler->start($this->preset->getData(), []);
         $dataHandler->process_datamap();
 
-        $rootPageUid = $dataHandler->substNEWwithIDs['NEW1'];
-        $this->createSiteConfiguration($rootPageUid);
-
-        return [
-            'rootPageUid' => $rootPageUid,
-        ];
-    }
-
-    protected function getDataForPreset(string $presetIdentifier): array
-    {
-        if ($presetIdentifier === '1') {
-            return self::getEmptyManualPresetData();
+        $this->rootPageUid = $dataHandler->substNEWwithIDs['NEW1'] ?? null;
+        if (!$this->rootPageUid) {
+            return [];
         }
-        return [];
-    }
 
-    protected static function getEmptyManualPresetData(): array
-    {
+        if ($this->siteWriter) {
+            $this->createSiteConfiguration();
+        } else {
+            $this->createSiteConfigurationV12();
+        }
+
         return [
-            'pages' => [
-                'NEW1' => [
-                    'pid' => 0 - self::getUidOfLastTopLevelPage(),
-                    'hidden' => 0,
-                    'title' => 'New Manual',
-                    'doktype' => 701,
-                    'is_siteroot' => 1,
-                    'tsconfig_includes' => 'EXT:xima_typo3_manual/Configuration/TSconfig/Page.tsconfig',
-                    'backend_layout' => 'pagets__manualHomepage',
-                ],
-            ],
-            'sys_template' => [
-                'NEW2' => [
-                    'pid' => 'NEW1',
-                    'title' => 'NEW MANUAL',
-                    'root' => 1,
-                    'clear' => 3,
-                    'include_static_file' => 'EXT:xima_typo3_manual/Configuration/TypoScript',
-                ],
-            ],
+            'rootPageUid' => $this->rootPageUid,
         ];
     }
 
-    protected static function getUidOfLastTopLevelPage(): int
+    protected function getPresetByIdentifier(string $presetIdentifier): ?PresetInterface
+    {
+        $pid = 0 - $this->getUidOfLastTopLevelPage();
+
+        if ($presetIdentifier === '1') {
+            return new EmptyManualPreset($pid);
+        }
+
+        return null;
+    }
+
+    private function getUidOfLastTopLevelPage(): int
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
         $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
@@ -86,20 +82,41 @@ class ManualGenerator
         return $uid;
     }
 
-    protected function createSiteConfiguration(
-        int $rootPageUid,
-        string $title = 'manual demo'
-    ): void {
-        $port = $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() ? ':' . $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() : '';
-        $domain = $GLOBALS['TYPO3_REQUEST']->getUri()->getScheme() . '://' . $GLOBALS['TYPO3_REQUEST']->getUri()->getHost() . $port . '/';
+    private function createSiteConfiguration(): void
+    {
+        $this->siteWriter->createNewBasicSite($this->getSiteIdentifier(), $this->rootPageUid, $this->getSiteBase());
+    }
 
+    private function getSiteIdentifier(): string
+    {
+        $slug = $this->getSlugForSite();
+        return $slug . '-' . $this->rootPageUid;
+    }
+
+    private function getSlugForSite(): string
+    {
+        return preg_replace('/[^a-z0-9]+/', '-', strtolower($this->preset->getTitle()));
+    }
+
+    private function getSiteBase(): string
+    {
+        return $this->getBaseDomain() . $this->getSlugForSite();
+    }
+
+    private function getBaseDomain(): string
+    {
+        $port = $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() ? ':' . $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() : '';
+        return $GLOBALS['TYPO3_REQUEST']->getUri()->getScheme() . '://' . $GLOBALS['TYPO3_REQUEST']->getUri()->getHost() . $port . '/';
+    }
+
+    private function createSiteConfigurationV12(): void
+    {
         $siteConfiguration = GeneralUtility::makeInstance(SiteConfiguration::class);
-        $siteIdentifier = 'manual-demo-' . $rootPageUid;
         $configuration = [
-            'base' => $domain . 'manual-demo-' . $rootPageUid,
-            'rootPageId' => $rootPageUid,
+            'base' => $this->getSiteBase(),
+            'rootPageId' => $this->rootPageUid,
             'routes' => [],
-            'websiteTitle' => $title . ' ' . $rootPageUid,
+            'websiteTitle' => $this->preset->getTitle(),
             'baseVariants' => [],
             'errorHandling' => [],
             'languages' => [
@@ -119,6 +136,6 @@ class ManualGenerator
                 ],
             ],
         ];
-        $siteConfiguration->write($siteIdentifier, $configuration);
+        $siteConfiguration->write($this->getSiteIdentifier(), $configuration);
     }
 }
