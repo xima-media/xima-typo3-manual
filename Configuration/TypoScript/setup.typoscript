@@ -64,15 +64,10 @@ page {
 
   includeCSS {
     gutenberg = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.min.css
-    gutenberg.inline = 1
     theme = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.modern.min.css
-    theme.inline = 1
     focuspoint = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/focuspoint.css
-    focuspoint.inline = 1
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
-    manual.inline = 1
     slider = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/slider.css
-    slider.inline = 1
   }
 
   includeJSFooter {
@@ -88,6 +83,13 @@ pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
 pdf.10.variables.context.value = pdf
 pdf.includeJSFooter.navigation >
+pdf.includeCSS {
+  gutenberg.inline = 1
+  theme.inline = 1
+  focuspoint.inline = 1
+  manual.inline = 1
+  slider.inline = 1
+}
 
 tt_content {
 
