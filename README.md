@@ -30,7 +30,7 @@ See [bw_icons](https://extensions.typo3.org/extension/bw_icons)
 
 ## Requirements
 
-* TYPO3 12.4 & PHP 8.1+
+* TYPO3 12+ & PHP 8.1+
 
 ## Installation
 
