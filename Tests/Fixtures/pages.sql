@@ -6,4 +6,3 @@ VALUES
 	(4,3,256,'First Chapter',701,0,'/first-manual-page', NULL,''),
 	(5,3,512,'Second Chapter',701,0,'/second-chapter', NULL,''),
 	(6,5,256,'Subchapter',701,0,'/second-chapter/subchapter', NULL,'');
-

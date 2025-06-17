@@ -126,6 +126,10 @@
 				<source />
 				<target>Handbuch öffnen</target>
 			</trans-unit>
+			<trans-unit id="button.dropdown.no-title">
+				<source />
+				<target>Erwähnung</target>
+			</trans-unit>
 			<trans-unit id="button.preview">
 				<source />
 				<target>Vorschau öffnen</target>

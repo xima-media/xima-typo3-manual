@@ -31,7 +31,7 @@
     </nav>
 </f:if>
 
-<main style="--link-color:{backendSettings.loginHighlightColor}">
+<main style="{f:if(condition:backendSettings.loginHighlightColor, then:'--link-color:\{backendSettings.loginHighlightColor\}')}">
 
     <section class="section cover">
         <f:if condition="{backendSettings.loginLogo}">
