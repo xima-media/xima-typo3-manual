@@ -79,7 +79,7 @@ ul li {
 
 /**
     Counter-Stuff
- */
+*/
 main > section > h2 {
     counter-increment: counter-level-1;
     counter-reset: counter-level-2;
@@ -121,7 +121,7 @@ ol > li::marker {
 
 /**
     General spacing
- */
+*/
 section, .section {
     margin-bottom: calc(3 * var(--space));
     width: 100%;
@@ -135,7 +135,7 @@ section, .section {
 
 /**
     Content elements
- */
+*/
 figure {
     margin: 0.25rem 0;
 }
@@ -210,7 +210,7 @@ a.to-top:hover {
 
 /**
     Sticky navigation
- */
+*/
 @media (min-width: 1850px) {
     nav.section {
         position: fixed;
@@ -260,7 +260,7 @@ nav a.active {
 
 /**
     Cover section
- */
+*/
 section.cover {
     display: grid;
     justify-items: center;

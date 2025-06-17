@@ -16,8 +16,8 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 class EncodeImagesBase64Middleware implements MiddlewareInterface
 {
     /**
-     * @var array<string, string>
-     */
+    * @var array<string, string>
+    */
     protected array $svgSpriteCache = [];
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

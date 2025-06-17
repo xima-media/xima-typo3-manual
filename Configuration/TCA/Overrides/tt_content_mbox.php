@@ -1,7 +1,6 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use Xima\XimaTypo3Manual\Preview\MboxPreviewRenderer;
 
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
@@ -24,6 +23,8 @@ $GLOBALS['TCA']['tt_content']['palettes']['mbox'] = [
 $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
     'showitem' => '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     --palette--;;mbox,
+                --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tab.manual_relations,
+                    --palette--;;manual-relations,
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:language,
                     --palette--;;language,colPos',
     'columnsOverrides' => [
@@ -72,5 +73,3 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
         ],
     ],
 ];
-
-$GLOBALS['TCA']['tt_content']['types']['mbox']['previewRenderer'] = MboxPreviewRenderer::class;
