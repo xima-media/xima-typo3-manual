@@ -1,0 +1,4 @@
+# Remove all content elements from wizard (should not be available globally)
+mod.wizards.newContentElement.wizardItems {
+  default.removeItems := addToList(mannotation,mbox,msteps,mtext)
+}
