@@ -10,6 +10,8 @@ ExtensionManagementUtility::addTcaSelectItem(
         'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title',
         'mannotation',
         'bw_focuspoint_images_svg',
+        'default',
+        'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description',
     ],
     'image',
     'after'
