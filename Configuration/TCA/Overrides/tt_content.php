@@ -29,11 +29,6 @@ $tempFields = [
                 'showPossibleLocalizationRecords' => true,
             ],
             'overrideChildTca' => [
-                'types' => [
-                    'mtext' => [
-                        'showitem' => '--palette--;;mtext,colPos',
-                    ],
-                ],
                 'columns' => [
                     'CType' => [
                         'config' => [
