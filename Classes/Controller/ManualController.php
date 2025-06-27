@@ -123,7 +123,7 @@ class ManualController extends ActionController
         return $GLOBALS['LANG'];
     }
 
-    protected function getCurrentLanguage(int $pageId, string $languageParam = null): int
+    protected function getCurrentLanguage(int $pageId, ?string $languageParam = null): int
     {
         $languageId = (int)$languageParam;
         if ($languageParam === null) {
