@@ -16,6 +16,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:manual_page_type',
         701,
         'EXT:xima_typo3_manual/Resources/Public/Icons/apps-pagetree-manual.svg',
+        'default',
     ],
     '1',
     'after'
