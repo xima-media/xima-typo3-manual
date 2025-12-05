@@ -1,6 +1,14 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
 
+<f:if condition="{backendSettings.loginHighlightColor}">
+    <f:asset.css identifier="manual-custom-link-color">
+        :root {
+        --link-color: {backendSettings.loginHighlightColor};
+        }
+    </f:asset.css>
+</f:if>
+
 <f:if condition="{languageNavigation->f:count()} > 1">
     <nav class="language-menu">
         <ul>
@@ -31,7 +39,7 @@
     </nav>
 </f:if>
 
-<main style="{f:if(condition:backendSettings.loginHighlightColor, then:'--link-color:\{backendSettings.loginHighlightColor\}')}">
+<main>
 
     <section class="section cover">
         <f:if condition="{backendSettings.loginLogo}">
