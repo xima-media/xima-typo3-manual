@@ -10,7 +10,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'mtext',
         'content-beside-text-img-below-center',
         'default',
-        'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description'
+        'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description',
     ],
     'image',
     'after'
