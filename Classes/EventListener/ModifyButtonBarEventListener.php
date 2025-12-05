@@ -68,6 +68,9 @@ final class ModifyButtonBarEventListener
         // edit record view
         if (str_contains($uri, 'record/edit')) {
             $editParam = $request->getQueryParams()['edit'] ?? '';
+            if (!is_array($editParam)) {
+                return [];
+            }
             $recordTable = array_key_first($editParam);
             $recordUid = (int)array_key_first($editParam[$recordTable] ?? []);
             $recordType = $GLOBALS['TCA'][$recordTable]['ctrl']['type'] ?? '0';
