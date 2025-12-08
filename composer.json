@@ -75,7 +75,7 @@
 			"@ci:php:fixer",
 			"@ci:language:lint",
 			"@ci:php:stan",
-			"@ci:php:rector",
+			"@ci:rector",
 			"@ci:typoscript:lint",
 			"@ci:yaml:lint"
 		],
