@@ -20,7 +20,7 @@ class ManualGenerator
 
     protected ?int $rootPageUid = null;
 
-    public function __construct(private ?SiteWriter $siteWriter = null)
+    public function __construct(private readonly ConnectionPool $connectionPool, private ?SiteWriter $siteWriter = null)
     {
     }
 
@@ -68,7 +68,7 @@ class ManualGenerator
 
     private function getUidOfLastTopLevelPage(): int
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
         $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $lastPage = $queryBuilder->select('uid')
             ->from('pages')

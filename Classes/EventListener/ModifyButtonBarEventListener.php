@@ -21,7 +21,7 @@ use Xima\XimaTypo3Manual\Controller\ManualController;
 
 final class ModifyButtonBarEventListener
 {
-    public function __construct(private IconFactory $iconFactory, private UriBuilder $uriBuilder)
+    public function __construct(private IconFactory $iconFactory, private UriBuilder $uriBuilder, private readonly ConnectionPool $connectionPool)
     {
     }
 
@@ -108,7 +108,7 @@ final class ModifyButtonBarEventListener
     protected function fetchRecords(string $sql, string $table): array
     {
         try {
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
+            $connection = $this->connectionPool->getConnectionForTable($table);
             $result = $connection->executeQuery($sql)->fetchAllAssociative();
         } catch (Exception) {
             return [];
@@ -232,7 +232,7 @@ final class ModifyButtonBarEventListener
     public function getSmallManualButton(
         ModifyButtonBarEvent $event,
         int $pageId
-    ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
+    ): LinkButton {
         $manualButton = $event->getButtonBar()->makeLinkButton();
         $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
             'xima_typo3_manual',
