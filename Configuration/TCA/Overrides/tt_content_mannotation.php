@@ -7,11 +7,11 @@ ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title',
-        'mannotation',
-        'bw_focuspoint_images_svg',
-        'default',
-        'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description',
+        'label' => 'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title',
+        'value' => 'mannotation',
+        'icon' => 'bw_focuspoint_images_svg',
+        'group' => 'default',
+        'description' => 'LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description',
     ],
     'image',
     'after'

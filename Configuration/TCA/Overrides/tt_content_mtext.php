@@ -6,11 +6,11 @@ ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',
     [
-        'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.title',
-        'mtext',
-        'content-beside-text-img-below-center',
-        'default',
-        'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description',
+        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.title',
+        'value' => 'mtext',
+        'icon' => 'content-beside-text-img-below-center',
+        'group' => 'default',
+        'description' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description',
     ],
     'image',
     'after'
