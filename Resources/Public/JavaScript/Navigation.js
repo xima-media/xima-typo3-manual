@@ -31,6 +31,22 @@ class Navigation {
         setTimeout(() => makeIdentifierActive(href), 50)
       })
     })
+
+    this.navigateToSlug()
+  }
+
+  navigateToSlug() {
+    const slug = window.location.pathname
+    const section = Array.from(document.querySelectorAll('section[data-page-slug]'))
+      .find(s => s.getAttribute('data-page-slug') === slug)
+    if (!section) {
+      return
+    }
+    const headline = section.querySelector('h2[id]')
+    if (headline) {
+      headline.scrollIntoView()
+      makeIdentifierActive('#' + CSS.escape(headline.getAttribute('id')))
+    }
   }
 
   bindObserver() {

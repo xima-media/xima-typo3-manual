@@ -125,7 +125,7 @@
 </f:section>
 
 <f:section name="page">
-    <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
+    <section class="{f:if(condition:noPageBreak, else: 'break-before')}" data-page-slug="{page.data.slug}">
         <h2 id="p{page.data.uid}">
             {page.title}
             <f:if condition="{context} == 'frontend'">
