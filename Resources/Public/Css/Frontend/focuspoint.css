@@ -20,21 +20,6 @@
     border-radius: 3px;
 }
 
-.focuspoint text.marking {
-    transform: translate3d(-20px, var(--margin-y, 1px), 0);
-}
-
-.focuspoint text.marking.right {
-    transform: translate3d(calc(var(--margin) + 20px), var(--margin-y, 1px), 0);
-}
-
-.focuspoint circle {
-    transform: translate3d(-20px, 0, 0);
-}
-
-.focuspoint circle.right {
-    transform: translate3d(calc(var(--margin) + 20px), 0, 0);
-}
 
 .focuspoint img {
     grid-column: 1 / 2;
