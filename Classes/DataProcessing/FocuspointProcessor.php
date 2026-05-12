@@ -20,7 +20,7 @@ class FocuspointProcessor extends BaseFocuspointProcessor
                 if (($point->type ?? '') !== 'marking') {
                     continue;
                 }
-                $position = $point->markerPosition ?? 'left';
+                $position = $point->markerPosition ?? ($point->x < 10 ? 'right' : 'left');
                 [$point->markerCx, $point->markerCy, $point->markerTransform] = match ($position) {
                     'right'  => [$point->x + $point->width, $point->textY,             'translate(20, 0)'],
                     'top'    => [$point->textX,             $point->y,                 'translate(0, -20)'],
