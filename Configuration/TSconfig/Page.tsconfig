@@ -86,6 +86,20 @@ mod.tx_bwfocuspointimages.settings.fields {
     default = default
   }
 
+  markerPosition {
+    title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition
+    type = select
+    displayCond = FIELD:type:=:marking
+    options {
+      left = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition.left
+      right = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition.right
+      top = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition.top
+      bottom = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition.bottom
+      inside = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.markerPosition.inside
+    }
+    default = left
+  }
+
   title {
     title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:focus_point.title
     type = text

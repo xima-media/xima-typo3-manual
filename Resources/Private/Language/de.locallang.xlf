@@ -34,6 +34,30 @@
 				<source />
 				<target>Standard</target>
 			</trans-unit>
+			<trans-unit id="focus_point.markerPosition">
+				<source />
+				<target>Label-Position</target>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.left">
+				<source />
+				<target>Links</target>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.right">
+				<source />
+				<target>Rechts</target>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.top">
+				<source />
+				<target>Oben</target>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.bottom">
+				<source />
+				<target>Unten</target>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.inside">
+				<source />
+				<target>Innerhalb</target>
+			</trans-unit>
 			<trans-unit id="wizard.mbox.title">
 				<source />
 				<target>Infobox</target>

@@ -80,40 +80,19 @@
                     </f:if>
 
                     <f:if condition="{point.type}=='marking'">
-                        <f:if condition="{point.x} < 10">
-                            <f:then>
-                                <circle class="right"
-                                        r="13"
-                                        cx="{point.x}%"
-                                        cy="{point.textY}%"
-                                        fill="{color}"
-                                        style="--margin:{point.width}%"/>
-                                <text style="--margin:{point.width}%"
-                                    class="marking right"
-                                    x="{point.x}%"
-                                    y="{point.textY}%"
-                                    fill="#FFF"
-                                    font-weight="bold"
-                                    font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
-                                    alignment-baseline="middle"
-                                    text-anchor="middle">
-                                    {i.cycle}
-                                </text>
-                            </f:then>
-                            <f:else>
-                                <circle r="13" cx="{point.x}%" cy="{point.textY}%" fill="{color}"/>
-                                <text x="{point.x}%"
-                                    y="{point.textY}%"
-                                    fill="#FFF"
-                                    class="marking"
-                                    font-weight="bold"
-                                    font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
-                                    alignment-baseline="middle"
-                                    text-anchor="middle">
-                                    {i.cycle}
-                                </text>
-                            </f:else>
-                        </f:if>
+                        <g transform="{point.markerTransform}">
+                            <circle r="13" cx="{point.markerCx}%" cy="{point.markerCy}%" fill="{color}"/>
+                            <text x="{point.markerCx}%"
+                                y="{point.markerCy}%"
+                                dy="0.35em"
+                                fill="#FFF"
+                                class="marking"
+                                font-weight="bold"
+                                font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
+                                text-anchor="middle">
+                                {i.cycle}
+                            </text>
+                        </g>
                     </f:if>
 
 

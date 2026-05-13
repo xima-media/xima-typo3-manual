@@ -26,6 +26,24 @@
 			<trans-unit id="focus_point.default">
 				<source>Default</source>
 			</trans-unit>
+			<trans-unit id="focus_point.markerPosition">
+				<source>Label Position</source>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.left">
+				<source>Left</source>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.right">
+				<source>Right</source>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.top">
+				<source>Top</source>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.bottom">
+				<source>Bottom</source>
+			</trans-unit>
+			<trans-unit id="focus_point.markerPosition.inside">
+				<source>Inside</source>
+			</trans-unit>
 			<trans-unit id="wizard.mbox.title">
 				<source>Info box</source>
 			</trans-unit>
