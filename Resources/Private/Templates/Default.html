@@ -126,7 +126,7 @@
 
 <f:section name="page">
     <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
-        <h2 id="p{page.data.uid}">
+        <h2 id="p{page.data.uid}" data-page-url="{page.link}">
             {page.title}
             <f:if condition="{context} == 'frontend'">
                 <a href="#p{page.data.uid}">
