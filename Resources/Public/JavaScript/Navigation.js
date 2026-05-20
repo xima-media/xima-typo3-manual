@@ -78,13 +78,17 @@ class Navigation {
     document.querySelector(hash)?.scrollIntoView()
   }
 
+  #debounceTimer = null
+
   headlineObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id')
-        this.makeIdentifierActive('#' + id)
-      }
-    })
+    const intersecting = entries.find(entry => entry.isIntersecting)
+    if (!intersecting) {
+      return
+    }
+    clearTimeout(this.#debounceTimer)
+    this.#debounceTimer = setTimeout(() => {
+      this.makeIdentifierActive('#' + intersecting.target.getAttribute('id'))
+    }, 50)
   }, {rootMargin: '-5%', threshold: 1})
 
 }
