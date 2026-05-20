@@ -1,6 +1,7 @@
 class Navigation {
 
   anchorMap = {}
+  #debounceTimer = null
 
   makeIdentifierActive(href) {
     const navItem = document.querySelector('nav a[href="' + href + '"]')
@@ -77,8 +78,6 @@ class Navigation {
     this.makeIdentifierActive(hash)
     document.querySelector(hash)?.scrollIntoView()
   }
-
-  #debounceTimer = null
 
   headlineObserver = new IntersectionObserver((entries) => {
     const intersecting = entries.find(entry => entry.isIntersecting)
