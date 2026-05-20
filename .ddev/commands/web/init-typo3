@@ -54,3 +54,8 @@ for file in "$fixturePath"/*.sql; do
     mysql $dbCredentials "$dbName" < "$file"
     _done
 done
+
+# Import site configuration fixtures
+_progress "Importing site configuration fixtures"
+cp -r "$fixturePath/sites/." /var/www/html/config/sites/
+_done
