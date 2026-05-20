@@ -21,6 +21,8 @@ ddev composer install
 ddev init-typo3
 ```
 
+The manual is available at <https://xima-typo3-manual.ddev.site/manual/> now.
+
 You can access the TYPO3 backend at <https://xima-typo3-manual.ddev.site/typo3/>.
 
 To login, you can use the username `admin` and password `Passw0rd!`.

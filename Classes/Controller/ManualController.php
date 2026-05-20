@@ -204,20 +204,22 @@ class ManualController extends ActionController
 
         $targetUrl = (string)PreviewUriBuilder::create($pageId)->withSection('')->withLanguage($languageId)->buildUri();
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
-        $showButton = $buttonBar->makeLinkButton()
-            ->setHref($targetUrl)
-            ->setDataAttributes([
-                'dispatch-action' => 'TYPO3.WindowManager.localOpen',
-                'dispatch-args' => GeneralUtility::jsonEncodeForHtmlAttribute([
-                    $targetUrl,
-                    true, // switchFocus
-                    'newTYPO3frontendWindow', // windowName,
-                ]),
-            ])
-            ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.showPage'))
-            ->setShowLabelText(true)
-            ->setIcon($this->iconFactory->getIcon('actions-view-page', Icon::SIZE_SMALL));
-        $buttonBar->addButton($showButton);
+        if ($targetUrl !== '') {
+            $showButton = $buttonBar->makeLinkButton()
+                ->setHref($targetUrl)
+                ->setDataAttributes([
+                    'dispatch-action' => 'TYPO3.WindowManager.localOpen',
+                    'dispatch-args' => GeneralUtility::jsonEncodeForHtmlAttribute([
+                        $targetUrl,
+                        true, // switchFocus
+                        'newTYPO3frontendWindow', // windowName,
+                    ]),
+                ])
+                ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.showPage'))
+                ->setShowLabelText(true)
+                ->setIcon($this->iconFactory->getIcon('actions-view-page', Icon::SIZE_SMALL));
+            $buttonBar->addButton($showButton);
+        }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         $downloadUrl = $uriBuilder->buildUriFromRoute(

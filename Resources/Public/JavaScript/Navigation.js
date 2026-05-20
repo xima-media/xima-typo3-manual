@@ -51,4 +51,25 @@ class Navigation {
 
 }
 
+const rewriteManualLinksToAnchors = () => {
+  const anchorMap = {}
+  document.querySelectorAll('[data-page-url]').forEach(el => {
+    try {
+      const url = new URL(el.dataset.pageUrl, window.location.href)
+      anchorMap[url.pathname] = '#' + el.id
+    } catch {}
+  })
+
+  document.querySelectorAll('main a[href]').forEach(a => {
+    try {
+      const url = new URL(a.href, window.location.href)
+      if (url.origin === window.location.origin && anchorMap[url.pathname]) {
+        a.href = anchorMap[url.pathname]
+      }
+    } catch {}
+  })
+}
+
+rewriteManualLinksToAnchors()
+
 export default new Navigation()
