@@ -20,6 +20,7 @@ class Navigation {
     this.bindObserver()
     this.rewriteManualLinksToAnchors()
     this.navigateToCurrentAnchor()
+    window.addEventListener('hashchange', () => this.navigateToCurrentAnchor())
   }
 
   bindEditLinks() {
