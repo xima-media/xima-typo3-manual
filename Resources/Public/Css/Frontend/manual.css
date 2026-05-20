@@ -125,7 +125,7 @@ ol > li::marker {
 section, .section {
     margin-bottom: calc(3 * var(--space));
     width: 100%;
-    max-width: 1200px;
+    max-width: 940px;
     background: #fff;
 }
 
