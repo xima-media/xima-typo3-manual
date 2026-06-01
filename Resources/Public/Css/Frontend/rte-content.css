@@ -1,0 +1,32 @@
+figure.table {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+thead,
+tbody,
+tfoot,
+tr {
+    background-color: inherit;
+}
+
+th,
+td {
+    padding: .5rem .75rem;
+    border: 1px solid #adadad;
+    text-align: left;
+    vertical-align: top;
+    background-color: inherit;
+}
+
+thead th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
