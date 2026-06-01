@@ -9,6 +9,15 @@ editor:
     externalPlugins:
         typo3link: { resource: "EXT:rte_ckeditor/Resources/Public/JavaScript/Plugins/typo3link.js", route: "rteckeditor_wizard_browse_links" }
     config:
+        contentsCss:
+            - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
+        table:
+            contentToolbar:
+                - tableColumn
+                - tableRow
+                - mergeTableCells
+                - tableProperties
+                - tableCellProperties
         toolbar:
             items:
               - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] }
@@ -17,6 +26,7 @@ editor:
               - { name: 'lists', items: [ 'NumberedList', 'BulletedList' ] }
               - { name: 'clipboard', items: [ 'Undo', 'Redo' ] }
               - { name: 'format', items: [ 'Paste', 'RemoveFormat', 'Link' ] }
+              - { name: 'table', items: [ 'Table' ] }
               - { name: 'icon', items: [ 'IconPicker' ] }
         style:
           definitions:

@@ -178,6 +178,10 @@ figcaption {
     grid-column: 1 / 2;
 }
 
+.ce-image .ce-bodytext {
+    min-width: 0;
+}
+
 .ce-focuspoint-bodytext {
     margin-bottom: var(--space);
 }
@@ -269,6 +273,39 @@ section.cover {
 }
 
 /** RTE styles */
+.ce-bodytext figure.table {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.ce-bodytext table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space);
+}
+
+.ce-bodytext table thead,
+.ce-bodytext table tbody,
+.ce-bodytext table tfoot,
+.ce-bodytext table tr {
+    background-color: inherit;
+}
+
+.ce-bodytext table th,
+.ce-bodytext table td {
+    padding: .5rem calc(var(--space) * 0.75);
+    border: 1px solid #adadad;
+    text-align: left;
+    vertical-align: top;
+    background-color: inherit;
+}
+
+.ce-bodytext table thead th {
+    background-color: #e0e0e0;
+    font-weight: bold;
+}
+
+
 span.badge {
     background-color: #ececec;
     font-size: 75%;
