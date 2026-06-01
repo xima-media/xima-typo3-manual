@@ -63,7 +63,7 @@ TCEFORM.tt_content {
   CType.keepItems = mtext,mbox,msteps,mannotation
   assets.config.maxitems = 1
   imageorient.disabled = 0
-  imageorient.removeItems = 1,2,9,10,17,18
+  imageorient.keepItems = 0,8,25,26
   colPos.addItems.1 = Content Slider
   header_layout.disabled = 1
   header_position.disabled = 1
