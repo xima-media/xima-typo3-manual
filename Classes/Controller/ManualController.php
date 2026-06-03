@@ -35,7 +35,8 @@ class ManualController extends ActionController
         protected IconFactory $iconFactory,
         protected PageRenderer $pageRenderer,
         protected PageRepository $pageRepository,
-        protected SiteFinder $siteFinder
+        protected SiteFinder $siteFinder,
+        private readonly ConnectionPool $connectionPool
     ) {
     }
 
@@ -96,7 +97,7 @@ class ManualController extends ActionController
 
     protected function getUidOfFirstAccessibleManualPage(): int
     {
-        $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $qb = $this->connectionPool->getQueryBuilderForTable('pages');
         $pages = $qb->select('uid')
             ->from('pages')
             ->where(

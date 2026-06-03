@@ -2,6 +2,7 @@
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc;
 
 ExtensionManagementUtility::registerPageTSConfigFile(
     'xima_typo3_manual',
@@ -34,7 +35,7 @@ $tempFields = [
             'appearance' => [
                 'expandAll' => true,
             ],
-            'itemsProcFunc' => \Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc::class . '->getItems',
+            'itemsProcFunc' => SelectItemsProcFunc::class . '->getItems',
         ],
     ],
 ];
