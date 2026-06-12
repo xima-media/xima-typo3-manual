@@ -15,7 +15,7 @@ page {
       context.value = frontend
       context.override.data = GP:context
       title = TEXT
-      title.data = levelfield:0,title
+      title.data = leveltitle:0
     }
 
     dataProcessing {
