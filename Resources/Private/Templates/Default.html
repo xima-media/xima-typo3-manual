@@ -46,11 +46,9 @@
             <f:then>
                 <f:image image="{manualLogo.0}" width="300" alt="Logo"/>
             </f:then>
-            <f:else>
-                <f:if condition="{backendSettings.loginLogo}">
-                    <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
-                </f:if>
-            </f:else>
+            <f:elseif condition="{backendSettings.loginLogo}">
+                <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
+            </f:elseif>
         </f:if>
         <h1>{title}</h1>
     </section>
