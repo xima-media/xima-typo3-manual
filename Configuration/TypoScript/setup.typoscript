@@ -15,8 +15,7 @@ page {
       context.value = frontend
       context.override.data = GP:context
       title = TEXT
-      title.data = site:websiteTitle
-      title.override.data = siteLanguage:websiteTitle
+      title.data = page:title
     }
 
     dataProcessing {
@@ -41,6 +40,14 @@ page {
 
       # Backend settings
       20 = Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor
+
+      # Manual logo from root page media field
+      40 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+      40 {
+        references.fieldName = media
+        as = manualLogo
+        maxItems = 1
+      }
 
       # Language menu
       30 = TYPO3\CMS\Frontend\DataProcessing\LanguageMenuProcessor
