@@ -272,7 +272,7 @@ nav li:not(:has(> details)) {
 }
 
 nav li:not(:has(> details))::before {
-    content: counters(nav-counter, '.') ". ";
+    content: counters(nav-counter, '.') " ";
     flex-shrink: 0;
     white-space: nowrap;
 }
@@ -289,13 +289,13 @@ summary::marker {
 }
 
 summary:before {
-    content: "► " counters(nav-counter, '.') ". ";
+    content: "► " counters(nav-counter, '.') " ";
     flex-shrink: 0;
     white-space: nowrap;
 }
 
 details[open] > summary:before {
-    content: "▼ " counters(nav-counter, '.') ". ";
+    content: "▼ " counters(nav-counter, '.') " ";
     flex-shrink: 0;
     white-space: nowrap;
 }
