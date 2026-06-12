@@ -289,15 +289,21 @@ summary::marker {
 }
 
 summary:before {
-    content: "► " counters(nav-counter, '.') " ";
+    content: counters(nav-counter, '.') " ";
     flex-shrink: 0;
     white-space: nowrap;
 }
 
-details[open] > summary:before {
-    content: "▼ " counters(nav-counter, '.') " ";
-    flex-shrink: 0;
-    white-space: nowrap;
+summary:after {
+    content: "►";
+    display: inline-block;
+    transition: transform 0.2s;
+    order: -1;
+    margin-right: 0.25rem;
+}
+
+details[open] > summary:after {
+    transform: rotate(90deg);
 }
 
 nav a.active {
