@@ -46,9 +46,9 @@
             <f:then>
                 <f:image image="{manualLogo.0}" width="300" alt="Logo"/>
             </f:then>
-            <f:elseif condition="{backendSettings.loginLogo}">
+            <f:else if="{backendSettings.loginLogo}">
                 <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
-            </f:elseif>
+            </f:else>
         </f:if>
         <h1>{title}</h1>
     </section>
