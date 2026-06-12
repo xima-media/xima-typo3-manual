@@ -100,19 +100,19 @@ main > section > section > section > section > h2:first-child, main > section > 
 }
 
 main > section > h2:before {
-    content: counter(counter-level-1) ". ";
+    content: counter(counter-level-1) " ";
 }
 
 main > section > section > h2:before, main > section > div > header > h3:before {
-    content: counter(counter-level-1) "." counter(counter-level-2) ". ";
+    content: counter(counter-level-1) "." counter(counter-level-2) " ";
 }
 
 main > section > section > section > h2:before, main > section > section > div > header > h3:before {
-    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) ". ";
+    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) " ";
 }
 
 main > section > section > section > section > h2:before, main > section > section > section > div > header > h3:before {
-    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) "." counter(counter-level-4) ". ";
+    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) "." counter(counter-level-4) " ";
 }
 
 ol > li::marker {
