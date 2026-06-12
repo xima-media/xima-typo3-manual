@@ -106,9 +106,11 @@
             <f:if condition="{point.title} || {point.description}">
                 <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
                     <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
-                    <p>
-                        <f:format.nl2br>{point.description}</f:format.nl2br>
-                    </p>
+                    <f:if condition="{point.description}">
+                        <p>
+                            <f:format.nl2br>{point.description}</f:format.nl2br>
+                        </p>
+                    </f:if>
                 </div>
             </f:if>
         </f:for>
