@@ -108,6 +108,11 @@ main > section > section > section > h2:first-child, main > section > section > 
 
 main > section > section > section > section > h2:first-child, main > section > section > section > div > header > h3 {
     counter-increment: counter-level-4;
+    counter-reset: counter-level-5;
+}
+
+main > section > section > section > section > section > h2:first-child, main > section > section > section > section > div > header > h3 {
+    counter-increment: counter-level-5;
 }
 
 main > section > h2:before {
@@ -124,6 +129,10 @@ main > section > section > section > h2:before, main > section > section > div >
 
 main > section > section > section > section > h2:before, main > section > section > section > div > header > h3:before {
     content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) "." counter(counter-level-4) " ";
+}
+
+main > section > section > section > section > section > h2:before, main > section > section > section > section > div > header > h3:before {
+    content: counter(counter-level-1) "." counter(counter-level-2) "." counter(counter-level-3) "." counter(counter-level-4) "." counter(counter-level-5) " ";
 }
 
 ol > li::marker {
@@ -243,11 +252,36 @@ nav li, nav summary {
 }
 
 nav ol {
+    padding-left: 1.5rem;
     margin-bottom: 0.4rem !important;
+    counter-reset: nav-counter;
+}
+
+nav li {
+    counter-increment: nav-counter;
+}
+
+nav li::marker {
+    content: '';
+}
+
+nav li:not(:has(> details)) {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
+
+nav li:not(:has(> details))::before {
+    content: counters(nav-counter, '.') ". ";
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 summary {
-    position: relative;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
 }
 
 summary::marker {
@@ -255,18 +289,15 @@ summary::marker {
 }
 
 summary:before {
-    content: "►";
-    float: left;
-    position: absolute;
-    left: -45px;
-}
-
-details details summary:before {
-    left: -55px;
+    content: "► " counters(nav-counter, '.') ". ";
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 details[open] > summary:before {
-    content: "▼";
+    content: "▼ " counters(nav-counter, '.') ". ";
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 nav a.active {
