@@ -44,6 +44,8 @@ page {
       # Manual logo from root page media field
       40 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
       40 {
+        references.table = pages
+        references.uid.data = levelUid:0
         references.fieldName = media
         as = manualLogo
         maxItems = 1
