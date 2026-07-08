@@ -74,6 +74,8 @@ TCEFORM.tt_content {
   layout >
 }
 
+TCEFORM.pages.doktype.keepItems = 701
+
 mod.tx_bwfocuspointimages.settings.fields {
 
   type {
