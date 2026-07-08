@@ -1,6 +1,7 @@
 <?php
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc;
 
 $tempFields = [
     'tx_ximatypo3manual_relations' => [
@@ -13,7 +14,7 @@ $tempFields = [
             'appearance' => [
                 'expandAll' => true,
             ],
-            'itemsProcFunc' => \Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc::class . '->getItems',
+            'itemsProcFunc' => SelectItemsProcFunc::class . '->getItems',
         ],
     ],
     'tx_ximatypo3manual_children' => [

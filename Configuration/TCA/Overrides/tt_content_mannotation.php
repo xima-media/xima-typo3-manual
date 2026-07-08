@@ -1,6 +1,7 @@
 <?php
 
 use Blueways\BwFocuspointImages\Preview\FocuspointPreviewRenderer;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 ExtensionManagementUtility::addTcaSelectItem(
@@ -41,7 +42,7 @@ $GLOBALS['TCA']['tt_content']['types']['mannotation'] = [
             'config' => [
                 'overrideChildTca' => [
                     'types' => [
-                        \TYPO3\CMS\Core\Resource\File::FILETYPE_IMAGE => [
+                        File::FILETYPE_IMAGE => [
                             'showitem' => 'focus_points,--palette--;;filePalette',
                         ],
                     ],

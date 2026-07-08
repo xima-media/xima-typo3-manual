@@ -9,6 +9,9 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 final class PageContentPreviewEventListener
 {
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
         if ($event->getTable() !== 'tt_content') {
@@ -32,7 +35,7 @@ final class PageContentPreviewEventListener
         $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Backend/MstepsPreview.html');
 
         if ($record['tx_ximatypo3manual_children'] !== 0) {
-            $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+            $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
             $steps = $qb->select('header')
                 ->from('tt_content')
                 ->where(

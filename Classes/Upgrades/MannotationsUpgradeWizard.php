@@ -6,13 +6,15 @@ namespace Xima\XimaTypo3Manual\Upgrades;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 #[UpgradeWizard('ximaManual_mAnnotationsUpgradeWizard')]
 final class MannotationsUpgradeWizard implements UpgradeWizardInterface
 {
+    public function __construct(private readonly ConnectionPool $connectionPool)
+    {
+    }
     public function getTitle(): string
     {
         return 'Manual elements';
@@ -27,7 +29,7 @@ final class MannotationsUpgradeWizard implements UpgradeWizardInterface
     {
         $elements = $this->getLegacyElementUids();
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->update('tt_content')
             ->set('CType', 'mannotation')
             ->where(
@@ -40,7 +42,7 @@ final class MannotationsUpgradeWizard implements UpgradeWizardInterface
 
     private function getLegacyElementUids(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $queryBuilder->getRestrictions()->removeAll();
         $elements = $queryBuilder->select('c.uid')
             ->from('tt_content', 'c')
