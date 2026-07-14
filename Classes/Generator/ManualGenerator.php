@@ -2,7 +2,6 @@
 
 namespace Xima\XimaTypo3Manual\Generator;
 
-use TYPO3\CMS\Core\Configuration\SiteConfiguration;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -20,7 +19,7 @@ class ManualGenerator
 
     protected ?int $rootPageUid = null;
 
-    public function __construct(private ?SiteWriter $siteWriter = null)
+    public function __construct(private readonly SiteWriter $siteWriter)
     {
     }
 
@@ -44,11 +43,7 @@ class ManualGenerator
             return [];
         }
 
-        if ($this->siteWriter) {
-            $this->createSiteConfiguration();
-        } else {
-            $this->createSiteConfigurationV12();
-        }
+        $this->createSiteConfiguration();
 
         return [
             'rootPageUid' => $this->rootPageUid,
@@ -113,35 +108,5 @@ class ManualGenerator
     {
         $port = $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() ? ':' . $GLOBALS['TYPO3_REQUEST']->getUri()->getPort() : '';
         return $GLOBALS['TYPO3_REQUEST']->getUri()->getScheme() . '://' . $GLOBALS['TYPO3_REQUEST']->getUri()->getHost() . $port . '/';
-    }
-
-    private function createSiteConfigurationV12(): void
-    {
-        $siteConfiguration = GeneralUtility::makeInstance(SiteConfiguration::class);
-        $configuration = [
-            'base' => $this->getSiteBase(),
-            'rootPageId' => $this->rootPageUid,
-            'routes' => [],
-            'websiteTitle' => $this->preset->getTitle(),
-            'baseVariants' => [],
-            'errorHandling' => [],
-            'languages' => [
-                [
-                    'title' => 'English',
-                    'enabled' => true,
-                    'languageId' => 0,
-                    'base' => '/',
-                    'typo3Language' => 'default',
-                    'locale' => 'en_US.UTF-8',
-                    'iso-639-1' => 'en',
-                    'navigationTitle' => 'English',
-                    'hreflang' => 'en-us',
-                    'direction' => 'ltr',
-                    'flag' => 'us',
-                    'websiteTitle' => '',
-                ],
-            ],
-        ];
-        $siteConfiguration->write($this->getSiteIdentifier(), $configuration);
     }
 }

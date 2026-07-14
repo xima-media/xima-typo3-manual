@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+xrdb -merge /home/$(whoami)/.Xresources 2>/dev/null || true
+xsetroot -solid grey 2>/dev/null || true
+startxfce4 2>/dev/null || startkde 2>/dev/null || x-window-manager 2>/dev/null || true

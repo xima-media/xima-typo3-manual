@@ -1,4 +1,4 @@
-# Load default processing options
+# CKEditor5 RTE preset for the editor manual
 imports:
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
@@ -6,30 +6,39 @@ imports:
     - { resource: 'EXT:bw_icons/Configuration/RTE/IconPicker.yaml' }
 
 editor:
-    externalPlugins:
-        typo3link: { resource: "EXT:rte_ckeditor/Resources/Public/JavaScript/Plugins/typo3link.js", route: "rteckeditor_wizard_browse_links" }
-    config:
-        contentsCss:
-            - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
-        table:
-            contentToolbar:
-                - tableColumn
-                - tableRow
-                - mergeTableCells
-                - tableProperties
-                - tableCellProperties
-        toolbar:
-            items:
-              - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] }
-              - { name: 'styles', items: [ 'Styles' ] }
-              - { name: 'links', groups: [ 'links' ] }
-              - { name: 'lists', items: [ 'NumberedList', 'BulletedList' ] }
-              - { name: 'clipboard', items: [ 'Undo', 'Redo' ] }
-              - { name: 'format', items: [ 'Paste', 'RemoveFormat', 'Link' ] }
-              - { name: 'table', items: [ 'Table' ] }
-              - { name: 'icon', items: [ 'IconPicker' ] }
-        style:
-          definitions:
-            - { name: "Grün", element: "span", classes: ['badge', 'badge--green'] }
-            - { name: "Blau", element: "span", classes: ['badge', 'badge--blue'] }
-            - { name: "Rot", element: "span", classes: ['badge', 'badge--red'] }
+  config:
+    contentsCss:
+      - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
+    table:
+      contentToolbar:
+        - tableColumn
+        - tableRow
+        - mergeTableCells
+        - tableProperties
+        - tableCellProperties
+    toolbar:
+      items:
+        - bold
+        - italic
+        - underline
+        - '|'
+        - style
+        - '|'
+        - bulletedList
+        - numberedList
+        - '|'
+        - insertTable
+        - '|'
+        - undo
+        - redo
+        - '|'
+        - link
+        - removeFormat
+        - pasteFromOffice
+        - '|'
+        - IconPicker
+    style:
+      definitions:
+        - { name: "Grün", element: "span", classes: ['badge', 'badge--green'] }
+        - { name: "Blau", element: "span", classes: ['badge', 'badge--blue'] }
+        - { name: "Rot", element: "span", classes: ['badge', 'badge--red'] }

@@ -1,0 +1,2 @@
+insert into `be_users` (`uid`, `pid`, `tstamp`, `username`, `password`, `admin`, `usergroup`, `lang`, `email`, `realName`, `disable`, `starttime`, `endtime`) values
+	(1, 0, 0, 'admin', '$argon2i$v=19$m=65536,t=16,p=1$OGJSTFVYSk41eXJEMXFaNg$bEgp5pkFnvF/0VZ7SF2p5GzPm7EqIFOkHUcFQkE6oPM', 1, '', 'default', 'admin@example.com', 'Admin User', 0, 0, 0);
