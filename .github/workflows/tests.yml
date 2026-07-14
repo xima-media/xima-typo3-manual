@@ -1,0 +1,114 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+      - v14
+      - 'renovate/**'
+  pull_request:
+    branches:
+      - main
+      - v14
+
+jobs:
+  functional:
+    name: Functional tests (PHP ${{ matrix.php-version }}, TYPO3 ${{ matrix.typo3-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        typo3-version: [ "13.4", "14.3" ]
+        php-version: [ "8.3" ]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql
+
+      - name: Setup DDEV
+        uses: ddev/github-action-setup-ddev@v1
+        with:
+          autostart: false
+
+      - name: Configure and start DDEV
+        run: |
+          ddev config --project-type=typo3 --php-version=${{ matrix.php-version }} --web-environment-add="XDEBUG_MODE=off"
+          ddev start
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: --with=typo3/cms-core:"^${{ matrix.typo3-version }}" --with=typo3/cms-rte-ckeditor:"^${{ matrix.typo3-version }}"
+
+      - name: Init TYPO3
+        run: ddev init-typo3
+
+      - name: Run functional tests
+        run: ddev exec vendor/bin/phpunit -c phpunit.xml.dist
+
+  acceptance:
+    name: Acceptance tests (PHP ${{ matrix.php-version }}, TYPO3 ${{ matrix.typo3-version }})
+    needs: functional
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        typo3-version: [ "13.4", "14.3" ]
+        php-version: [ "8.3" ]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql
+
+      - name: Setup DDEV
+        uses: ddev/github-action-setup-ddev@v1
+        with:
+          autostart: false
+
+      - name: Configure and start DDEV
+        run: |
+          ddev config --project-type=typo3 --php-version=${{ matrix.php-version }} --web-environment-add="XDEBUG_MODE=off"
+          ddev start
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: --with=typo3/cms-core:"^${{ matrix.typo3-version }}" --with=typo3/cms-rte-ckeditor:"^${{ matrix.typo3-version }}"
+
+      - name: Init TYPO3
+        run: ddev init-typo3
+
+      - name: Run acceptance tests
+        uses: nick-fields/retry@v3
+        with:
+          max_attempts: 3
+          retry_on: error
+          timeout_minutes: 10
+          command: ddev playwright test
+          new_command_on_retry: ddev playwright test --last-failed
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: acceptance-reports-${{ matrix.php-version }}-${{ matrix.typo3-version }}
+          path: Tests/Playwright/playwright-report/
+        if: failure()
