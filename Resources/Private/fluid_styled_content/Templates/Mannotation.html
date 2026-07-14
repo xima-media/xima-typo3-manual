@@ -103,12 +103,16 @@
         </div>
 
         <f:for each="{points.{img-i.index}}" as="point" iteration="i">
-            <f:if condition="{point.description}">
+            <f:if condition="{point.title} || {point.description}">
                 <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
-                    <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
-                    <p>
-                        <f:format.nl2br>{point.description}</f:format.nl2br>
-                    </p>
+                    <f:if condition="{point.title}">
+                        <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
+                    </f:if>
+                    <f:if condition="{point.description}">
+                        <p>
+                            <f:format.nl2br>{point.description}</f:format.nl2br>
+                        </p>
+                    </f:if>
                 </div>
             </f:if>
         </f:for>

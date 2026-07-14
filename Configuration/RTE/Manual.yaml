@@ -7,6 +7,15 @@ imports:
 
 editor:
   config:
+    contentsCss:
+      - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
+    table:
+      contentToolbar:
+        - tableColumn
+        - tableRow
+        - mergeTableCells
+        - tableProperties
+        - tableCellProperties
     toolbar:
       items:
         - bold
@@ -17,6 +26,8 @@ editor:
         - '|'
         - bulletedList
         - numberedList
+        - '|'
+        - insertTable
         - '|'
         - undo
         - redo
