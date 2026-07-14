@@ -1,4 +1,4 @@
-# Load default processing options
+# CKEditor5 RTE preset for the editor manual
 imports:
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
@@ -6,20 +6,28 @@ imports:
     - { resource: 'EXT:bw_icons/Configuration/RTE/IconPicker.yaml' }
 
 editor:
-    externalPlugins:
-        typo3link: { resource: "EXT:rte_ckeditor/Resources/Public/JavaScript/Plugins/typo3link.js", route: "rteckeditor_wizard_browse_links" }
-    config:
-        toolbar:
-            items:
-              - { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] }
-              - { name: 'styles', items: [ 'Styles' ] }
-              - { name: 'links', groups: [ 'links' ] }
-              - { name: 'lists', items: [ 'NumberedList', 'BulletedList' ] }
-              - { name: 'clipboard', items: [ 'Undo', 'Redo' ] }
-              - { name: 'format', items: [ 'Paste', 'RemoveFormat', 'Link' ] }
-              - { name: 'icon', items: [ 'IconPicker' ] }
-        style:
-          definitions:
-            - { name: "Grün", element: "span", classes: ['badge', 'badge--green'] }
-            - { name: "Blau", element: "span", classes: ['badge', 'badge--blue'] }
-            - { name: "Rot", element: "span", classes: ['badge', 'badge--red'] }
+  config:
+    toolbar:
+      items:
+        - bold
+        - italic
+        - underline
+        - '|'
+        - style
+        - '|'
+        - bulletedList
+        - numberedList
+        - '|'
+        - undo
+        - redo
+        - '|'
+        - link
+        - removeFormat
+        - pasteFromOffice
+        - '|'
+        - IconPicker
+    style:
+      definitions:
+        - { name: "Grün", element: "span", classes: ['badge', 'badge--green'] }
+        - { name: "Blau", element: "span", classes: ['badge', 'badge--blue'] }
+        - { name: "Rot", element: "span", classes: ['badge', 'badge--red'] }
