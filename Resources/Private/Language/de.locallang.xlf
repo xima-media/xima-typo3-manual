@@ -234,6 +234,21 @@
 				<source />
 				<target>Zum neuen Handbuch</target>
 			</trans-unit>
+			<trans-unit id="widget_group.xima_typo3_manual">
+				<source>Editor Manual</source>
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="cta_widget.description">
+				<source>Shows a short explanation and a link button to the manual</source>
+			</trans-unit>
+			<trans-unit id="cta_widget.button_label">
+				<source>Open manual</source>
+				<target>Handbuch öffnen</target>
+			</trans-unit>
+			<trans-unit id="cta_widget.bodytext">
+				<source>New in this project or to TYPO3 in general? There is a manual for helping editors to get started.</source>
+				<target>Neu in diesem Projekt oder in TYPO3 allgemein? Es gibt ein Handbuch, das Redakteuren den Einstieg erleichtert.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -176,6 +176,18 @@
 			<trans-unit id="installation.result.success.openNewManual">
 				<source>Navigate to new manual</source>
 			</trans-unit>
+			<trans-unit id="widget_group.xima_typo3_manual">
+				<source>Editor Manual</source>
+			</trans-unit>
+			<trans-unit id="cta_widget.description">
+				<source>Shows a short explanation and a link button to the manual</source>
+			</trans-unit>
+			<trans-unit id="cta_widget.button_label">
+				<source>Open manual</source>
+			</trans-unit>
+			<trans-unit id="cta_widget.bodytext">
+				<source>New in this project or to TYPO3 in general? There is a manual for helping editors to get started.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
