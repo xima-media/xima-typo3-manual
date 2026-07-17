@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
 		<body>
 			<trans-unit id="manual_page_type">
 				<source />
@@ -235,18 +235,19 @@
 				<target>Zum neuen Handbuch</target>
 			</trans-unit>
 			<trans-unit id="widget_group.xima_typo3_manual">
-				<source>Editor Manual</source>
+				<source />
 				<target>Handbuch</target>
 			</trans-unit>
 			<trans-unit id="cta_widget.description">
-				<source>Shows a short explanation and a link button to the manual</source>
+				<source />
+				<target>Zeigt eine kurze Erklärung und einen Link zum Handbuch</target>
 			</trans-unit>
 			<trans-unit id="cta_widget.button_label">
-				<source>Open manual</source>
+				<source />
 				<target>Handbuch öffnen</target>
 			</trans-unit>
 			<trans-unit id="cta_widget.bodytext">
-				<source>New in this project or to TYPO3 in general? There is a manual for helping editors to get started.</source>
+				<source />
 				<target>Neu in diesem Projekt oder in TYPO3 allgemein? Es gibt ein Handbuch, das Redakteuren den Einstieg erleichtert.</target>
 			</trans-unit>
 		</body>
