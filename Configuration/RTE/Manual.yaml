@@ -3,11 +3,16 @@ imports:
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
     - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
-    - { resource: 'EXT:bw_icons/Configuration/RTE/IconPicker.yaml' }
 
 editor:
   config:
+    # EXT:bw_icons/Configuration/RTE/IconPicker.yaml is deliberately not imported: it declares its module as a plain
+    # string. TYPO3 accepts that, EXT:visual_editor reads every entry as an array, so the module is declared here in
+    # the documented form instead.
+    importModules:
+      - { module: '@blueways/bw-icons/IconPicker.js' }
     contentsCss:
+      - "EXT:bw_icons/Resources/Public/Css/Rte.css"
       - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
     table:
       contentToolbar:

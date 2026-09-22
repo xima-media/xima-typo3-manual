@@ -31,10 +31,13 @@ makes no request to a third party for them
 
 ### Fixed
 
+- Text elements failed to render in the visual editor. The RTE preset pulled in
+  `EXT:bw_icons/Configuration/RTE/IconPicker.yaml`, which declares its CKEditor module as a plain string; TYPO3
+  accepts that, the visual editor reads every entry as an array. The module is now declared in the documented form
 - The annotation element was the one content element left in the old styling: its markers, its description list and
-  its heading now follow the design, and the marker colour comes from the design palette instead of TYPO3 orange
+its heading now follow the design, and the marker colour comes from the design palette instead of TYPO3 orange
 - Annotation descriptions had lost their spacing, because their stylesheet still referenced a custom property of the
-  removed Gutenberg stylesheets
+removed Gutenberg stylesheets
 - Picking a file for an image or annotation element failed with "Element browser with identifier file is not
 registered": the manual uses file relations, but never declared its dependency on EXT:filelist
 
