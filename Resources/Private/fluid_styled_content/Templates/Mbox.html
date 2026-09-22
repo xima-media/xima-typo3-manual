@@ -12,9 +12,9 @@
 
     <aside class="manual-note manual-note--{noteVariant}">
         <f:if condition="{data.header}">
-            <p class="manual-note_label">{data.header}</p>
+            <p class="manual-note_label">{record -> f:render.text(field: 'header')}</p>
         </f:if>
-        <f:format.html>{data.bodytext}</f:format.html>
+        {record -> f:render.text(field: 'bodytext')}
     </aside>
 </f:section>
 </html>

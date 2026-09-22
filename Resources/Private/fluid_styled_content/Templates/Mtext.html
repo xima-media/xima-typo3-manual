@@ -16,7 +16,7 @@
             </div>
         </f:if>
         <div class="manual-text_body">
-            <f:format.html>{data.bodytext}</f:format.html>
+            {record -> f:render.text(field: 'bodytext')}
         </div>
     </div>
 </f:section>

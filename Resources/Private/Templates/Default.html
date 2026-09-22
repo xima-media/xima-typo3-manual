@@ -209,7 +209,8 @@
             <p class="manual-chapter_lead">{page.data.abstract}</p>
         </f:if>
 
-        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
+        <f:render partial="Manual/ContentArea"
+                arguments="{pid: page.data.uid, colPos: '0', markable: '{f:if(condition: \'{page.data.uid} == {currentPageUid}\', then: 1, else: 0)}'}"/>
     </section>
 
     <f:for each="{page.children}" as="subpage">

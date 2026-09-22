@@ -82,6 +82,25 @@ Installations that predate site sets can keep the previous wiring instead: inclu
 the **static PageTS** "XIMA Manual" and create a root TypoScript template that
 includes the static TypoScript of this extension.
 
+## Visual editing
+
+With [`friendsoftypo3/visual-editor`](https://github.com/FriendsOfTYPO3/visual_editor)
+installed, chapter headings and texts can be edited inline in the backend module
+*Web > Edit*, in the layout the reader sees:
+
+```bash
+composer require friendsoftypo3/visual-editor
+```
+
+Nothing else has to be configured. The extension is optional; without it the
+manual renders exactly as before.
+
+One limitation is worth knowing: a manual renders its whole page tree on a single
+page, while the visual editor takes the page that new elements are added to from
+the request. Adding, moving and deleting elements therefore works in the chapter
+that is the requested page — open `Web > Edit` on that chapter to edit its
+structure. Editing existing headings and texts works in every chapter.
+
 ## Several manuals
 
 An installation can hold any number of manuals: create one manual page tree per

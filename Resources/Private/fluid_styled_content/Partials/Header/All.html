@@ -3,7 +3,7 @@
 <f:if condition="{data.header} && {data.CType} != 'mbox'">
     <header>
         <h3 id="c{data.uid}">
-            {data.header}
+            {record -> f:render.text(field: 'header')}
             <f:if condition="{context} == 'frontend'">
                 <a href="#c{data.uid}" class="manual-anchor" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:anchor.permalink')}">
                     <core:icon identifier="actions-link" size="small"/>

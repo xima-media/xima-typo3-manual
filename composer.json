@@ -27,6 +27,7 @@
 		"bk2k/bootstrap-package": "^15.0 || ^16.0",
 		"ergebnis/composer-normalize": "^2.45",
 		"friendsofphp/php-cs-fixer": "^3.6.0",
+		"friendsoftypo3/visual-editor": "^1.10",
 		"helhum/typo3-console": "^8.2",
 		"helmich/typo3-typoscript-lint": "^3.3",
 		"move-elevator/composer-translation-validator": "^1.3",
@@ -36,6 +37,9 @@
 		"ssch/typo3-rector": "^2.13 || ^3.3",
 		"typo3/cms-lowlevel": "^13.4 || ^14.3",
 		"typo3/testing-framework": "^9.0"
+	},
+	"suggest": {
+		"friendsoftypo3/visual-editor": "Inline WYSIWYG editing of manual chapters in the TYPO3 backend (TYPO3 v13.4.22+ and v14)"
 	},
 	"autoload": {
 		"psr-4": {

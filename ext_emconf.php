@@ -18,6 +18,8 @@ $EM_CONF[$_EXTKEY] = [
             'bw_icons' => '4.0.0-4.99.99',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests' => [
+            'visual_editor' => '1.10.0-1.99.99',
+        ],
     ],
 ];

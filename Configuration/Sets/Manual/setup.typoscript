@@ -15,6 +15,8 @@ page {
       context.override.data = GP:context
       title = TEXT
       title.data = leveltitle:0
+      currentPageUid = TEXT
+      currentPageUid.data = page:uid
     }
 
     dataProcessing {
@@ -158,6 +160,9 @@ tt_content {
     }
   }
 }
+
+# Provides every content element template with a Record object, which f:render.text needs
+lib.contentElement.dataProcessing.1768551979 = record-transformation
 
 lib.contentElement.variables.context = TEXT
 lib.contentElement.variables.context.value = frontend

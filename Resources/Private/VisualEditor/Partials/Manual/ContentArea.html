@@ -1,0 +1,17 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:comment>
+    Overrides the default partial while EXT:visual_editor is installed, which registers f:mark.contentArea into the
+    "f" namespace. The ViewHelper takes the page to add records to from the request, so only the chapter that is the
+    requested page can be marked; the remaining chapters of the manual stay read-only for structural edits.
+</f:comment>
+<f:if condition="{markable}">
+    <f:then>
+        <f:mark.contentArea colPos="{colPos}">
+            <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: pid, colPos: colPos}"/>
+        </f:mark.contentArea>
+    </f:then>
+    <f:else>
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: pid, colPos: colPos}"/>
+    </f:else>
+</f:if>
+</html>
