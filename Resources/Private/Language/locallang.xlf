@@ -125,6 +125,15 @@
 			<trans-unit id="button.manual.close">
 				<source>Close manual</source>
 			</trans-unit>
+			<trans-unit id="modal.title.editRecord">
+				<source>Edit record</source>
+			</trans-unit>
+			<trans-unit id="modal.title.manual">
+				<source>Manual</source>
+			</trans-unit>
+			<trans-unit id="button.download.pdf">
+				<source>Download PDF</source>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source>Associated chapters</source>
 			</trans-unit>
@@ -146,16 +155,16 @@
 			<trans-unit id="installation.createFromPreset">
 				<source>Create new manual from preset</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.title">
+			<trans-unit id="installation.preset.empty.title">
 				<source>Empty Manual</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.subtitle">
+			<trans-unit id="installation.preset.empty.subtitle">
 				<source>Do it by yourself</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.body">
+			<trans-unit id="installation.preset.empty.description">
 				<source>This creates a new site root with pre-configured TypoScript template, PageTS and site configuration.</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.button">
+			<trans-unit id="installation.preset.create">
 				<source>Create new manual</source>
 			</trans-unit>
 			<trans-unit id="installation.creating">

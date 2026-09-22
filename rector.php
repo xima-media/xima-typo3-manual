@@ -9,9 +9,7 @@ use Rector\Set\ValueObject\SetList;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
-use Ssch\TYPO3Rector\CodeQuality\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
-use Ssch\TYPO3Rector\CodeQuality\General\RemoveTypo3VersionChecksRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 use Ssch\TYPO3Rector\Set\Typo3SetList;
@@ -21,10 +19,8 @@ return RectorConfig::configure()
         __DIR__ . '/Classes',
         __DIR__ . '/Configuration',
         __DIR__ . '/Tests',
-        __DIR__ . '/config',
         __DIR__ . '/ext_emconf.php',
         __DIR__ . '/ext_localconf.php',
-        __DIR__ . '/ext_tables.php',
     ])
     // uncomment to reach your current PHP version
     // ->withPhpSets()
@@ -43,6 +39,7 @@ return RectorConfig::configure()
 
         Typo3SetList::CODE_QUALITY,
         Typo3SetList::GENERAL,
+        // Not UP_TO_TYPO3_14: its Fluid 5 and FAL rules would produce code that no longer runs on v13
         Typo3LevelSetList::UP_TO_TYPO3_13,
     ])
     // To have a better analysis from PHPStan, we teach it here some more things
@@ -50,17 +47,12 @@ return RectorConfig::configure()
     ->withImportNames(true, true, false, true)
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
-        ConvertImplicitVariablesToExplicitGlobalsRector::class,
     ])
     ->withConfiguredRule(ExtEmConfRector::class, [
-        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.2.0-8.4.99',
-        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '13.0.0-14.3.99',
+        ExtEmConfRector::PHP_VERSION_CONSTRAINT => '8.2.0-8.5.99',
+        ExtEmConfRector::TYPO3_VERSION_CONSTRAINT => '13.4.0-14.3.99',
         ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => [],
     ])
-    ->withConfiguredRule(
-        RemoveTypo3VersionChecksRector::class,
-        [RemoveTypo3VersionChecksRector::TARGET_VERSION => 14]
-    )
     ->withSkip([
         // @see https://github.com/sabbelasichon/typo3-rector/issues/2536
         __DIR__ . '/**/Configuration/ExtensionBuilder/*',

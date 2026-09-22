@@ -4,31 +4,39 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Manual\Generator\Preset;
 
+use Xima\XimaTypo3Manual\Configuration;
+
 class EmptyManualPreset implements PresetInterface
 {
-    public function __construct(protected int $pid)
-    {
-    }
-
     public function getIdentifier(): string
     {
-        return '1';
+        return 'empty';
+    }
+
+    public function getTitle(): string
+    {
+        return Configuration::LANGUAGE_FILE . 'installation.preset.empty.title';
     }
 
     public function getDescription(): string
     {
-        return 'This is a demo manual with no content. Start building your manual by adding pages and content.';
+        return Configuration::LANGUAGE_FILE . 'installation.preset.empty.description';
     }
 
-    public function getData(): array
+    public function getIconIdentifier(): string
+    {
+        return 'apps-pagetree-manual-root';
+    }
+
+    public function getData(int $pid): array
     {
         return [
             'pages' => [
                 'NEW1' => [
-                    'pid' => $this->pid,
+                    'pid' => $pid,
                     'hidden' => 0,
-                    'title' => $this->getTitle(),
-                    'doktype' => 701,
+                    'title' => 'Demo Manual',
+                    'doktype' => Configuration::DOKTYPE_MANUAL,
                     'is_siteroot' => 1,
                     'tsconfig_includes' => 'EXT:xima_typo3_manual/Configuration/TSconfig/Page.tsconfig',
                     'backend_layout' => 'pagets__manualHomepage',
@@ -44,10 +52,5 @@ class EmptyManualPreset implements PresetInterface
                 ],
             ],
         ];
-    }
-
-    public function getTitle(): string
-    {
-        return 'Demo Manual';
     }
 }

@@ -6,6 +6,8 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 use Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc;
 
+defined('TYPO3') || die();
+
 $tempFields = [
     'tx_ximatypo3manual_relations' => [
         'exclude' => true,

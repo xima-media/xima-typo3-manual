@@ -7,6 +7,8 @@ use Blueways\BwFocuspointImages\Preview\FocuspointPreviewRenderer;
 use TYPO3\CMS\Core\Resource\FileType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
+defined('TYPO3') || die();
+
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
     'CType',

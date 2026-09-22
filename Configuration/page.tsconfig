@@ -2,5 +2,3 @@
 mod.wizards.newContentElement.wizardItems {
   default.removeItems := addToList(mannotation,mbox,msteps,mtext)
 }
-
-options.pageTree.doktypesToShowInNewPageDragArea := addToList(701)

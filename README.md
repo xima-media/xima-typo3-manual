@@ -28,9 +28,13 @@ See [bw_focuspoint_images](https://extensions.typo3.org/extension/bw_focuspoint_
 * TYPO3 system icons available in RTE:
 See [bw_icons](https://extensions.typo3.org/extension/bw_icons)
 
-## Requirements
+## Compatibility
 
-* TYPO3 12+ & PHP 8.1+
+| TYPO3      | PHP         | Extension |
+|------------|-------------|-----------|
+| 14.3 LTS   | 8.2 – 8.5   | 2.1+      |
+| 13.4 LTS   | 8.2 – 8.4   | 2.1+      |
+| 12.4 LTS   | 8.1 – 8.3   | 2.0.x     |
 
 ## Installation
 
@@ -100,6 +104,29 @@ appear in the doc header. These links are opened in a modal:
 * Link color and logo: Values of the backend are
 used: ```$GLOBALS['EXTENSIONS']['backend']```
 * Manual title: The `websiteTitle` of the generated site configuration is used
+
+## Development
+
+Everything runs inside DDEV:
+
+```bash
+ddev start
+ddev init-typo3          # empty database, fixtures and site configuration
+ddev composer sca        # composer normalize, php-cs-fixer, PHPStan, rector, linters
+ddev exec vendor/bin/phpunit -c phpunit.xml.dist
+ddev playwright test     # acceptance tests, needs the ddev playwright add-on
+```
+
+To try the extension against the other supported TYPO3 version, put a second
+install next to this one instead of switching versions in place:
+
+```bash
+git worktree add ../xima-typo3-manual-v13
+printf 'name: xima-typo3-manual-v13\n' > ../xima-typo3-manual-v13/.ddev/config.local.yaml
+cd ../xima-typo3-manual-v13 && ddev start
+ddev composer update --with "typo3/cms-core:^13.4" --with "typo3/cms-rte-ckeditor:^13.4"
+ddev init-typo3
+```
 
 ## Contribute
 

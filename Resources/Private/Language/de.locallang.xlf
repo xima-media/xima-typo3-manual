@@ -166,6 +166,18 @@
 				<source />
 				<target>Handbuch schließen</target>
 			</trans-unit>
+			<trans-unit id="modal.title.editRecord">
+				<source />
+				<target>Datensatz bearbeiten</target>
+			</trans-unit>
+			<trans-unit id="modal.title.manual">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="button.download.pdf">
+				<source />
+				<target>PDF herunterladen</target>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source />
 				<target>Zugehörige Kapitel</target>
@@ -194,19 +206,19 @@
 				<source />
 				<target>Neues Handbuch aus Voreinstellung erstellen</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.title">
+			<trans-unit id="installation.preset.empty.title">
 				<source />
 				<target>Leeres Handbuch</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.subtitle">
+			<trans-unit id="installation.preset.empty.subtitle">
 				<source />
-				<target>Start from scratch</target>
+				<target>Selbst gestalten</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.body">
+			<trans-unit id="installation.preset.empty.description">
 				<source />
 				<target>Dies erstellt eine neue Site-Root mit vorkonfiguriertem TypoScript-Template, PageTS und Site-Konfiguration.</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.button">
+			<trans-unit id="installation.preset.create">
 				<source />
 				<target>Neues Handbuch erstellen</target>
 			</trans-unit>

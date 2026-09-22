@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Manual\Tests\Functional\Controller;
 
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
@@ -17,51 +18,37 @@ final class ManualControllerTest extends FunctionalTestCase
 
     protected array $coreExtensionsToLoad = [
         'rte_ckeditor',
-        'dashboard',
     ];
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->importCSVDataSet(__DIR__ . '/../../Acceptance/Fixtures/be_users.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/tt_content.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/sys_template.csv');
-
-        $this->setUpFrontendRootPage(3, ['EXT:xima_typo3_manual/Configuration/TypoScript']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasManualRootPageReturnsTrueForManualRoot(): void
     {
         $result = ManualController::hasManualRootPage(3);
         self::assertTrue($result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasManualRootPageReturnsFalseForRegularPage(): void
     {
         $result = ManualController::hasManualRootPage(1);
         self::assertFalse($result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getRootPageUidReturnsRootOfPageInManual(): void
     {
         $result = ManualController::getRootPageUid(4);
         self::assertSame(3, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getRootPageUidReturnsPageItselfForRoot(): void
     {
         $result = ManualController::getRootPageUid(3);
