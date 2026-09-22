@@ -116,7 +116,7 @@
         </f:if>
 
         <f:for each="{pages}" as="page">
-            <f:render section="page" arguments="{page: page, context: context}"/>
+            <f:render section="page" arguments="{page: page, context: context, currentPageUid: currentPageUid}"/>
         </f:for>
     </main>
 
@@ -210,10 +210,10 @@
         </f:if>
 
         <f:render partial="Manual/ContentArea"
-                arguments="{pid: page.data.uid, colPos: '0', markable: '{f:if(condition: \'{page.data.uid} == {currentPageUid}\', then: 1, else: 0)}'}"/>
+                arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid}"/>
     </section>
 
     <f:for each="{page.children}" as="subpage">
-        <f:render section="page" arguments="{page: subpage, context: context}"/>
+        <f:render section="page" arguments="{page: subpage, context: context, currentPageUid: currentPageUid}"/>
     </f:for>
 </f:section>

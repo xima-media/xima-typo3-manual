@@ -18,11 +18,11 @@ final class RichtextPresetTest extends AbstractFunctionalTestCase
     }
 
     /**
-     * EXT:visual_editor reads every entry as an array, and TYPO3 itself documents the array form. A plain string
-     * passes unnoticed in the backend but breaks the frontend editor, so the preset is pinned to the array form.
+     * EXT:visual_editor reads every entry as an array with its exports, and TYPO3 documents that form. A plain
+     * string passes unnoticed in the backend but breaks the frontend editor, so the preset is pinned to it.
      */
     #[Test]
-    public function everyImportModuleOfThePresetIsDeclaredAsAnArray(): void
+    public function everyImportModuleOfThePresetIsDeclaredWithItsExports(): void
     {
         $importModules = $this->resolveConfiguration()['editor']['config']['importModules'] ?? [];
 
@@ -30,6 +30,9 @@ final class RichtextPresetTest extends AbstractFunctionalTestCase
         foreach ($importModules as $importModule) {
             self::assertIsArray($importModule, 'Import module "' . var_export($importModule, true) . '" is not an array');
             self::assertArrayHasKey('module', $importModule);
+            // The CKEditor bootstrap iterates the exports of every entry, a missing key aborts the whole editor
+            self::assertArrayHasKey('exports', $importModule, 'Import module "' . $importModule['module'] . '" has no exports');
+            self::assertNotSame([], $importModule['exports']);
         }
     }
 

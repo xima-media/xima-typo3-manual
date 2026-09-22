@@ -4,7 +4,7 @@
     "f" namespace. The ViewHelper takes the page to add records to from the request, so only the chapter that is the
     requested page can be marked; the remaining chapters of the manual stay read-only for structural edits.
 </f:comment>
-<f:if condition="{markable}">
+<f:if condition="{pid} == {currentPageUid}">
     <f:then>
         <f:mark.contentArea colPos="{colPos}">
             <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: pid, colPos: colPos}"/>
