@@ -1,121 +1,101 @@
-<f:layout name="Default"/>{namespace be=TYPO3\CMS\Backend\ViewHelpers}
-
-<f:section name="Header">
-    <f:if condition="{data.header}">
-        <header>
-            <h3 class="ce-headline-{data.header_position}" id="c{data.uid}">
-                {data.header}
-                <f:if condition="{context} == 'frontend'">
-                    <a href="#c{data.uid}">
-                        <core:icon identifier="actions-link" size="small"/>
-                    </a>
-                </f:if>
-                <f:if condition="{context} == 'backend'">
-                    <be:link.editRecord uid="{data.uid}"
-                                        table="tt_content"
-                                        returnUrl=""
-                                        fields="header,bodytext,assets"
-                                        class="edit-record">
-                        <core:icon identifier="actions-open" size="small"/>
-                    </be:link.editRecord>
-                </f:if>
-            </h3>
-        </header>
-    </f:if>
-</f:section>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default"/>
 
 <f:section name="Main">
 
-    <div class="ce-bodytext ce-focuspoint-bodytext">
-        <f:format.html>{data.bodytext}</f:format.html>
-    </div>
-
-    <f:for each="{images}" as="image" iteration="img-i">
-        <div class="focuspoint">
-
-            <f:image image="{image}"/>
-
-            <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
-
-                <defs>
-                    <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="solid">
-                        <feFlood flood-color="{color}" result="bg"/>
-                        <feMerge>
-                            <feMergeNode in="bg"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-
-
-                <f:for each="{points.{img-i.index}}" as="point" iteration="i">
-
-                    <a href="#focuspoint-{data.uid}-{i.cycle}">
-                        <f:if condition="{point.type}=='marking'">
-                            <rect x="{point.x}%"
-                                y="{point.y}%"
-                                stroke="{color}"
-                                stroke-width="2px"
-                                class="focuspoint__svg__rect marking"
-                                width="{point.width}%"
-                                height="{point.height}%"
-                                fill="transparent"/>
-                        </f:if>
-                    </a>
-
-                    <f:if condition="{point.type}!='marking'">
-                        <a href="#focuspoint-{data.uid}-{i.cycle}">
-
-                            <text x="{point.textX}%"
-                                y="{point.textY}%"
-                                class="default"
-                                fill="#FFF"
-                                font-size="13"
-                                filter="url(#solid)"
-                                alignment-baseline="middle"
-                                text-anchor="middle">
-                                {point.title}
-                            </text>
-                        </a>
-                    </f:if>
-
-                    <f:if condition="{point.type}=='marking'">
-                        <g transform="{point.markerTransform}">
-                            <circle r="13" cx="{point.markerCx}%" cy="{point.markerCy}%" fill="{color}"/>
-                            <text x="{point.markerCx}%"
-                                y="{point.markerCy}%"
-                                dy="0.35em"
-                                fill="#FFF"
-                                class="marking"
-                                font-weight="bold"
-                                font-family="'Open Sans', 'Helvetica Neue', Helvetica, arial, sans-serif"
-                                text-anchor="middle">
-                                {i.cycle}
-                            </text>
-                        </g>
-                    </f:if>
-
-
-                </f:for>
-
-            </svg>
-
+    <f:if condition="{data.bodytext}">
+        <div class="manual-annotation_intro">
+            {record -> f:render.text(field: 'bodytext')}
         </div>
+    </f:if>
 
-        <f:for each="{points.{img-i.index}}" as="point" iteration="i">
-            <f:if condition="{point.title} || {point.description}">
-                <div class="focuspoint__description" id="focuspoint-{data.uid}-{i.cycle}">
-                    <f:if condition="{point.title}">
-                        <strong>{f:if(condition: '{point.type}==marking', then: '{i.cycle}. ')}{point.title}</strong>
-                    </f:if>
-                    <f:if condition="{point.description}">
-                        <p>
-                            <f:format.nl2br>{point.description}</f:format.nl2br>
-                        </p>
-                    </f:if>
-                </div>
+    <f:for each="{images}" as="image" iteration="imageIterator">
+        <figure class="manual-annotation">
+            <div class="focuspoint">
+                <f:image image="{image}" alt="{image.alternative}"/>
+
+                <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="solid-{data.uid}">
+                            <feFlood flood-color="{color}" result="bg"/>
+                            <feMerge>
+                                <feMergeNode in="bg"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <f:for each="{points.{imageIterator.index}}" as="point" iteration="i">
+                        <f:if condition="{point.type} == 'marking'">
+                            <f:then>
+                                <a href="#focuspoint-{data.uid}-{i.cycle}">
+                                    <rect x="{point.x}%"
+                                        y="{point.y}%"
+                                        width="{point.width}%"
+                                        height="{point.height}%"
+                                        class="focuspoint__svg__rect marking"
+                                        stroke="{color}"
+                                        stroke-width="2px"
+                                        fill="transparent"/>
+                                </a>
+                                <a href="#focuspoint-{data.uid}-{i.cycle}">
+                                    <g transform="{point.markerTransform}">
+                                        <circle r="13" cx="{point.markerCx}%" cy="{point.markerCy}%" fill="{color}"/>
+                                        <text x="{point.markerCx}%"
+                                            y="{point.markerCy}%"
+                                            dy="0.35em"
+                                            class="focuspoint__svg__marker"
+                                            fill="#fff"
+                                            text-anchor="middle">{i.cycle}</text>
+                                    </g>
+                                </a>
+                            </f:then>
+                            <f:else>
+                                <a href="#focuspoint-{data.uid}-{i.cycle}">
+                                    <text x="{point.textX}%"
+                                        y="{point.textY}%"
+                                        class="focuspoint__svg__label"
+                                        fill="#fff"
+                                        filter="url(#solid-{data.uid})"
+                                        alignment-baseline="middle"
+                                        text-anchor="middle">{point.title}</text>
+                                </a>
+                            </f:else>
+                        </f:if>
+                    </f:for>
+                </svg>
+            </div>
+
+            <f:variable name="hasDescriptions">0</f:variable>
+            <f:for each="{points.{imageIterator.index}}" as="point">
+                <f:if condition="{point.title} || {point.description}">
+                    <f:variable name="hasDescriptions">1</f:variable>
+                </f:if>
+            </f:for>
+
+            <f:if condition="{hasDescriptions}">
+                <figcaption>
+                    <ol class="manual-annotation_points">
+                        <f:for each="{points.{imageIterator.index}}" as="point" iteration="i">
+                            <f:if condition="{point.title} || {point.description}">
+                                <li class="manual-annotation_point" id="focuspoint-{data.uid}-{i.cycle}">
+                                    <span class="manual-annotation_marker" aria-hidden="true">{i.cycle}</span>
+                                    <div class="manual-annotation_body">
+                                        <f:if condition="{point.title}">
+                                            <span class="manual-annotation_title">{point.title}</span>
+                                        </f:if>
+                                        <f:if condition="{point.description}">
+                                            <p><f:format.nl2br>{point.description}</f:format.nl2br></p>
+                                        </f:if>
+                                    </div>
+                                </li>
+                            </f:if>
+                        </f:for>
+                    </ol>
+                </figcaption>
             </f:if>
-        </f:for>
+        </figure>
     </f:for>
 
 </f:section>
+</html>

@@ -152,7 +152,7 @@ tt_content {
 
     variables {
       color = TEXT
-      color.value = #ff8700
+      color.value = #1A5FB4
 
       context = TEXT
       context.value = frontend

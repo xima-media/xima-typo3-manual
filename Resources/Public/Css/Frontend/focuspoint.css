@@ -1,7 +1,21 @@
+/* Annotated screenshots, rendered by EXT:bw_focuspoint_images through Templates/Mannotation.html */
+
 @-moz-document url-prefix() {
     :root {
-        --margin-y: 6px;
+        --focuspoint-label-offset: 6px;
     }
+}
+
+.manual-annotation {
+    margin: 0 0 24px;
+}
+
+.manual-annotation_intro > :last-child {
+    margin-bottom: 0;
+}
+
+.manual-annotation_intro {
+    margin-bottom: 16px;
 }
 
 .focuspoint {
@@ -9,21 +23,20 @@
     grid-template-columns: 100%;
     grid-template-rows: auto min-content;
     max-width: 100%;
+    border: 1px solid var(--manual-line);
+    border-radius: var(--manual-radius);
+    overflow: hidden;
+    background: var(--manual-surface);
 }
 
 .focuspoint * {
     text-decoration: none !important;
 }
 
-.focuspoint text.default {
-    transform: translate3d(0, var(--margin-y, 1px), 0);
-    border-radius: 3px;
-}
-
-
 .focuspoint img {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    display: block;
     max-width: 100%;
     height: auto;
 }
@@ -36,15 +49,76 @@
     width: 100%;
 }
 
-.focuspoint__description {
-    padding-top: var(--space);
+.focuspoint__svg__label {
+    font-family: var(--manual-font-sans);
+    font-size: 13px;
+    transform: translate3d(0, var(--focuspoint-label-offset, 1px), 0);
 }
 
-.focuspoint__description strong {
+.focuspoint__svg__marker {
+    font-family: var(--manual-font-sans);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* The list repeats the markers of the image, so a reader can follow them in order */
+
+.manual-annotation_points {
+    counter-reset: none;
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.manual-annotation_point {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    scroll-margin-top: 24px;
+}
+
+.manual-annotation_point:target .manual-annotation_marker {
+    background: var(--manual-blue);
+    color: #fff;
+}
+
+.manual-annotation_marker {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--manual-blue-light);
+    color: var(--manual-blue-deep);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.manual-annotation_title {
     display: block;
-    margin-bottom: calc(0.25 * var(--space));
+    font-weight: 700;
+    color: var(--manual-text);
 }
 
-.focuspoint__description p {
-    padding-left: calc(0.5 * var(--space));
+.manual-annotation_body {
+    font-size: 15px;
+    color: var(--manual-text-muted);
+}
+
+.manual-annotation_body p {
+    margin: 2px 0 0;
+}
+
+@media print {
+    .focuspoint {
+        break-inside: avoid;
+    }
+
+    .manual-annotation_point {
+        break-inside: avoid;
+    }
 }
