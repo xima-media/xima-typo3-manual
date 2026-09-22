@@ -5,21 +5,11 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3Manual\Tests\Functional\Service;
 
 use PHPUnit\Framework\Attributes\Test;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Xima\XimaTypo3Manual\Service\CoverageService;
+use Xima\XimaTypo3Manual\Tests\Functional\AbstractFunctionalTestCase;
 
-final class CoverageServiceTest extends FunctionalTestCase
+final class CoverageServiceTest extends AbstractFunctionalTestCase
 {
-    protected array $testExtensionsToLoad = [
-        'blueways/bw-focuspoint-images',
-        'blueways/bw-icons',
-        'xima/xima-typo3-manual',
-    ];
-
-    protected array $coreExtensionsToLoad = [
-        'rte_ckeditor',
-    ];
-
     protected function setUp(): void
     {
         parent::setUp();

@@ -13,22 +13,12 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Routing\PageArguments;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Middleware\EncodeImagesBase64Middleware;
+use Xima\XimaTypo3Manual\Tests\Functional\AbstractFunctionalTestCase;
 
-final class EncodeImagesBase64MiddlewareTest extends FunctionalTestCase
+final class EncodeImagesBase64MiddlewareTest extends AbstractFunctionalTestCase
 {
-    protected array $testExtensionsToLoad = [
-        'blueways/bw-focuspoint-images',
-        'blueways/bw-icons',
-        'xima/xima-typo3-manual',
-    ];
-
-    protected array $coreExtensionsToLoad = [
-        'rte_ckeditor',
-    ];
-
     private const IMAGE_URL = '/fileadmin/middleware-test.svg';
 
     protected function setUp(): void

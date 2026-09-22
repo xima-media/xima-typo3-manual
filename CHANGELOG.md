@@ -29,6 +29,11 @@ while the extension is loaded, so the manual keeps working without it
 makes no request to a third party for them
 - An "on this page" column that follows the chapter currently in view
 
+### Fixed
+
+- Picking a file for an image or annotation element failed with "Element browser with identifier file is not
+  registered": the manual uses file relations, but never declared its dependency on EXT:filelist
+
 ### Removed
 
 - The content slider of the step element, together with `Slider.js` and `slider.css`
