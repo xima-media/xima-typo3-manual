@@ -38,6 +38,13 @@ page {
             pidInList.field = uid
             where = header!="" and colPos=0
           }
+
+          # Turns the page row of a menu item into a Record, which f:render.text needs to make the chapter title editable
+          20 = record-transformation
+          20 {
+            table = pages
+            as = record
+          }
         }
       }
 

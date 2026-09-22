@@ -24,6 +24,7 @@ variant; its heading is rendered inside the block
 
 ### Added
 
+- Chapter titles are editable in the visual editor, in the chapter itself rather than in the chapter list
 - Two site settings, editable per site in the backend: `manual.appearance.primaryColor` sets the lead colour of the
 manual, `manual.behaviour.displayFullManual` decides whether the manual renders every chapter on one page (the
 previous behaviour, still the default) or one chapter per page
