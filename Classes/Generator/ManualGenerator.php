@@ -19,14 +19,14 @@ class ManualGenerator
 
     protected ?int $rootPageUid = null;
 
-    public function __construct(private readonly SiteWriter $siteWriter)
+    public function __construct(private readonly SiteWriter $siteWriter, private readonly ConnectionPool $connectionPool, private readonly SiteFinder $siteFinder)
     {
     }
 
     public function createManualFromPreset(string $presetIdentifier): array
     {
         $this->preset = $this->getPresetByIdentifier($presetIdentifier);
-        if (!$this->preset) {
+        if (!$this->preset instanceof PresetInterface) {
             return [];
         }
 
@@ -63,7 +63,7 @@ class ManualGenerator
 
     private function getUidOfLastTopLevelPage(): int
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
         $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
         $lastPage = $queryBuilder->select('uid')
             ->from('pages')
@@ -71,17 +71,16 @@ class ManualGenerator
             ->orderBy('sorting', 'DESC')
             ->executeQuery()
             ->fetchOne();
-        $uid = 0;
         if (MathUtility::canBeInterpretedAsInteger($lastPage) && $lastPage > 0) {
-            $uid = (int)$lastPage;
+            return (int)$lastPage;
         }
-        return $uid;
+        return 0;
     }
 
     private function createSiteConfiguration(): void
     {
         $this->siteWriter->createNewBasicSite($this->getSiteIdentifier(), $this->rootPageUid, $this->getSiteBase());
-        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $siteFinder = $this->siteFinder;
         $site = $siteFinder->getSiteByPageId($this->rootPageUid);
         $siteConfiguration = $site->getConfiguration();
         $siteConfiguration['websiteTitle'] = $this->preset->getTitle();

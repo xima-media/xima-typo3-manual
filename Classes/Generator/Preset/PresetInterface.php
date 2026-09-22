@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xima\XimaTypo3Manual\Generator\Preset;
 
 interface PresetInterface

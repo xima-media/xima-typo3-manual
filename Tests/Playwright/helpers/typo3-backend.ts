@@ -10,9 +10,9 @@ export async function loginAsAdmin(page: Page): Promise<void> {
 }
 
 /**
- * Open the manual module by its module menu identifier.
- * Returns the content frame (list_frame iframe).
- */
+* Open the manual module by its module menu identifier.
+* Returns the content frame (list_frame iframe).
+*/
 export async function openManualModule(page: Page): Promise<FrameLocator> {
   const contentFrame = page.frameLocator('iframe[name="list_frame"]');
   await page.click('a[data-modulemenu-identifier="help_manual"]');
@@ -22,16 +22,16 @@ export async function openManualModule(page: Page): Promise<FrameLocator> {
 }
 
 /**
- * Navigate to a manual page by clicking the sidebar navigation item with matching text.
- */
+* Navigate to a manual page by clicking the sidebar navigation item with matching text.
+*/
 export async function navigateToManualPage(contentFrame: FrameLocator, title: string): Promise<void> {
   await contentFrame.locator('.xima-typo3-manual-nav a').filter({ hasText: title }).click();
   await contentFrame.waitForTimeout(500); // wait for scroll/animation
 }
 
 /**
- * Wait for the manual module content area to finish loading.
- */
+* Wait for the manual module content area to finish loading.
+*/
 export async function waitForManualContent(contentFrame: FrameLocator): Promise<void> {
   await contentFrame.locator('.xima-typo3-manual-content').waitFor({ state: 'visible', timeout: 10000 });
 }

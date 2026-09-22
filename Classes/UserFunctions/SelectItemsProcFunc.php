@@ -95,11 +95,8 @@ class SelectItemsProcFunc
     protected static function getIconForTableAndType(string $table, string|int $type): string
     {
         $iconName = $type === 0 ? 'default' : $type;
-        if (isset($GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName])) {
-            return $GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName];
-        }
 
-        return $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
+        return $GLOBALS['TCA'][$table]['ctrl']['typeicon_classes'][$iconName] ?? $GLOBALS['TCA'][$table]['ctrl']['iconfile'] ?? '';
     }
 
     protected static function getPlugins(): array

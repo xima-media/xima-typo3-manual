@@ -4,7 +4,6 @@ namespace Xima\XimaTypo3Manual\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Routing\PreviewUriBuilder;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -16,8 +15,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\SiteFinder;
@@ -35,7 +34,8 @@ class ManualController extends ActionController
         protected IconFactory $iconFactory,
         protected PageRenderer $pageRenderer,
         protected PageRepository $pageRepository,
-        protected SiteFinder $siteFinder
+        protected SiteFinder $siteFinder,
+        private readonly ConnectionPool $connectionPool
     ) {
     }
 
@@ -96,7 +96,7 @@ class ManualController extends ActionController
 
     protected function getUidOfFirstAccessibleManualPage(): int
     {
-        $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $qb = $this->connectionPool->getQueryBuilderForTable('pages');
         $pages = $qb->select('uid')
             ->from('pages')
             ->where(
@@ -217,11 +217,11 @@ class ManualController extends ActionController
                 ])
                 ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.showPage'))
                 ->setShowLabelText(true)
-                ->setIcon($this->iconFactory->getIcon('actions-view-page', Icon::SIZE_SMALL));
+                ->setIcon($this->iconFactory->getIcon('actions-view-page', IconSize::SMALL));
             $buttonBar->addButton($showButton);
         }
 
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $uriBuilder = $this->uriBuilder;
         $downloadUrl = $uriBuilder->buildUriFromRoute(
             'manual-download-pdf',
             ['id' => $pageId, 'language' => $languageId]
@@ -231,7 +231,7 @@ class ManualController extends ActionController
             ->setClasses('xima-typo3-manual-download-pdf')
             ->setTitle('Download PDF')
             ->setShowLabelText(true)
-            ->setIcon($this->iconFactory->getIcon('actions-download', Icon::SIZE_SMALL));
+            ->setIcon($this->iconFactory->getIcon('actions-download', IconSize::SMALL));
         $buttonBar->addButton($showButton);
 
         if ($context === 'backend') {
@@ -249,7 +249,7 @@ class ManualController extends ActionController
                 ->setClasses($class)
                 ->setTitle($this->getLanguageService()->sL($label))
                 ->setShowLabelText(true)
-                ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL));
+                ->setIcon($this->iconFactory->getIcon('actions-close', IconSize::SMALL));
             $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
         }
     }

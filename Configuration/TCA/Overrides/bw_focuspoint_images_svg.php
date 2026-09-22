@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $showItem = $GLOBALS['TCA']['tt_content']['types']['bw_focuspoint_images_svg']['showitem'];
 $GLOBALS['TCA']['tt_content']['types']['bw_focuspoint_images_svg']['showitem'] = str_replace('assets,', 'bodytext,assets,', (string)$showItem);
 

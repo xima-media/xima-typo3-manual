@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Manual\Tests\Functional\Controller;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
-use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
-use TYPO3\CMS\Core\Http\ServerRequest;
-use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Xima\XimaTypo3Manual\Controller\DownloadController;
 use Xima\XimaTypo3Manual\Generator\ManualGenerator;
-use Xima\XimaTypo3Manual\Generator\Preset\EmptyManualPreset;
 
 final class ManualGeneratorTest extends FunctionalTestCase
 {

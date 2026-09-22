@@ -20,9 +20,9 @@ class InstallationController extends ActionController
     protected ?ModuleTemplate $moduleTemplate = null;
 
     public function __construct(
-        private ModuleTemplateFactory $moduleTemplateFactory,
-        private PageRenderer $pageRenderer,
-        private ManualGenerator $manualGenerator
+        private readonly ModuleTemplateFactory $moduleTemplateFactory,
+        private readonly PageRenderer $pageRenderer,
+        private readonly ManualGenerator $manualGenerator
     ) {
     }
 

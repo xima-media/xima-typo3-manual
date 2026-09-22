@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Manual\Tests\Functional\Controller;
 
-use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
