@@ -60,22 +60,22 @@ page {
   }
 
   includeCSS {
-    gutenberg = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.min.css
-    theme = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/gutenberg.modern.min.css
-    focuspoint = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/focuspoint.css
+    fonts = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/fonts.css
     manual = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/manual.css
-    slider = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/slider.css
+    focuspoint = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/focuspoint.css
   }
 
   includeJSFooter {
     navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
     navigation.type = module
-    slider = EXT:xima_typo3_manual/Resources/Public/JavaScript/Slider.js
-    slider.type = module
     search = EXT:xima_typo3_manual/Resources/Public/JavaScript/Search.js
     search.type = module
     glossary = EXT:xima_typo3_manual/Resources/Public/JavaScript/Glossary.js
     glossary.type = module
+    tree = EXT:xima_typo3_manual/Resources/Public/JavaScript/Tree.js
+    tree.type = module
+    toc = EXT:xima_typo3_manual/Resources/Public/JavaScript/Toc.js
+    toc.type = module
   }
 }
 
@@ -86,12 +86,12 @@ pdf.10.variables.context.value = pdf
 pdf.includeJSFooter.navigation >
 pdf.includeJSFooter.search >
 pdf.includeJSFooter.glossary >
+pdf.includeJSFooter.tree >
+pdf.includeJSFooter.toc >
 pdf.includeCSS {
-  gutenberg.inline = 1
-  theme.inline = 1
-  focuspoint.inline = 1
+  fonts >
   manual.inline = 1
-  slider.inline = 1
+  focuspoint.inline = 1
 }
 
 tt_content {

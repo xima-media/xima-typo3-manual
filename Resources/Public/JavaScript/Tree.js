@@ -1,0 +1,95 @@
+/**
+* The chapter tree of the sidebar: a leaf count per branch, the +/− sign of the design, and the expand/collapse all
+* controls. The open state survives a reload, so an editor keeps the branch they were working in.
+*/
+class Tree {
+  #storageKey = 'ximaTypo3Manual.openChapters'
+
+  constructor() {
+    this.details = [...document.querySelectorAll('.manual-nav details')]
+    if (this.details.length === 0) {
+      return
+    }
+
+    this.details.forEach((details, index) => {
+      this.decorate(details, index)
+      details.addEventListener('toggle', () => {
+        this.updateSign(details)
+        this.persist()
+      })
+    })
+
+    this.restore()
+    this.bindControls()
+  }
+
+  decorate(details, index) {
+    details.dataset.treeId = details.querySelector(':scope > summary > a')?.getAttribute('href') || 'branch-' + index
+
+    const leaves = details.querySelectorAll(':scope > ol > li > a, :scope > ol > li > details').length
+    if (leaves > 0) {
+      const count = document.createElement('span')
+      count.className = 'manual-nav_count'
+      count.textContent = String(this.countLeaves(details))
+      details.querySelector(':scope > summary')?.append(count)
+    }
+
+    this.updateSign(details)
+  }
+
+  countLeaves(details) {
+    return details.querySelectorAll(':scope > ol > li').length
+  }
+
+  updateSign(details) {
+    const sign = details.querySelector(':scope > summary > .manual-nav_sign')
+    if (sign) {
+      sign.textContent = details.open ? '−' : '+'
+    }
+  }
+
+  bindControls() {
+    document.querySelectorAll('[data-manual-tree]').forEach(button => {
+      button.addEventListener('click', () => {
+        const open = button.dataset.manualTree === 'expand'
+        this.details.forEach(details => {
+          details.open = open
+        })
+      })
+    })
+  }
+
+  persist() {
+    try {
+      const open = this.details.filter(d => d.open).map(d => d.dataset.treeId)
+      window.localStorage.setItem(this.#storageKey, JSON.stringify(open))
+    } catch {
+      // Storage can be unavailable, the tree simply starts collapsed next time
+    }
+  }
+
+  restore() {
+    let open = []
+    try {
+      open = JSON.parse(window.localStorage.getItem(this.#storageKey) || '[]')
+    } catch {
+      open = []
+    }
+
+    if (!Array.isArray(open) || open.length === 0) {
+      // Without a stored state the first level is open, so the manual never looks empty
+      this.details.filter(d => d.closest('.manual-nav') === d.parentElement?.parentElement).forEach(d => {
+        d.open = true
+      })
+      this.details.forEach(d => this.updateSign(d))
+      return
+    }
+
+    this.details.forEach(details => {
+      details.open = open.includes(details.dataset.treeId)
+      this.updateSign(details)
+    })
+  }
+}
+
+export default new Tree()

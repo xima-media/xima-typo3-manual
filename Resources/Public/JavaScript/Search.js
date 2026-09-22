@@ -8,6 +8,8 @@ class Search {
   #input
   #results
   #status
+  #tree
+  #treeLabel
 
   constructor() {
     this.#form = document.querySelector('[data-manual-search]')
@@ -16,8 +18,11 @@ class Search {
     }
 
     this.#input = this.#form.querySelector('.manual-search_input')
-    this.#results = this.#form.querySelector('.manual-search_results')
-    this.#status = this.#form.querySelector('.manual-search_status')
+    // Status and results live in the sidebar, where the design puts them
+    this.#results = document.querySelector('.manual-search_results')
+    this.#status = document.querySelector('.manual-search_status')
+    this.#tree = document.querySelector('.manual-nav')
+    this.#treeLabel = document.querySelector('.manual-sidebar_label')
 
     this.#form.addEventListener('submit', e => e.preventDefault())
     this.#index = this.buildIndex()
@@ -39,7 +44,7 @@ class Search {
   * One entry per heading, holding the text of everything up to the next heading of the same or a higher rank.
   */
   buildIndex() {
-    const headings = [...document.querySelectorAll('main section h2[id], main section h3[id], main section h4[id]')]
+    const headings = [...document.querySelectorAll('.manual-chapter h2[id], .manual-chapter h3[id], .manual-chapter h4[id]')]
 
     return headings.map((heading, i) => {
       const next = headings[i + 1]
@@ -53,7 +58,8 @@ class Search {
 
       return {
         id: heading.id,
-        title: heading.textContent.trim(),
+        title: (heading.firstChild?.textContent || heading.textContent).trim(),
+        trail: heading.closest('.manual-chapter')?.querySelector('h2')?.firstChild?.textContent.trim() ?? '',
         haystack: (heading.textContent + ' ' + text.join(' ')).replace(/\s+/g, ' ').toLowerCase(),
         raw: text.join(' ').replace(/\s+/g, ' ').trim(),
       }
@@ -66,6 +72,7 @@ class Search {
     if (query.length < 2) {
       this.#results.hidden = true
       this.#status.hidden = true
+      this.showTree(true)
       return
     }
 
@@ -82,12 +89,32 @@ class Search {
 
     hits.slice(0, 20).forEach(hit => this.#results.append(this.renderHit(hit.entry, needle)))
     this.#results.hidden = hits.length === 0
+    this.showTree(false)
+  }
+
+  /**
+  * While a query is active the sidebar shows results instead of the chapter tree.
+  */
+  showTree(visible) {
+    if (this.#tree) {
+      this.#tree.hidden = !visible
+    }
+    if (this.#treeLabel) {
+      this.#treeLabel.hidden = !visible
+    }
   }
 
   renderHit(entry, needle) {
     const link = document.createElement('a')
     link.href = '#' + entry.id
     link.className = 'manual-search_hit'
+
+    if (entry.trail && entry.trail !== entry.title) {
+      const trail = document.createElement('span')
+      trail.className = 'manual-search_hit-trail'
+      trail.textContent = entry.trail
+      link.append(trail)
+    }
 
     const title = document.createElement('span')
     title.className = 'manual-search_hit-title'

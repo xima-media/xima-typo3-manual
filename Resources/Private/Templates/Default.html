@@ -1,89 +1,137 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
-
-<f:if condition="{languageNavigation->f:count()} > 1">
-    <nav class="language-menu">
-        <ul>
-            <f:for each="{languageNavigation}" as="language">
-                <f:if condition="{language.active}">
-                    <li>
-                        <a href="{language.link}" title="{language.title}">
-                            <core:icon identifier="{language.flag}" />
-                            {language.title}
-                            <core:icon identifier="actions-caret-down" size="small" />
-                        </a>
-                        <ul>
-                            <f:for each="{languageNavigation}" as="language2">
-                                <f:if condition="!{language2.active}">
-                                    <li>
-                                        <a href="{language2.link}" title="{language2.title}">
-                                            <core:icon identifier="{language2.flag}" />
-                                            {language2.title}
-                                        </a>
-                                    </li>
-                                </f:if>
-                            </f:for>
-                        </ul>
-                    </li>
+<f:if condition="{context} != 'pdf'">
+    <header class="manual-masthead">
+        <div class="manual-masthead_inner">
+            <div class="manual-masthead_identity">
+                <f:if condition="{manualLogo.0}">
+                    <f:then>
+                        <f:image class="manual-masthead_logo" image="{manualLogo.0}" height="48" alt=""/>
+                    </f:then>
+                    <f:else if="{backendSettings.loginLogo}">
+                        <img class="manual-masthead_logo" src="{f:uri.resource(path: backendSettings.loginLogo)}" height="48" alt=""/>
+                    </f:else>
                 </f:if>
-            </f:for>
-        </ul>
-    </nav>
-</f:if>
+                <p class="manual-masthead_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                <p class="manual-masthead_title">{title}</p>
+            </div>
 
-<main>
-
-    <section class="section cover">
-        <f:if condition="{manualLogo.0}">
-            <f:then>
-                <f:image image="{manualLogo.0}" width="300" alt="Logo"/>
-            </f:then>
-            <f:else if="{backendSettings.loginLogo}">
-                <img src="{f:uri.resource(path: backendSettings.loginLogo)}" width="300" alt="Logo"/>
-            </f:else>
-        </f:if>
-        <h1>{title}</h1>
-    </section>
-
-    <f:if condition="{context} != 'pdf'">
-        <nav class="section">
             <form class="manual-search" role="search" data-manual-search
                 data-label-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.results')}"
                 data-label-no-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.noResults')}">
                 <label class="manual-search_label" for="manual-search-input">
                     <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.label"/>
                 </label>
-                <input type="search" id="manual-search-input" class="manual-search_input" autocomplete="off"
-                    placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
-                <p class="manual-search_status" role="status" hidden></p>
-                <ol class="manual-search_results" hidden></ol>
+                <div class="manual-search_field">
+                    <input type="search" id="manual-search-input" class="manual-search_input" autocomplete="off"
+                        placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
+                </div>
             </form>
-            <ol>
-                <f:for each="{pages}" as="page" iteration="i">
+
+            <f:if condition="{languageNavigation->f:count()} > 1">
+                <div class="manual-masthead_aside">
+                    <nav class="manual-language">
+                        <ul>
+                            <f:for each="{languageNavigation}" as="language">
+                                <f:if condition="{language.active}">
+                                    <li>
+                                        <a href="{language.link}" title="{language.title}">
+                                            <core:icon identifier="{language.flag}"/>
+                                            {language.title}
+                                            <core:icon identifier="actions-caret-down" size="small"/>
+                                        </a>
+                                        <ul>
+                                            <f:for each="{languageNavigation}" as="otherLanguage">
+                                                <f:if condition="!{otherLanguage.active}">
+                                                    <li>
+                                                        <a href="{otherLanguage.link}" title="{otherLanguage.title}">
+                                                            <core:icon identifier="{otherLanguage.flag}"/>
+                                                            {otherLanguage.title}
+                                                        </a>
+                                                    </li>
+                                                </f:if>
+                                            </f:for>
+                                        </ul>
+                                    </li>
+                                </f:if>
+                            </f:for>
+                        </ul>
+                    </nav>
+                </div>
+            </f:if>
+        </div>
+    </header>
+</f:if>
+
+<div class="manual-shell">
+
+    <f:if condition="{context} != 'pdf'">
+        <nav class="manual-sidebar" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label')}">
+            <p class="manual-search_status" role="status" hidden></p>
+            <ol class="manual-search_results" hidden></ol>
+
+            <p class="manual-sidebar_label">
+                <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label"/>
+                <span class="manual-sidebar_actions">
+                    <button type="button" class="manual-sidebar_action" data-manual-tree="expand">
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.expandAll"/>
+                    </button>
+                    <button type="button" class="manual-sidebar_action" data-manual-tree="collapse">
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.collapseAll"/>
+                    </button>
+                </span>
+            </p>
+            <ol class="manual-nav">
+                <f:for each="{pages}" as="page">
                     <f:render section="navigation" arguments="{page: page}"/>
                 </f:for>
             </ol>
         </nav>
     </f:if>
 
+    <main class="manual-main">
 
-    <div class="section break-before show-for-print">
-        <h2 class="no-number">Inhaltsverzeichnis</h2>
-        <ol>
-            <f:for each="{pages}" as="page" iteration="i">
-                <f:render section="chapter" arguments="{page: page}"/>
-            </f:for>
-        </ol>
-    </div>
+        <f:if condition="{context} != 'pdf'">
+            <f:then>
+                <section class="manual-hero">
+                    <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                    <h1 class="manual-hero_title">{title}</h1>
+                    <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
+                </section>
+            </f:then>
+            <f:else>
+                <section class="manual-hero">
+                    <h1 class="manual-hero_title">{title}</h1>
+                </section>
 
+                <section class="manual-card manual-chapter">
+                    <h2 class="no-number"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading"/></h2>
+                    <ol>
+                        <f:for each="{pages}" as="page">
+                            <f:render section="chapter" arguments="{page: page}"/>
+                        </f:for>
+                    </ol>
+                </section>
+            </f:else>
+        </f:if>
 
-    <f:for each="{pages}" as="page">
-        <f:render section="page" arguments="{page:page, context:context}"/>
-    </f:for>
+        <f:for each="{pages}" as="page">
+            <f:render section="page" arguments="{page: page, context: context}"/>
+        </f:for>
+    </main>
 
-    <a href="#" class="to-top" title="To top">&#8593;</a>
-</main>
+    <f:if condition="{context} != 'pdf'">
+        <aside class="manual-aside">
+            <p class="manual-aside_label"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.onThisPage"/></p>
+            <ol class="manual-toc" data-manual-toc></ol>
+        </aside>
+    </f:if>
 
+</div>
+
+<f:if condition="{context} != 'pdf'">
+    <a href="#" class="manual-to-top" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toTop')}">&#8593;</a>
+</f:if>
 
 <f:section name="chapter">
     <li>
@@ -91,9 +139,7 @@
         <f:if condition="{page.hasSubpages} || {page.chapters}">
             <ol>
                 <f:for each="{page.chapters}" as="content">
-                    <li>
-                        <a href="#c{content.data.uid}">{content.data.header}</a>
-                    </li>
+                    <li><a href="#c{content.data.uid}">{content.data.header}</a></li>
                 </f:for>
                 <f:for each="{page.children}" as="subpage">
                     <f:render section="chapter" arguments="{page: subpage}"/>
@@ -109,48 +155,64 @@
             <f:then>
                 <details>
                     <summary>
+                        <span class="manual-nav_sign" aria-hidden="true">+</span>
                         <a href="#p{page.data.uid}" title="{page.title}">{page.title}</a>
                     </summary>
-                    <f:if condition="{page.hasSubpages} || {page.chapters}">
-                        <ol>
-                            <f:for each="{page.chapters}" as="content">
-                                <li>
-                                    <a href="#c{content.data.uid}" title="{page.title}">{content.data.header}</a>
-                                </li>
-                            </f:for>
-                            <f:for each="{page.children}" as="subpage">
-                                <f:render section="navigation" arguments="{page: subpage}"/>
-                            </f:for>
-                        </ol>
-                    </f:if>
+                    <ol>
+                        <f:for each="{page.chapters}" as="content">
+                            <li>
+                                <a href="#c{content.data.uid}" title="{content.data.header}">
+                                    <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
+                                    {content.data.header}
+                                </a>
+                            </li>
+                        </f:for>
+                        <f:for each="{page.children}" as="subpage">
+                            <f:render section="navigation" arguments="{page: subpage}"/>
+                        </f:for>
+                    </ol>
                 </details>
             </f:then>
             <f:else>
-                <a href="#p{page.data.uid}">{page.title}</a>
+                <a href="#p{page.data.uid}" title="{page.title}">
+                    <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
+                    {page.title}
+                </a>
             </f:else>
         </f:if>
     </li>
 </f:section>
 
 <f:section name="page">
-    <section class="{f:if(condition:noPageBreak, else: 'break-before')}">
+    <section class="manual-card manual-chapter" id="chapter-{page.data.uid}">
+        <f:if condition="{page.data.tx_ximatypo3manual_relations}">
+            <div class="manual-badges">
+                <span class="manual-badge manual-badge--editorial"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:badge.documented"/></span>
+            </div>
+        </f:if>
+
         <h2 id="p{page.data.uid}" data-page-url="{page.link}">
             {page.title}
             <f:if condition="{context} == 'frontend'">
-                <a href="#p{page.data.uid}">
+                <a href="#p{page.data.uid}" class="manual-anchor" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:anchor.permalink')}">
                     <core:icon identifier="actions-link" size="small"/>
                 </a>
             </f:if>
             <f:if condition="{context} == 'backend'">
-                <be:link.editRecord uid="{page.data.uid}" table="pages" returnUrl="" fields="title" class="edit-record">
+                <be:link.editRecord uid="{page.data.uid}" table="pages" returnUrl="" fields="title" class="edit-record manual-anchor">
                     <core:icon identifier="actions-open" size="small"/>
                 </be:link.editRecord>
             </f:if>
         </h2>
-        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
 
-        <f:for each="{page.children}" as="subpage">
-            <f:render section="page" arguments="{page:subpage, noPageBreak:'true', context:context}"/>
-        </f:for>
+        <f:if condition="{page.data.abstract}">
+            <p class="manual-chapter_lead">{page.data.abstract}</p>
+        </f:if>
+
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pid: page.data.uid, colPos: '0'}"/>
     </section>
+
+    <f:for each="{page.children}" as="subpage">
+        <f:render section="page" arguments="{page: subpage, context: context}"/>
+    </f:for>
 </f:section>

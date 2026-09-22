@@ -1,0 +1,55 @@
+/**
+* Builds the "on this page" column from the headings of the chapter currently in view and keeps the active entry in
+* sync while scrolling.
+*/
+class Toc {
+  #list
+  #links = new Map()
+
+  constructor() {
+    this.#list = document.querySelector('[data-manual-toc]')
+    if (!this.#list) {
+      return
+    }
+
+    this.build()
+    this.observe()
+  }
+
+  build() {
+    const headings = [...document.querySelectorAll('.manual-chapter h2[id], .manual-chapter h3[id]')]
+
+    headings.forEach(heading => {
+      const item = document.createElement('li')
+      item.className = 'manual-toc_level-' + heading.tagName.slice(1)
+
+      const link = document.createElement('a')
+      link.href = '#' + heading.id
+      link.textContent = heading.firstChild?.textContent.trim() || heading.textContent.trim()
+
+      item.append(link)
+      this.#list.append(item)
+      this.#links.set(heading.id, link)
+    })
+  }
+
+  observe() {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.find(entry => entry.isIntersecting)
+      if (!visible) {
+        return
+      }
+      this.#links.forEach(link => link.classList.remove('active'))
+      this.#links.get(visible.target.id)?.classList.add('active')
+    }, { rootMargin: '-10% 0px -70%', threshold: 0 })
+
+    this.#links.forEach((_, id) => {
+      const heading = document.getElementById(id)
+      if (heading) {
+        observer.observe(heading)
+      }
+    })
+  }
+}
+
+export default new Toc()

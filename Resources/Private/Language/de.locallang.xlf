@@ -338,6 +338,46 @@
 				<source />
 				<target>Handbuch</target>
 			</trans-unit>
+			<trans-unit id="masthead.eyebrow">
+				<source />
+				<target>Redakteurshandbuch</target>
+			</trans-unit>
+			<trans-unit id="hero.lead">
+				<source />
+				<target>Alle Kapitel dieses Handbuchs auf einer Seite. Nutzen Sie die Suche oder die Kapitelliste, um zu einem Thema zu springen.</target>
+			</trans-unit>
+			<trans-unit id="nav.label">
+				<source />
+				<target>Dokumentation</target>
+			</trans-unit>
+			<trans-unit id="nav.expandAll">
+				<source />
+				<target>alle</target>
+			</trans-unit>
+			<trans-unit id="nav.collapseAll">
+				<source />
+				<target>zu</target>
+			</trans-unit>
+			<trans-unit id="toc.heading">
+				<source />
+				<target>Inhaltsverzeichnis</target>
+			</trans-unit>
+			<trans-unit id="toc.onThisPage">
+				<source />
+				<target>Auf dieser Seite</target>
+			</trans-unit>
+			<trans-unit id="toTop">
+				<source />
+				<target>Nach oben</target>
+			</trans-unit>
+			<trans-unit id="anchor.permalink">
+				<source />
+				<target>Link zu diesem Abschnitt</target>
+			</trans-unit>
+			<trans-unit id="badge.documented">
+				<source />
+				<target>Mit Datensätzen verknüpft</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

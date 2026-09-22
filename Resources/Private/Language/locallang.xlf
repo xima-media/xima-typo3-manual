@@ -254,6 +254,36 @@
 			<trans-unit id="menu.manual">
 				<source>Manual</source>
 			</trans-unit>
+			<trans-unit id="masthead.eyebrow">
+				<source>Editor manual</source>
+			</trans-unit>
+			<trans-unit id="hero.lead">
+				<source>Every chapter of this manual, on one page. Use the search or the chapter list to jump to a topic.</source>
+			</trans-unit>
+			<trans-unit id="nav.label">
+				<source>Documentation</source>
+			</trans-unit>
+			<trans-unit id="nav.expandAll">
+				<source>expand</source>
+			</trans-unit>
+			<trans-unit id="nav.collapseAll">
+				<source>collapse</source>
+			</trans-unit>
+			<trans-unit id="toc.heading">
+				<source>Table of contents</source>
+			</trans-unit>
+			<trans-unit id="toc.onThisPage">
+				<source>On this page</source>
+			</trans-unit>
+			<trans-unit id="toTop">
+				<source>Back to top</source>
+			</trans-unit>
+			<trans-unit id="anchor.permalink">
+				<source>Permalink to this section</source>
+			</trans-unit>
+			<trans-unit id="badge.documented">
+				<source>Linked to records</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -2,20 +2,22 @@
 <f:layout name="Default"/>
 
 <f:section name="Main">
-
-    <f:if condition="{files}">
-        <f:variable name="galleryClass">ce-image ce-{gallery.position.horizontal} ce-{gallery.position.vertical}</f:variable>
-    </f:if>
-
-    <div class="ce-textpic {galleryClass}">
-
-        <f:render partial="Media/Gallery" arguments="{_all}"/>
-
-        <div class="ce-bodytext">
+    <div class="manual-text{f:if(condition: '{data.imageorient} == 25 || {data.imageorient} == 26', then: ' manual-text--beside')}">
+        <f:if condition="{files}">
+            <div class="manual-text_media">
+                <f:for each="{files}" as="file">
+                    <figure>
+                        <f:image image="{file}" maxWidth="{settings.media.maxWidth}" alt="{file.alternative}"/>
+                        <f:if condition="{file.description}">
+                            <figcaption>{file.description}</figcaption>
+                        </f:if>
+                    </figure>
+                </f:for>
+            </div>
+        </f:if>
+        <div class="manual-text_body">
             <f:format.html>{data.bodytext}</f:format.html>
         </div>
-
     </div>
-
 </f:section>
 </html>

@@ -4,15 +4,18 @@ class Navigation {
   #debounceTimer = null
 
   makeIdentifierActive(href) {
-    const navItem = document.querySelector('nav a[href="' + href + '"]')
+    const navItem = document.querySelector('.manual-nav a[href="' + href + '"]')
     if (!navItem) {
       return
     }
-    document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'))
-    document.querySelectorAll('details').forEach(item => item.removeAttribute('open'))
+    document.querySelectorAll('.manual-nav a').forEach(item => item.classList.remove('active'))
     navItem.classList.add('active')
-    navItem.closest('nav > ol > li > details')?.setAttribute('open', 'open')
-    navItem.closest('nav > ol > li > details')?.querySelectorAll('details').forEach(item => item.setAttribute('open', 'open'))
+    // Open every branch on the way to the active entry, without collapsing the rest
+    let branch = navItem.closest('details')
+    while (branch) {
+      branch.open = true
+      branch = branch.parentElement?.closest('details')
+    }
   }
 
   constructor() {
@@ -35,7 +38,7 @@ class Navigation {
   }
 
   bindNavLinks() {
-    document.querySelectorAll('nav a').forEach(link => {
+    document.querySelectorAll('.manual-nav a').forEach(link => {
       link.addEventListener('click', e => {
         const href = e.currentTarget.getAttribute('href')
         setTimeout(() => this.makeIdentifierActive(href), 50)
@@ -44,7 +47,7 @@ class Navigation {
   }
 
   bindObserver() {
-    document.querySelectorAll('h2,h3').forEach(headline => {
+    document.querySelectorAll('.manual-chapter h2, .manual-chapter h3').forEach(headline => {
       this.headlineObserver.observe(headline)
     })
   }
@@ -58,7 +61,7 @@ class Navigation {
       }
     })
 
-    document.querySelectorAll('main a[href]').forEach(a => {
+    document.querySelectorAll('.manual-main a[href]').forEach(a => {
       try {
         const url = new URL(a.href, window.location.href)
         if (url.origin === window.location.origin && this.anchorMap[url.pathname]) {
