@@ -334,6 +334,10 @@
 				<source />
 				<target>Abdeckung</target>
 			</trans-unit>
+			<trans-unit id="menu.manual">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

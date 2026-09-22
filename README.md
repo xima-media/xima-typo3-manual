@@ -23,6 +23,7 @@ special doktype.
 * Full text search over the whole manual
 * Glossary elements: terms are linked and explained automatically wherever they appear
 * Documentation coverage report: which record types are documented, and which are not
+* Several manuals side by side, for example one per editor role or per website
 * Associate individual chapters to TYPO3 records for easy access
 * Directly open chapters in a modal while editing records
 * PDF download
@@ -79,6 +80,15 @@ configuration:
 Installations that predate site sets can keep the previous wiring instead: include
 the **static PageTS** "XIMA Manual" and create a root TypoScript template that
 includes the static TypoScript of this extension.
+
+## Several manuals
+
+An installation can hold any number of manuals: create one manual page tree per
+manual, each with its own site configuration. The backend module then shows a
+manual selector in its doc header, remembers which manual you read last, and the
+manual button of every other module groups the chapters it found by the manual
+they belong to. Manuals a backend user has no page permissions for are hidden
+from both.
 
 ## Usage
 

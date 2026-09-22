@@ -16,8 +16,6 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
@@ -26,11 +24,11 @@ use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Xima\XimaTypo3Manual\Configuration;
+use Xima\XimaTypo3Manual\Service\ManualRegistry;
 
 class ManualController extends ActionController
 {
@@ -40,8 +38,8 @@ class ManualController extends ActionController
         protected PageRenderer $pageRenderer,
         protected PageRepository $pageRepository,
         protected SiteFinder $siteFinder,
-        private readonly ConnectionPool $connectionPool,
-        private readonly BackendUriBuilder $backendUriBuilder
+        private readonly BackendUriBuilder $backendUriBuilder,
+        private readonly ManualRegistry $manualRegistry
     ) {
     }
 
@@ -60,12 +58,15 @@ class ManualController extends ActionController
         $context = $this->resolveContext();
         $pageId = $this->resolveRequestedPageId();
         if (!self::hasManualRootPage($pageId)) {
-            $pageId = $this->getUidOfFirstAccessibleManualPage();
+            $pageId = $this->manualRegistry->getPreferredManualRoot();
             if ($pageId === 0) {
                 $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
                 return new RedirectResponse($uri);
             }
         }
+
+        $manualRoot = $this->manualRegistry->getManualRootForPage($pageId);
+        $this->manualRegistry->rememberManualRoot($manualRoot);
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Navigation.js');
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/EditRecords.js');
@@ -74,7 +75,10 @@ class ManualController extends ActionController
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $moduleTemplate->setBodyTag('<body class="typo3-module-xima_typo3_manual">');
-        $moduleTemplate->setTitle($this->translate('mlang_tabs_tab'));
+        $moduleTemplate->setTitle(
+            $this->translate('mlang_tabs_tab'),
+            $this->manualRegistry->getTitle($manualRoot)
+        );
 
         $languageId = $this->getCurrentLanguage($pageId, $this->resolveLanguageParameter());
         $targetUrl = (string)PreviewUriBuilder::create($pageId)
@@ -82,7 +86,7 @@ class ManualController extends ActionController
             ->withAdditionalQueryParameters(['context' => $context])
             ->withLanguage($languageId)
             ->buildUri();
-        $this->registerDocHeader($moduleTemplate, $pageId, $languageId, $context);
+        $this->registerDocHeader($moduleTemplate, $pageId, $manualRoot, $languageId, $context);
 
         if ($context === 'iframe') {
             $moduleTemplate->getDocHeaderComponent()->disable();
@@ -103,37 +107,6 @@ class ManualController extends ActionController
 
         $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
         return (int)($rootline[0]['doktype'] ?? 0) === Configuration::DOKTYPE_MANUAL;
-    }
-
-    /**
-     * The module is reachable without any page argument, so the first manual the user may read is used as entry point.
-     */
-    protected function getUidOfFirstAccessibleManualPage(): int
-    {
-        $qb = $this->connectionPool->getQueryBuilderForTable('pages');
-        $pages = $qb->select('uid')
-            ->from('pages')
-            ->where(
-                $qb->expr()->and(
-                    $qb->expr()->eq('doktype', $qb->createNamedParameter(Configuration::DOKTYPE_MANUAL, Connection::PARAM_INT)),
-                    $qb->expr()->eq('is_siteroot', $qb->createNamedParameter(1, Connection::PARAM_INT)),
-                )
-            )
-            ->orderBy('sorting', 'ASC')
-            ->executeQuery()
-            ->fetchAllAssociative();
-
-        foreach ($pages as $row) {
-            $access = BackendUtility::readPageAccess(
-                (int)$row['uid'],
-                $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW)
-            );
-            if ($access !== false) {
-                return (int)$row['uid'];
-            }
-        }
-
-        return 0;
     }
 
     protected function getLanguageService(): LanguageService
@@ -196,8 +169,10 @@ class ManualController extends ActionController
         return $languages;
     }
 
-    protected function registerDocHeader(ModuleTemplate $moduleTemplate, int $pageId, int $languageId, string $context): void
+    protected function registerDocHeader(ModuleTemplate $moduleTemplate, int $pageId, int $manualRoot, int $languageId, string $context): void
     {
+        $this->registerManualMenu($moduleTemplate, $manualRoot, $context);
+
         $languages = $this->getPreviewLanguages($pageId);
         if (count($languages) > 1) {
             $languageMenu = GeneralUtility::makeInstance(Menu::class);
@@ -283,6 +258,33 @@ class ManualController extends ActionController
                 ->setIcon($this->iconFactory->getIcon('actions-close', IconSize::SMALL));
             $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
         }
+    }
+
+    /**
+     * With more than one manual in the installation the doc header offers a menu to switch between them.
+     */
+    protected function registerManualMenu(ModuleTemplate $moduleTemplate, int $manualRoot, string $context): void
+    {
+        if ($context !== 'backend' || !$this->manualRegistry->hasSeveralManuals()) {
+            return;
+        }
+
+        $menu = GeneralUtility::makeInstance(Menu::class);
+        $menu->setIdentifier('_manualSelector');
+        $menu->setLabel($this->translate('menu.manual'));
+
+        foreach ($this->manualRegistry->getAccessibleManuals() as $manual) {
+            $menuItem = GeneralUtility::makeInstance(MenuItem::class);
+            $menuItem
+                ->setTitle($manual->title !== '' ? $manual->title : '#' . $manual->uid)
+                ->setHref($this->uriBuilder->uriFor('index', ['id' => $manual->uid]));
+            if ($manual->uid === $manualRoot) {
+                $menuItem->setActive(true);
+            }
+            $menu->addMenuItem($menuItem);
+        }
+
+        $moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
     protected function resolveContext(): string

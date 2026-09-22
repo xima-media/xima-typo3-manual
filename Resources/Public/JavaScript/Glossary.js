@@ -1,7 +1,7 @@
 /**
- * Turns every occurrence of a glossary term in the manual into an abbreviation carrying the definition, linked to
- * the glossary entry itself.
- */
+* Turns every occurrence of a glossary term in the manual into an abbreviation carrying the definition, linked to
+* the glossary entry itself.
+*/
 class Glossary {
   #skip = new Set(['A', 'ABBR', 'BUTTON', 'CODE', 'DT', 'DD', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'PRE', 'SCRIPT', 'STYLE', 'TEXTAREA'])
 

@@ -1,7 +1,7 @@
 /**
- * Full text search over the rendered manual. The manual is a single document, so the index is built from the DOM
- * instead of asking the server: that keeps the search instant and works inside the backend module iframe as well.
- */
+* Full text search over the rendered manual. The manual is a single document, so the index is built from the DOM
+* instead of asking the server: that keeps the search instant and works inside the backend module iframe as well.
+*/
 class Search {
   #index = []
   #form
@@ -36,8 +36,8 @@ class Search {
   }
 
   /**
-   * One entry per heading, holding the text of everything up to the next heading of the same or a higher rank.
-   */
+  * One entry per heading, holding the text of everything up to the next heading of the same or a higher rank.
+  */
   buildIndex() {
     const headings = [...document.querySelectorAll('main section h2[id], main section h3[id], main section h4[id]')]
 
@@ -105,8 +105,8 @@ class Search {
   }
 
   /**
-   * Builds the "… match …" excerpt as real nodes, so the manual content can never inject markup here.
-   */
+  * Builds the "… match …" excerpt as real nodes, so the manual content can never inject markup here.
+  */
   buildSnippet(raw, needle) {
     const at = raw.toLowerCase().indexOf(needle)
     if (at === -1) {

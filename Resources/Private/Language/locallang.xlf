@@ -251,6 +251,9 @@
 			<trans-unit id="button.coverage">
 				<source>Coverage</source>
 			</trans-unit>
+			<trans-unit id="menu.manual">
+				<source>Manual</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Controller\ManualController;
+use Xima\XimaTypo3Manual\Service\ManualRegistry;
 
 /**
  * Adds the manual button to every backend doc header. Which button is shown depends on what the current view is
@@ -36,7 +37,8 @@ final readonly class ModifyButtonBarEventListener
         private IconFactory $iconFactory,
         private UriBuilder $uriBuilder,
         private PageRenderer $pageRenderer,
-        private ConnectionPool $connectionPool
+        private ConnectionPool $connectionPool,
+        private ManualRegistry $manualRegistry
     ) {
     }
 
@@ -59,7 +61,7 @@ final readonly class ModifyButtonBarEventListener
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
         $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
 
-        $manualPages = $this->getManualPages($request, $pageId, $isRecordEdit);
+        $manualPages = $this->groupByManual($this->getManualPages($request, $pageId, $isRecordEdit));
 
         if ($manualPages !== []) {
             $button = $this->getDropdownManualButton($event, $manualPages);
@@ -268,7 +270,7 @@ final readonly class ModifyButtonBarEventListener
     }
 
     /**
-     * @param list<array<string, mixed>> $manualPages
+     * @param array<int, list<array<string, mixed>>> $manualPages Chapters grouped by the manual they belong to
      */
     public function getDropdownManualButton(ModifyButtonBarEvent $event, array $manualPages): DropDownButton
     {
@@ -278,25 +280,41 @@ final readonly class ModifyButtonBarEventListener
         $dropdown->setShowLabelText(true);
         $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', IconSize::SMALL));
 
-        $dropdown->addItem(
-            GeneralUtility::makeInstance(DropDownHeader::class)
-                ->setLabel($this->translate('button.dropdown.header'))
-        );
+        $showManualTitles = count($manualPages) > 1;
 
-        foreach ($manualPages as $key => $manualPage) {
-            $item = GeneralUtility::makeInstance(DropDownItem::class);
-            $title = (string)($manualPage['title'] ?? $manualPage['header'] ?? '');
-            $title = $title !== '' ? $title : $this->translate('button.dropdown.no-title') . ' ' . ($key + 1);
-            $pid = (int)($manualPage['pid'] ?? $manualPage['uid'] ?? 0);
+        if (!$showManualTitles) {
+            $dropdown->addItem(
+                GeneralUtility::makeInstance(DropDownHeader::class)
+                    ->setLabel($this->translate('button.dropdown.header'))
+            );
+        }
 
-            $item->setIcon($this->iconFactory->getIcon('actions-dot', IconSize::SMALL));
-            $item->setLabel($title);
-            $item->setAttributes([
-                'data-manual-modal' => 'open',
-                'data-manual-backend-url' => $this->manualUri($pid, 'backend'),
-            ]);
-            $item->setHref($this->manualUri($pid, 'iframe'));
-            $dropdown->addItem($item);
+        $key = 0;
+        foreach ($manualPages as $manualRoot => $chapters) {
+            if ($showManualTitles) {
+                $manualTitle = $this->manualRegistry->getTitle($manualRoot);
+                $dropdown->addItem(
+                    GeneralUtility::makeInstance(DropDownHeader::class)
+                        ->setLabel($manualTitle !== '' ? $manualTitle : $this->translate('button.dropdown.header'))
+                );
+            }
+
+            foreach ($chapters as $manualPage) {
+                $key++;
+                $item = GeneralUtility::makeInstance(DropDownItem::class);
+                $title = (string)($manualPage['title'] ?? $manualPage['header'] ?? '');
+                $title = $title !== '' ? $title : $this->translate('button.dropdown.no-title') . ' ' . $key;
+                $pid = (int)($manualPage['pid'] ?? $manualPage['uid'] ?? 0);
+
+                $item->setIcon($this->iconFactory->getIcon('actions-dot', IconSize::SMALL));
+                $item->setLabel($title);
+                $item->setAttributes([
+                    'data-manual-modal' => 'open',
+                    'data-manual-backend-url' => $this->manualUri($pid, 'backend'),
+                ]);
+                $item->setHref($this->manualUri($pid, 'iframe'));
+                $dropdown->addItem($item);
+            }
         }
 
         $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
@@ -340,6 +358,27 @@ final readonly class ModifyButtonBarEventListener
                 'manual-modal' => 'open',
                 'manual-backend-url' => $this->manualUri($pageId, 'backend'),
             ]);
+    }
+
+    /**
+     * Chapters of manuals the user may not read are dropped, the rest is grouped by the manual they belong to.
+     *
+     * @param list<array<string, mixed>> $manualPages
+     * @return array<int, list<array<string, mixed>>>
+     */
+    private function groupByManual(array $manualPages): array
+    {
+        $grouped = [];
+        foreach ($manualPages as $manualPage) {
+            $pageUid = (int)($manualPage['pid'] ?? $manualPage['uid'] ?? 0);
+            $manualRoot = $this->manualRegistry->getManualRootForPage($pageUid);
+            if ($manualRoot === 0 || !$this->manualRegistry->isAccessible($manualRoot)) {
+                continue;
+            }
+            $grouped[$manualRoot][] = $manualPage;
+        }
+
+        return $grouped;
     }
 
     private function manualUri(int $pageId, string $context): string
