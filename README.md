@@ -20,6 +20,7 @@ special doktype.
 ## Features
 
 * Backend module with preview
+* Its own design system: serif headings, a calm blue lead colour and self-hosted fonts
 * Full text search over the whole manual
 * Glossary elements: terms are linked and explained automatically wherever they appear
 * Documentation coverage report: which record types are documented, and which are not

@@ -39,6 +39,11 @@
     box-sizing: border-box;
 }
 
+/* Elements of the manual carry a display value, which would otherwise win over the hidden attribute */
+[hidden] {
+    display: none !important;
+}
+
 body {
     margin: 0;
     background: var(--manual-paper);

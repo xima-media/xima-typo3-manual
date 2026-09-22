@@ -4,6 +4,33 @@ All notable changes to this project are documented in this file. The format foll
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), the project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - unreleased
+
+### Changed
+
+- **New design.** Calm blue as the lead colour, plum as the accent for editorial contexts, serif headings and
+  straight edges instead of rounded cards. The design tokens live as custom properties at the top of
+  `Resources/Public/Css/Frontend/manual.css`
+- The manual renders in a three column shell: chapter tree, content, "on this page"
+- Chapters are cards, the manual opens with a hero carrying its title
+- The note element (`mbox`) became the design's note block with an info, editorial, warning, success and error
+  variant; its heading is rendered inside the block
+- The step element (`msteps`) is a numbered list with a connector line instead of a carousel
+- The glossary is a two column definition list
+- Search results replace the chapter tree while a query is active and are shown as result cards
+- The chapter tree remembers its open branches per browser and shows the number of entries per branch
+
+### Added
+
+- Source Sans 3 and Source Serif 4 are shipped with the extension (SIL Open Font License), so an installation
+  makes no request to a third party for them
+- An "on this page" column that follows the chapter currently in view
+
+### Removed
+
+- The content slider of the step element, together with `Slider.js` and `slider.css`
+- The Gutenberg stylesheets, replaced by the design system stylesheet
+
 ## [2.1.0] - unreleased
 
 ### Added
