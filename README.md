@@ -137,9 +137,17 @@ appear in the doc header. These links are opened in a modal:
 
 ## Customization
 
-* Link color and logo: Values of the backend are
-used: ```$GLOBALS['EXTENSIONS']['backend']```
-* Manual title: The `websiteTitle` of the generated site configuration is used
+The site set `xima/manual` brings its settings along, so they can be edited per
+site under *Site Management > Sites > Settings*:
+
+| Setting | Default | Effect |
+|---|---|---|
+| `manual.appearance.primaryColor` | `#1A5FB4` | Lead colour: links, markers, active states |
+| `manual.behaviour.displayFullManual` | enabled | Renders every chapter on one page. Turn it off to show one chapter per page, with the chapter list linking to the pages instead of anchors |
+
+* Logo: the `media` field of the manual root page, falling back to the backend
+login logo
+* Manual title: the `websiteTitle` of the site configuration is used
 
 ## Development
 

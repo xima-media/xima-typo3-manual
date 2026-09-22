@@ -83,7 +83,7 @@
             </p>
             <ol class="manual-nav">
                 <f:for each="{pages}" as="page">
-                    <f:render section="navigation" arguments="{page: page}"/>
+                    <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual}"/>
                 </f:for>
             </ol>
         </nav>
@@ -116,7 +116,8 @@
         </f:if>
 
         <f:for each="{pages}" as="page">
-            <f:render section="page" arguments="{page: page, context: context, currentPageUid: currentPageUid}"/>
+            <f:render section="page"
+                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual}"/>
         </f:for>
     </main>
 
@@ -151,30 +152,25 @@
 
 <f:section name="navigation">
     <li>
-        <f:if condition="{page.hasSubpages} || {page.chapters}">
+        <f:if condition="{page.hasSubpages}">
             <f:then>
                 <details>
                     <summary>
                         <span class="manual-nav_sign" aria-hidden="true">+</span>
-                        <a href="#p{page.data.uid}" title="{page.title}">{page.title}</a>
+                        <a href="{f:if(condition: displayFullManual, then: '#p{page.data.uid}', else: page.link)}"
+                        title="{page.title}">{page.title}</a>
                     </summary>
                     <ol>
-                        <f:for each="{page.chapters}" as="content">
-                            <li>
-                                <a href="#c{content.data.uid}" title="{content.data.header}">
-                                    <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
-                                    {content.data.header}
-                                </a>
-                            </li>
-                        </f:for>
                         <f:for each="{page.children}" as="subpage">
-                            <f:render section="navigation" arguments="{page: subpage}"/>
+                            <f:render section="navigation"
+                                    arguments="{page: subpage, displayFullManual: displayFullManual}"/>
                         </f:for>
                     </ol>
                 </details>
             </f:then>
             <f:else>
-                <a href="#p{page.data.uid}" title="{page.title}">
+                <a href="{f:if(condition: displayFullManual, then: '#p{page.data.uid}', else: page.link)}"
+                title="{page.title}">
                     <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
                     {page.title}
                 </a>
@@ -184,6 +180,10 @@
 </f:section>
 
 <f:section name="page">
+    <f:comment>
+        Without the full manual only the requested chapter is rendered, the tree is still walked to find it.
+    </f:comment>
+    <f:if condition="{displayFullManual} || {page.data.uid} == {currentPageUid}">
     <section class="manual-card manual-chapter" id="chapter-{page.data.uid}">
         <f:if condition="{page.data.tx_ximatypo3manual_relations}">
             <div class="manual-badges">
@@ -212,8 +212,10 @@
         <f:render partial="Manual/ContentArea"
                 arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid}"/>
     </section>
+    </f:if>
 
     <f:for each="{page.children}" as="subpage">
-        <f:render section="page" arguments="{page: subpage, context: context, currentPageUid: currentPageUid}"/>
+        <f:render section="page"
+                arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual}"/>
     </f:for>
 </f:section>

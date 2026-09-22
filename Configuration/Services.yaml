@@ -13,7 +13,7 @@ services:
     exclude: '../Classes/Configuration.php'
 
   # Data processors are resolved through GeneralUtility::makeInstance(), which only reaches public services
-  Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor:
+  Xima\XimaTypo3Manual\DataProcessing\ManualSettingsProcessor:
     public: true
 
   Xima\XimaTypo3Manual\DataProcessing\FocuspointProcessor:

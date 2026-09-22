@@ -1,0 +1,23 @@
+categories:
+  manual:
+    label: 'XIMA Manual'
+  manual.appearance:
+    label: Appearance
+    parent: manual
+  manual.behaviour:
+    label: Behaviour
+    parent: manual
+
+settings:
+  manual.appearance.primaryColor:
+    label: 'Primary colour'
+    description: 'Lead colour of the manual: links, markers and active states.'
+    type: color
+    default: '#1A5FB4'
+    category: manual.appearance
+  manual.behaviour.displayFullManual:
+    label: 'Display full manual'
+    description: 'Render every chapter on one page, so the manual can be read and searched in one go. Turn this off to show one chapter per page.'
+    type: bool
+    default: true
+    category: manual.behaviour

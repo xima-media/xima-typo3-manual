@@ -19,9 +19,14 @@ variant; its heading is rendered inside the block
 - The glossary is a two column definition list
 - Search results replace the chapter tree while a query is active and are shown as result cards
 - The chapter tree remembers its open branches per browser and shows the number of entries per branch
+- The chapter list holds chapters only; the headings of the content elements moved to the "on this page" column
+- The lead colour comes from the site settings instead of the backend login highlight colour
 
 ### Added
 
+- Two site settings, editable per site in the backend: `manual.appearance.primaryColor` sets the lead colour of the
+manual, `manual.behaviour.displayFullManual` decides whether the manual renders every chapter on one page (the
+previous behaviour, still the default) or one chapter per page
 - Optional integration of `friendsoftypo3/visual-editor`: with the extension installed, chapter headings and texts
 are editable inline in the backend. The ViewHelper it registers is used through a partial that is only layered in
 while the extension is loaded, so the manual keeps working without it
@@ -32,9 +37,9 @@ makes no request to a third party for them
 ### Fixed
 
 - Rich text was not editable in the visual editor: the icon picker module was declared without its exports, and the
-  CKEditor bootstrap iterates them, so every editor instance aborted with "c is not iterable"
+CKEditor bootstrap iterates them, so every editor instance aborted with "c is not iterable"
 - Adding and moving elements was disabled in the visual editor, because the content area of the requested chapter was
-  never marked: the template passed the current page id to a Fluid section that never received it
+never marked: the template passed the current page id to a Fluid section that never received it
 - Text elements failed to render in the visual editor. The RTE preset pulled in
 `EXT:bw_icons/Configuration/RTE/IconPicker.yaml`, which declares its CKEditor module as a plain string; TYPO3
 accepts that, the visual editor reads every entry as an array. The module is now declared in the documented form

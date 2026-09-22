@@ -17,6 +17,8 @@ page {
       title.data = leveltitle:0
       currentPageUid = TEXT
       currentPageUid.data = page:uid
+      displayFullManual = TEXT
+      displayFullManual.value = {$manual.behaviour.displayFullManual}
     }
 
     dataProcessing {
@@ -39,8 +41,8 @@ page {
         }
       }
 
-      # Backend settings
-      20 = Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor
+      # Manual settings and backend appearance
+      20 = Xima\XimaTypo3Manual\DataProcessing\ManualSettingsProcessor
 
       # Manual logo from root page media field
       40 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
@@ -152,7 +154,7 @@ tt_content {
 
     variables {
       color = TEXT
-      color.value = #1A5FB4
+      color.value = {$manual.appearance.primaryColor}
 
       context = TEXT
       context.value = frontend
