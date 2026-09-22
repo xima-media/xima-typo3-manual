@@ -185,6 +185,72 @@
 			<trans-unit id="installation.result.success.openNewManual">
 				<source>Navigate to new manual</source>
 			</trans-unit>
+			<trans-unit id="search.label">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="search.placeholder">
+				<source>Search the manual</source>
+			</trans-unit>
+			<trans-unit id="search.results">
+				<source>%s results</source>
+			</trans-unit>
+			<trans-unit id="search.noResults">
+				<source>No results</source>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.title">
+				<source>Glossary</source>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.description">
+				<source>A list of terms with their definition. Each term is linked automatically wherever it appears in the manual.</source>
+			</trans-unit>
+			<trans-unit id="mglossary.palette">
+				<source>Glossary</source>
+			</trans-unit>
+			<trans-unit id="mglossary.terms">
+				<source>Terms</source>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.title">
+				<source>Glossary term</source>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.description">
+				<source>A single glossary entry, used inside a glossary element.</source>
+			</trans-unit>
+			<trans-unit id="mterm.palette">
+				<source>Glossary term</source>
+			</trans-unit>
+			<trans-unit id="mterm.term">
+				<source>Term</source>
+			</trans-unit>
+			<trans-unit id="mterm.definition">
+				<source>Definition</source>
+			</trans-unit>
+			<trans-unit id="coverage.title">
+				<source>Documentation coverage</source>
+			</trans-unit>
+			<trans-unit id="coverage.description">
+				<source>Which record types the manual documents, and which are still undocumented.</source>
+			</trans-unit>
+			<trans-unit id="coverage.recordType">
+				<source>Record type</source>
+			</trans-unit>
+			<trans-unit id="coverage.documentedBy">
+				<source>Documented by</source>
+			</trans-unit>
+			<trans-unit id="coverage.undocumented">
+				<source>Not documented</source>
+			</trans-unit>
+			<trans-unit id="coverage.summary">
+				<source>%1$s of %2$s record types documented</source>
+			</trans-unit>
+			<trans-unit id="coverage.filter.all">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="coverage.filter.undocumented">
+				<source>Only undocumented</source>
+			</trans-unit>
+			<trans-unit id="button.coverage">
+				<source>Coverage</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

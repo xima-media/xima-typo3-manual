@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Xima\XimaTypo3Manual\Controller\CoverageController;
 use Xima\XimaTypo3Manual\Controller\InstallationController;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 
@@ -21,6 +22,7 @@ return [
         'controllerActions' => [
             ManualController::class => 'index',
             InstallationController::class => 'index',
+            CoverageController::class => 'index',
         ],
     ],
 ];

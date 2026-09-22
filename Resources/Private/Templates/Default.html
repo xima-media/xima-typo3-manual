@@ -1,14 +1,6 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
 
-<f:if condition="{backendSettings.loginHighlightColor}">
-    <f:asset.css identifier="manual-custom-link-color">
-        :root {
-        --link-color: {backendSettings.loginHighlightColor};
-        }
-    </f:asset.css>
-</f:if>
-
 <f:if condition="{languageNavigation->f:count()} > 1">
     <nav class="language-menu">
         <ul>
@@ -55,6 +47,17 @@
 
     <f:if condition="{context} != 'pdf'">
         <nav class="section">
+            <form class="manual-search" role="search" data-manual-search
+                data-label-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.results')}"
+                data-label-no-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.noResults')}">
+                <label class="manual-search_label" for="manual-search-input">
+                    <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.label"/>
+                </label>
+                <input type="search" id="manual-search-input" class="manual-search_input" autocomplete="off"
+                    placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
+                <p class="manual-search_status" role="status" hidden></p>
+                <ol class="manual-search_results" hidden></ol>
+            </form>
             <ol>
                 <f:for each="{pages}" as="page" iteration="i">
                     <f:render section="navigation" arguments="{page: page}"/>

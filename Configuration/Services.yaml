@@ -12,6 +12,13 @@ services:
     resource: '../Classes/*'
     exclude: '../Classes/Configuration.php'
 
+  # Data processors are resolved through GeneralUtility::makeInstance(), which only reaches public services
+  Xima\XimaTypo3Manual\DataProcessing\BackendSettingsProcessor:
+    public: true
+
+  Xima\XimaTypo3Manual\DataProcessing\FocuspointProcessor:
+    public: true
+
   Xima\XimaTypo3Manual\Generator\ManualGenerator:
     arguments:
       $presets: !tagged_iterator xima_typo3_manual.preset

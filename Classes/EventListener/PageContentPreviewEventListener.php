@@ -37,7 +37,11 @@ final readonly class PageContentPreviewEventListener
         $preview = match ($record['CType'] ?? '') {
             'msteps' => $this->renderPreview('Backend/MstepsPreview', [
                 'data' => $record,
-                'steps' => $this->getSteps((int)($record['uid'] ?? 0)),
+                'steps' => $this->getChildren((int)($record['uid'] ?? 0)),
+            ]),
+            'mglossary' => $this->renderPreview('Backend/MglossaryPreview', [
+                'data' => $record,
+                'terms' => $this->getChildren((int)($record['uid'] ?? 0)),
             ]),
             'mbox' => $this->renderPreview('Backend/MboxPreview', [
                 'data' => $record,
@@ -65,7 +69,7 @@ final readonly class PageContentPreviewEventListener
     /**
      * @return list<array<string, mixed>>
      */
-    private function getSteps(int $parentUid): array
+    private function getChildren(int $parentUid): array
     {
         if ($parentUid === 0) {
             return [];

@@ -258,6 +258,14 @@ class ManualController extends ActionController
         $buttonBar->addButton($downloadButton);
 
         if ($context === 'backend') {
+            $coverageButton = GeneralUtility::makeInstance(LinkButton::class);
+            $coverageButton
+                ->setHref($this->uriBuilder->uriFor('index', ['id' => $pageId], 'Coverage'))
+                ->setTitle($this->translate('button.coverage'))
+                ->setShowLabelText(true)
+                ->setIcon($this->iconFactory->getIcon('actions-list-alternative', IconSize::SMALL));
+            $buttonBar->addButton($coverageButton);
+
             $returnUid = $this->resolveRequestedPageId();
             if ($returnUid !== $pageId) {
                 $label = 'button.manual.close';

@@ -16,6 +16,8 @@ final class Configuration
 
     public const PDF_PAGE_TYPE = 1664618986;
 
+    public const SITE_SET = 'xima/manual';
+
     public const LANGUAGE_FILE = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:';
 
     /**

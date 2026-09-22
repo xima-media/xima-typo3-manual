@@ -1,0 +1,4 @@
+name: xima/manual
+label: 'XIMA Manual'
+dependencies:
+  - typo3/fluid-styled-content

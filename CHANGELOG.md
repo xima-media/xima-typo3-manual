@@ -9,6 +9,15 @@ All notable changes to this project are documented in this file. The format foll
 ### Added
 
 - Support for TYPO3 v14.3 alongside v13.4
+- Site set `xima/manual`, so a manual no longer needs a TypoScript record. The static template and the static page
+TSconfig stay available for existing installations
+- Full text search over the manual, rendered into the chapter navigation and answered in the browser
+- Glossary content element with its own term elements. Every term is linked automatically wherever it appears in
+the manual and carries its definition as a tooltip
+- Documentation coverage report listing every record type next to the chapters documenting it, reachable from the
+doc header of the manual module
+- `Configuration/ContentSecurityPolicies.php`; the only inline stylesheet of the manual is registered through the
+asset collector so TYPO3 can attach a nonce
 - Presets for the installation wizard are collected from the service container, so a project can ship its own
 by implementing `PresetInterface`
 - Functional tests for the manual generator, the button bar event listener and the PDF middleware
@@ -26,6 +35,9 @@ factories were replaced by their supported counterparts
 yet deprecated, and moved to `Configuration/user.tsconfig`
 - The PDF filename is derived from the manual title instead of being hardcoded to `Handbuch.pdf`
 - Modal titles in the backend JavaScript are translatable
+- New manuals are created with the site set attached instead of a TypoScript record
+- The record types a chapter can document are enumerated by `RecordTypeRegistry`, shared by the TCA field and the
+coverage report
 
 ### Fixed
 

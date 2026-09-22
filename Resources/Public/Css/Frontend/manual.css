@@ -514,3 +514,128 @@ blockquote .icon {
         display: block;
     }
 }
+
+/* Search */
+
+.manual-search {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-bottom: 1rem;
+}
+
+.manual-search_label {
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    opacity: .7;
+}
+
+.manual-search_input {
+    width: 100%;
+    padding: .4rem .6rem;
+    border: 1px solid rgba(127, 127, 127, .4);
+    border-radius: .25rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.manual-search_input:focus-visible {
+    outline: 2px solid var(--link-color, currentColor);
+    outline-offset: 1px;
+}
+
+.manual-search_status {
+    margin: 0;
+    font-size: .75rem;
+    opacity: .7;
+}
+
+.manual-search_results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.manual-search_results > li {
+    margin: 0;
+}
+
+.manual-search_hit {
+    display: block;
+    padding: .35rem .5rem;
+    border-radius: .25rem;
+    text-decoration: none;
+}
+
+.manual-search_hit:hover,
+.manual-search_hit:focus-visible {
+    background: rgba(127, 127, 127, .15);
+}
+
+.manual-search_hit-title {
+    display: block;
+    font-weight: 600;
+}
+
+.manual-search_hit-snippet {
+    display: block;
+    font-size: .75rem;
+    opacity: .75;
+}
+
+.manual-search_hit-snippet mark {
+    background: var(--link-color, #ff8700);
+    color: #fff;
+    padding: 0 .1em;
+}
+
+/* Glossary */
+
+.manual-glossary {
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.manual-glossary_entry {
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(127, 127, 127, .2);
+}
+
+.manual-glossary_entry:last-child {
+    border-bottom: 0;
+}
+
+.manual-glossary_term {
+    display: block;
+    font-weight: 600;
+}
+
+.manual-glossary_definition {
+    margin: 0;
+}
+
+.manual-glossary_definition > p:last-child {
+    margin-bottom: 0;
+}
+
+a.manual-term {
+    text-decoration: underline dotted;
+    text-underline-offset: .2em;
+    cursor: help;
+    color: inherit;
+}
+
+@media print {
+    .manual-search {
+        display: none;
+    }
+
+    a.manual-term {
+        text-decoration: none;
+    }
+}

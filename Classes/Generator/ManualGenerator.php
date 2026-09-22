@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Generator\Preset\PresetInterface;
 
 class ManualGenerator
@@ -101,6 +102,9 @@ class ManualGenerator
         $site = $this->siteFinder->getSiteByPageId($rootPageUid);
         $siteConfiguration = $site->getConfiguration();
         $siteConfiguration['websiteTitle'] = $this->getPageTitle($rootPageUid);
+        $siteConfiguration['dependencies'] = array_values(array_unique(
+            [...($siteConfiguration['dependencies'] ?? []), Configuration::SITE_SET]
+        ));
         $this->siteWriter->write($identifier, $siteConfiguration);
     }
 

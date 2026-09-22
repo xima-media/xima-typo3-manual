@@ -20,6 +20,9 @@ special doktype.
 ## Features
 
 * Backend module with preview
+* Full text search over the whole manual
+* Glossary elements: terms are linked and explained automatically wherever they appear
+* Documentation coverage report: which record types are documented, and which are not
 * Associate individual chapters to TYPO3 records for easy access
 * Directly open chapters in a modal while editing records
 * PDF download
@@ -70,9 +73,12 @@ configuration:
 * Start with creating a new page in the page tree
 * Select Type "**Manual page**"
 * Check "**Use as Root Page**"
-* Include **static PageTS** "XIMA Manual"
-* Create new **Root-TypoScript** template for this page and include static
-TypoScript of this extension
+* Create a site configuration for that page and add the site set "**XIMA Manual**"
+(`xima/manual`) under *Dependencies*
+
+Installations that predate site sets can keep the previous wiring instead: include
+the **static PageTS** "XIMA Manual" and create a root TypoScript template that
+includes the static TypoScript of this extension.
 
 ## Usage
 

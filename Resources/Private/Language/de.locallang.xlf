@@ -246,6 +246,94 @@
 				<source />
 				<target>Zum neuen Handbuch</target>
 			</trans-unit>
+			<trans-unit id="search.label">
+				<source />
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="search.placeholder">
+				<source />
+				<target>Handbuch durchsuchen</target>
+			</trans-unit>
+			<trans-unit id="search.results">
+				<source />
+				<target>%s Treffer</target>
+			</trans-unit>
+			<trans-unit id="search.noResults">
+				<source />
+				<target>Keine Treffer</target>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.title">
+				<source />
+				<target>Glossar</target>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.description">
+				<source />
+				<target>Eine Liste von Begriffen mit ihrer Erklärung. Jeder Begriff wird im Handbuch automatisch verlinkt.</target>
+			</trans-unit>
+			<trans-unit id="mglossary.palette">
+				<source />
+				<target>Glossar</target>
+			</trans-unit>
+			<trans-unit id="mglossary.terms">
+				<source />
+				<target>Begriffe</target>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.title">
+				<source />
+				<target>Glossarbegriff</target>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.description">
+				<source />
+				<target>Ein einzelner Glossareintrag innerhalb eines Glossars.</target>
+			</trans-unit>
+			<trans-unit id="mterm.palette">
+				<source />
+				<target>Glossarbegriff</target>
+			</trans-unit>
+			<trans-unit id="mterm.term">
+				<source />
+				<target>Begriff</target>
+			</trans-unit>
+			<trans-unit id="mterm.definition">
+				<source />
+				<target>Erklärung</target>
+			</trans-unit>
+			<trans-unit id="coverage.title">
+				<source />
+				<target>Dokumentationsabdeckung</target>
+			</trans-unit>
+			<trans-unit id="coverage.description">
+				<source />
+				<target>Welche Datensatztypen das Handbuch dokumentiert und welche noch fehlen.</target>
+			</trans-unit>
+			<trans-unit id="coverage.recordType">
+				<source />
+				<target>Datensatztyp</target>
+			</trans-unit>
+			<trans-unit id="coverage.documentedBy">
+				<source />
+				<target>Dokumentiert durch</target>
+			</trans-unit>
+			<trans-unit id="coverage.undocumented">
+				<source />
+				<target>Nicht dokumentiert</target>
+			</trans-unit>
+			<trans-unit id="coverage.summary">
+				<source />
+				<target>%1$s von %2$s Datensatztypen dokumentiert</target>
+			</trans-unit>
+			<trans-unit id="coverage.filter.all">
+				<source />
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="coverage.filter.undocumented">
+				<source />
+				<target>Nur undokumentierte</target>
+			</trans-unit>
+			<trans-unit id="button.coverage">
+				<source />
+				<target>Abdeckung</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

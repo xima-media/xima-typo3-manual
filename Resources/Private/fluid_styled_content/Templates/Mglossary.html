@@ -1,0 +1,14 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default"/>
+
+<f:section name="Main">
+    <dl class="manual-glossary" data-manual-glossary>
+        <f:for each="{terms}" as="term">
+            <div class="manual-glossary_entry" id="term-{term.data.uid}">
+                <dt class="manual-glossary_term">{term.data.header}</dt>
+                <dd class="manual-glossary_definition"><f:format.html>{term.data.bodytext}</f:format.html></dd>
+            </div>
+        </f:for>
+    </dl>
+</f:section>
+</html>
