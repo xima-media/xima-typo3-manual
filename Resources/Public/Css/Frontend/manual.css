@@ -165,6 +165,18 @@ a:hover {
     padding: 28px;
 }
 
+.manual-shell--no-nav {
+    grid-template-columns: minmax(0, 1fr) var(--manual-aside-width);
+}
+
+.manual-shell--no-toc {
+    grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
+}
+
+.manual-shell--no-nav.manual-shell--no-toc {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .manual-sidebar {
     position: sticky;
     top: 20px;
@@ -924,6 +936,10 @@ a.manual-term {
 @media (max-width: 1180px) {
     .manual-shell {
         grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
+    }
+
+    .manual-shell--no-nav {
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .manual-aside {

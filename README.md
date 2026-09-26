@@ -143,6 +143,9 @@ site under *Site Management > Sites > Settings*:
 | Setting | Default | Effect |
 |---|---|---|
 | `manual.appearance.primaryColor` | `#1A5FB4` | Lead colour: links, markers, active states |
+| `manual.appearance.showNavigation` | enabled | Shows the chapter navigation sidebar. Turn it off to hide it entirely |
+| `manual.appearance.showToc` | enabled | Shows the "Contents" / "On this page" column. Turn it off to hide it entirely |
+| `manual.appearance.showContentInNavigation` | disabled | Lists content-element headers in the navigation tree too, not just chapter pages — how navigation worked before it became chapter-only. Combine with `showToc` off for that original look |
 | `manual.behaviour.displayFullManual` | enabled | Renders every chapter on one page. Turn it off to show one chapter per page, with the chapter list linking to the pages instead of anchors |
 
 * Logo: the `media` field of the manual root page, falling back to the backend

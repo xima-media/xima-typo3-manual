@@ -15,9 +15,27 @@ settings:
     type: color
     default: '#1A5FB4'
     category: manual.appearance
+  manual.appearance.showNavigation:
+    label: 'Show navigation'
+    description: 'Whether to display the navigation menu.'
+    type: bool
+    default: true
+    category: manual.appearance
+  manual.appearance.showToc:
+    label: 'Show table of contents'
+    description: 'Whether to display the table of contents.'
+    type: bool
+    default: true
+    category: manual.appearance
+  manual.appearance.showContentInNavigation:
+    label: 'Show content elements in navigation'
+    description: 'List content-element headers in the navigation tree too, not just chapter pages. This is how the navigation worked before it became a chapter-only tree; combine with "Show table of contents" off to get that original look back.'
+    type: bool
+    default: false
+    category: manual.appearance
   manual.behaviour.displayFullManual:
-    label: 'Display full manual'
-    description: 'Render every chapter on one page, so the manual can be read and searched in one go. Turn this off to show one chapter per page.'
+    label: 'Combine chapters on one page'
+    description: 'When enabled, every chapter renders on one continuous page, so the manual can be read and searched in one go. When disabled, each chapter gets its own page and its own URL.'
     type: bool
     default: true
     category: manual.behaviour

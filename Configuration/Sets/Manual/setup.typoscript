@@ -19,6 +19,12 @@ page {
       currentPageUid.data = page:uid
       displayFullManual = TEXT
       displayFullManual.value = {$manual.behaviour.displayFullManual}
+      showNavigation = TEXT
+      showNavigation.value = {$manual.appearance.showNavigation}
+      showToc = TEXT
+      showToc.value = {$manual.appearance.showToc}
+      showContentInNavigation = TEXT
+      showContentInNavigation.value = {$manual.appearance.showContentInNavigation}
     }
 
     dataProcessing {

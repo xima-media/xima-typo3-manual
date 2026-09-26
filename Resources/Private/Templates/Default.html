@@ -63,9 +63,9 @@
     </header>
 </f:if>
 
-<div class="manual-shell">
+<div class="manual-shell<f:if condition="!{showNavigation}"> manual-shell--no-nav</f:if><f:if condition="!{showToc}"> manual-shell--no-toc</f:if>">
 
-    <f:if condition="{context} != 'pdf'">
+    <f:if condition="{context} != 'pdf' && {showNavigation}">
         <nav class="manual-sidebar" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label')}">
             <p class="manual-search_status" role="status" hidden></p>
             <ol class="manual-search_results" hidden></ol>
@@ -83,7 +83,7 @@
             </p>
             <ol class="manual-nav">
                 <f:for each="{pages}" as="page">
-                    <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual}"/>
+                    <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
                 </f:for>
             </ol>
         </nav>
@@ -121,7 +121,7 @@
         </f:for>
     </main>
 
-    <f:if condition="{context} != 'pdf'">
+    <f:if condition="{context} != 'pdf' && {showToc}">
         <aside class="manual-aside">
             <p class="manual-aside_label">
                 <f:if condition="{displayFullManual}">
@@ -156,8 +156,12 @@
 </f:section>
 
 <f:section name="navigation">
+    <f:if condition="{showContentInNavigation}">
+        <f:then><f:variable name="navChapters" value="{page.chapters}"/></f:then>
+        <f:else><f:variable name="navChapters" value="0"/></f:else>
+    </f:if>
     <li>
-        <f:if condition="{page.hasSubpages}">
+        <f:if condition="{page.hasSubpages} || {navChapters}">
             <f:then>
                 <details>
                     <summary>
@@ -166,9 +170,20 @@
                         title="{page.title}">{page.title}</a>
                     </summary>
                     <ol>
+                        <f:if condition="{showContentInNavigation}">
+                            <f:for each="{page.chapters}" as="content">
+                                <li>
+                                    <a href="{f:if(condition: displayFullManual, then: '#c{content.data.uid}', else: '{page.link}#c{content.data.uid}')}"
+                                    title="{page.title}">
+                                        <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
+                                        {content.data.header}
+                                    </a>
+                                </li>
+                            </f:for>
+                        </f:if>
                         <f:for each="{page.children}" as="subpage">
                             <f:render section="navigation"
-                                    arguments="{page: subpage, displayFullManual: displayFullManual}"/>
+                                    arguments="{page: subpage, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
                         </f:for>
                     </ol>
                 </details>

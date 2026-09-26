@@ -47,7 +47,7 @@ class Navigation {
   }
 
   bindObserver() {
-    document.querySelectorAll('.manual-chapter h2, .manual-chapter h3').forEach(headline => {
+    document.querySelectorAll('.manual-chapter [data-level][id]').forEach(headline => {
       this.headlineObserver.observe(headline)
     })
   }
