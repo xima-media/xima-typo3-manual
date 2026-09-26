@@ -237,6 +237,60 @@ a:hover {
     max-width: 52ch;
 }
 
+/* --------------------------------------------------------------- Overview */
+
+.manual-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.manual-overview-card {
+    padding: 24px;
+}
+
+.manual-overview-card_title {
+    font-family: var(--manual-font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+
+.manual-overview-card_title a {
+    color: var(--manual-text);
+    text-decoration: none;
+}
+
+.manual-overview-card_title a:hover {
+    text-decoration: underline;
+}
+
+.manual-overview-card_subtitle {
+    color: var(--manual-text-muted);
+    font-size: 14px;
+    margin: 0 0 14px;
+}
+
+.manual-overview-card_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.manual-overview-card_list a {
+    color: var(--manual-blue);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.manual-overview-card_list a:hover {
+    text-decoration: underline;
+}
+
 /* ------------------------------------------------------------------ Sidebar */
 
 .manual-quicklinks {

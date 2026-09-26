@@ -128,6 +128,12 @@
                         <h1 class="manual-hero_title">{title}</h1>
                         <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
                     </section>
+
+                    <section class="manual-overview-grid">
+                        <f:for each="{pages}" as="page">
+                            <f:render section="overviewCard" arguments="{page: page, displayFullManual: displayFullManual}"/>
+                        </f:for>
+                    </section>
                 </f:if>
             </f:else>
         </f:if>
@@ -170,6 +176,31 @@
             </ol>
         </f:if>
     </li>
+</f:section>
+
+<f:section name="overviewCard">
+    <div class="manual-card manual-overview-card">
+        <h3 class="manual-overview-card_title">
+            <a href="{f:if(condition: displayFullManual, then: '#p{page.data.uid}', else: page.link)}">
+                <f:if condition="{page.record}">
+                    <f:then>{page.record -> f:render.text(field: 'title')}</f:then>
+                    <f:else>{page.title}</f:else>
+                </f:if>
+            </a>
+        </h3>
+        <f:if condition="{page.record}">
+            <p class="manual-overview-card_subtitle">{page.record -> f:render.text(field: 'subtitle')}</p>
+        </f:if>
+        <f:if condition="{page.children}">
+            <ul class="manual-overview-card_list">
+                <f:for each="{page.children}" as="subpage">
+                    <li>
+                        <a href="{f:if(condition: displayFullManual, then: '#p{subpage.data.uid}', else: subpage.link)}">{subpage.title}</a>
+                    </li>
+                </f:for>
+            </ul>
+        </f:if>
+    </div>
 </f:section>
 
 <f:section name="navigation">
