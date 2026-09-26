@@ -177,6 +177,14 @@ lib.contentElement.variables.context = TEXT
 lib.contentElement.variables.context.value = frontend
 lib.contentElement.variables.context.override.data = GP:context
 
+lib.contentElement.partialRootPaths.100 = EXT:xima_typo3_manual/Resources/Private/Partials/
+
+lib.contentElement.variables.headingLevel = TEXT
+lib.contentElement.variables.headingLevel {
+  data = register:headingLevel
+  ifEmpty = 3
+}
+
 lib.dynamicContent = COA
 lib.dynamicContent {
   10 = LOAD_REGISTER
@@ -188,6 +196,11 @@ lib.dynamicContent {
       value.current = 1
       ifEmpty = 0
     }
+  }
+  10.headingLevel.cObject = TEXT
+  10.headingLevel.cObject {
+    field = headingLevel
+    ifEmpty = 3
   }
 
   20 = CONTENT

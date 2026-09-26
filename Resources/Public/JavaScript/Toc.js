@@ -17,11 +17,17 @@ class Toc {
   }
 
   build() {
-    const headings = [...document.querySelectorAll('.manual-chapter h2[id], .manual-chapter h3[id]')]
+    let headings = [...document.querySelectorAll('.manual-chapter [data-level][id]')]
+
+    if (this.#list.dataset.fullManual !== '1') {
+      headings = headings.filter(heading => heading.closest('.manual-chapter').querySelector('[data-level][id]') !== heading)
+    }
+
+    const minLevel = Math.min(...headings.map(heading => Number(heading.dataset.level)))
 
     headings.forEach(heading => {
       const item = document.createElement('li')
-      item.className = 'manual-toc_level-' + heading.tagName.slice(1)
+      item.style.setProperty('--manual-toc-level', Number(heading.dataset.level) - minLevel)
 
       const link = document.createElement('a')
       link.href = '#' + heading.id

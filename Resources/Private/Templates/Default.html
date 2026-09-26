@@ -117,14 +117,19 @@
 
         <f:for each="{pages}" as="page">
             <f:render section="page"
-                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual}"/>
+                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: 2}"/>
         </f:for>
     </main>
 
     <f:if condition="{context} != 'pdf'">
         <aside class="manual-aside">
-            <p class="manual-aside_label"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.onThisPage"/></p>
-            <ol class="manual-toc" data-manual-toc></ol>
+            <p class="manual-aside_label">
+                <f:if condition="{displayFullManual}">
+                    <f:then><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.contents"/></f:then>
+                    <f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.onThisPage"/></f:else>
+                </f:if>
+            </p>
+            <ol class="manual-toc" data-manual-toc data-full-manual="{displayFullManual}"></ol>
         </aside>
     </f:if>
 
@@ -183,6 +188,7 @@
     <f:comment>
         Without the full manual only the requested chapter is rendered, the tree is still walked to find it.
     </f:comment>
+    <f:variable name="nextLevel" value="{level + 1}"/>
     <f:if condition="{displayFullManual} || {page.data.uid} == {currentPageUid}">
     <section class="manual-card manual-chapter" id="chapter-{page.data.uid}">
         <f:if condition="{page.data.tx_ximatypo3manual_relations}">
@@ -191,7 +197,8 @@
             </div>
         </f:if>
 
-        <h2 id="p{page.data.uid}" data-page-url="{page.link}">
+        <f:variable name="chapterHeadingId" value="p{page.data.uid}"/>
+        <f:render partial="Manual/Heading" arguments="{level: level, id: chapterHeadingId, pageUrl: page.link}" contentAs="content">
             <f:if condition="{page.record}">
                 <f:then>{page.record -> f:render.text(field: 'title')}</f:then>
                 <f:else>{page.title}</f:else>
@@ -206,19 +213,19 @@
                     <core:icon identifier="actions-open" size="small"/>
                 </be:link.editRecord>
             </f:if>
-        </h2>
+        </f:render>
 
         <f:if condition="{page.data.abstract}">
             <p class="manual-chapter_lead">{page.data.abstract}</p>
         </f:if>
 
         <f:render partial="Manual/ContentArea"
-                arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid}"/>
+                arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/>
     </section>
     </f:if>
 
     <f:for each="{page.children}" as="subpage">
         <f:render section="page"
-                arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual}"/>
+                arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: nextLevel}"/>
     </f:for>
 </f:section>

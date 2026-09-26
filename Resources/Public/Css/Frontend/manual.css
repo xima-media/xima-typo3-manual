@@ -271,13 +271,24 @@ a:hover {
     padding: 0;
 }
 
+.manual-nav ol {
+    margin-left: 6px;
+    padding-left: 13px;
+    border-left: 1px solid var(--manual-line);
+}
+
 .manual-nav li {
     margin: 0;
 }
 
-.manual-nav a {
+.manual-nav > li + li {
+    margin-top: 12px;
+}
+
+.manual-nav a,
+.manual-nav details > summary {
     display: flex;
-    align-items: flex-start;
+    align-items: baseline;
     gap: 7px;
     padding: 6px 8px;
     border-radius: var(--manual-radius);
@@ -287,7 +298,8 @@ a:hover {
     text-decoration: none;
 }
 
-.manual-nav a:hover {
+.manual-nav a:hover,
+.manual-nav details > summary:hover {
     background: var(--manual-paper);
 }
 
@@ -306,13 +318,20 @@ a:hover {
 
 .manual-nav details > summary {
     list-style: none;
-    display: flex;
-    align-items: flex-start;
     cursor: pointer;
 }
 
 .manual-nav details > summary::-webkit-details-marker {
     display: none;
+}
+
+.manual-nav details > summary > a {
+    padding: 0;
+    border-radius: 0;
+}
+
+.manual-nav details > summary > a:hover {
+    background: none;
 }
 
 .manual-nav_sign {
@@ -321,7 +340,6 @@ a:hover {
     text-align: center;
     color: var(--manual-blue);
     font-weight: 700;
-    padding-top: 6px;
 }
 
 .manual-nav_sign--leaf {
@@ -333,15 +351,6 @@ a:hover {
     font-size: 12px;
     color: var(--manual-text-soft);
     font-weight: 400;
-    padding-top: 2px;
-}
-
-.manual-nav ol ol a {
-    padding-left: 21px;
-}
-
-.manual-nav ol ol ol a {
-    padding-left: 34px;
 }
 
 /* ------------------------------------------------------------------- Search */
@@ -483,10 +492,11 @@ a:hover {
 .manual-toc {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 14px;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    border-left: 1px solid var(--manual-line);
 }
 
 .manual-toc a {
@@ -501,8 +511,8 @@ a:hover {
     color: var(--manual-blue);
 }
 
-.manual-toc_level-3 {
-    padding-left: 14px;
+.manual-toc li {
+    padding-left: calc(var(--manual-toc-level, 0) * 14px);
 }
 
 /* ------------------------------------------------------------------ Content */

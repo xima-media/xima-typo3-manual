@@ -2,7 +2,8 @@
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
 <f:if condition="{data.header} && {data.CType} != 'mbox'">
     <header>
-        <h3 id="c{data.uid}">
+        <f:variable name="contentHeadingId" value="c{data.uid}"/>
+        <f:render partial="Manual/Heading" arguments="{level: headingLevel, id: contentHeadingId}" contentAs="content">
             {record -> f:render.text(field: 'header')}
             <f:if condition="{context} == 'frontend'">
                 <a href="#c{data.uid}" class="manual-anchor" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:anchor.permalink')}">
@@ -14,6 +15,6 @@
                     <core:icon identifier="actions-open" size="small"/>
                 </be:link.editRecord>
             </f:if>
-        </h3>
+        </f:render>
     </header>
 </f:if>

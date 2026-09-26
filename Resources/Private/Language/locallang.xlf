@@ -275,6 +275,9 @@
 			<trans-unit id="toc.onThisPage">
 				<source>On this page</source>
 			</trans-unit>
+			<trans-unit id="toc.contents">
+				<source>Contents</source>
+			</trans-unit>
 			<trans-unit id="toTop">
 				<source>Back to top</source>
 			</trans-unit>

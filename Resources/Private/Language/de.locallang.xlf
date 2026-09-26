@@ -366,6 +366,10 @@
 				<source />
 				<target>Auf dieser Seite</target>
 			</trans-unit>
+			<trans-unit id="toc.contents">
+				<source />
+				<target>Inhalt</target>
+			</trans-unit>
 			<trans-unit id="toTop">
 				<source />
 				<target>Nach oben</target>
