@@ -41,6 +41,7 @@ page {
         levels = 9
         entryLevel = 0
         expandAll = 1
+        includeNotInMenu = 1
 
         dataProcessing {
           10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor

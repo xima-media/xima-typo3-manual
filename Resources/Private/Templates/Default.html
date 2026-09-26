@@ -98,7 +98,9 @@
             </p>
             <ol class="manual-nav">
                 <f:for each="{pages}" as="page">
-                    <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
+                    <f:if condition="!{page.data.nav_hide}">
+                        <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
+                    </f:if>
                 </f:for>
             </ol>
         </nav>
@@ -116,7 +118,9 @@
                     <h2 class="no-number"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading"/></h2>
                     <ol>
                         <f:for each="{pages}" as="page">
-                            <f:render section="chapter" arguments="{page: page}"/>
+                            <f:if condition="!{page.data.nav_hide}">
+                                <f:render section="chapter" arguments="{page: page}"/>
+                            </f:if>
                         </f:for>
                     </ol>
                 </section>
@@ -131,7 +135,9 @@
 
                     <section class="manual-overview-grid">
                         <f:for each="{pages}" as="page">
-                            <f:render section="overviewCard" arguments="{page: page, displayFullManual: displayFullManual}"/>
+                            <f:if condition="!{page.data.nav_hide}">
+                                <f:render section="overviewCard" arguments="{page: page, displayFullManual: displayFullManual}"/>
+                            </f:if>
                         </f:for>
                     </section>
                 </f:if>
@@ -171,7 +177,9 @@
                     <li><a href="#c{content.data.uid}">{content.data.header}</a></li>
                 </f:for>
                 <f:for each="{page.children}" as="subpage">
-                    <f:render section="chapter" arguments="{page: subpage}"/>
+                    <f:if condition="!{subpage.data.nav_hide}">
+                        <f:render section="chapter" arguments="{page: subpage}"/>
+                    </f:if>
                 </f:for>
             </ol>
         </f:if>
@@ -194,9 +202,11 @@
         <f:if condition="{page.children}">
             <ul class="manual-overview-card_list">
                 <f:for each="{page.children}" as="subpage">
-                    <li>
-                        <a href="{f:if(condition: displayFullManual, then: '#p{subpage.data.uid}', else: subpage.link)}">{subpage.title}</a>
-                    </li>
+                    <f:if condition="!{subpage.data.nav_hide}">
+                        <li>
+                            <a href="{f:if(condition: displayFullManual, then: '#p{subpage.data.uid}', else: subpage.link)}">{subpage.title}</a>
+                        </li>
+                    </f:if>
                 </f:for>
             </ul>
         </f:if>
@@ -230,8 +240,10 @@
                             </f:for>
                         </f:if>
                         <f:for each="{page.children}" as="subpage">
-                            <f:render section="navigation"
-                                    arguments="{page: subpage, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
+                            <f:if condition="!{subpage.data.nav_hide}">
+                                <f:render section="navigation"
+                                        arguments="{page: subpage, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
+                            </f:if>
                         </f:for>
                     </ol>
                 </details>
