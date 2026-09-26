@@ -146,7 +146,7 @@
 
         <f:for each="{pages}" as="page">
             <f:render section="page"
-                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: 2}"/>
+                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: 2, faqPageUid: faqPageUid, changelogPageUid: changelogPageUid}"/>
         </f:for>
     </main>
 
@@ -264,15 +264,12 @@
         Without the full manual only the requested chapter is rendered, the tree is still walked to find it.
     </f:comment>
     <f:variable name="nextLevel" value="{level + 1}"/>
+    <f:variable name="isEntriesPage" value="0"/>
+    <f:if condition="{page.data.uid} == {faqPageUid}"><f:variable name="isEntriesPage" value="1"/></f:if>
+    <f:if condition="{page.data.uid} == {changelogPageUid}"><f:variable name="isEntriesPage" value="1"/></f:if>
     <f:if condition="{displayFullManual} || {page.data.uid} == {currentPageUid}">
-    <section class="manual-card manual-chapter" id="chapter-{page.data.uid}">
-        <f:if condition="{page.data.tx_ximatypo3manual_relations}">
-            <div class="manual-badges">
-                <span class="manual-badge manual-badge--editorial"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:badge.documented"/></span>
-            </div>
-        </f:if>
-
-        <f:variable name="chapterHeadingId" value="p{page.data.uid}"/>
+    <f:variable name="chapterHeadingId" value="p{page.data.uid}"/>
+    <f:variable name="chapterHeadingMarkup">
         <f:render partial="Manual/Heading" arguments="{level: level, id: chapterHeadingId, pageUrl: page.link}" contentAs="content">
             <f:if condition="{page.record}">
                 <f:then>{page.record -> f:render.text(field: 'title')}</f:then>
@@ -289,18 +286,54 @@
                 </be:link.editRecord>
             </f:if>
         </f:render>
+    </f:variable>
 
-        <f:if condition="{page.record}">
-            <p class="manual-chapter_lead">{page.record -> f:render.text(field: 'subtitle')}</p>
-        </f:if>
+    <f:if condition="{isEntriesPage}">
+        <f:then>
+            <div class="manual-chapter manual-chapter--entries" id="chapter-{page.data.uid}">
+                <section class="manual-hero manual-hero--chapter">
+                    {chapterHeadingMarkup -> f:format.raw()}
 
-        <f:render partial="Manual/ContentArea"
-                arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/>
-    </section>
+                    <f:if condition="{page.record}">
+                        <p class="manual-hero_lead">{page.record -> f:render.text(field: 'subtitle')}</p>
+                    </f:if>
+                </section>
+
+                <section class="manual-card">
+                    <f:if condition="{page.data.tx_ximatypo3manual_relations}">
+                        <div class="manual-badges">
+                            <span class="manual-badge manual-badge--editorial"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:badge.documented"/></span>
+                        </div>
+                    </f:if>
+
+                    <f:render partial="Manual/ContentArea"
+                            arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/>
+                </section>
+            </div>
+        </f:then>
+        <f:else>
+            <section class="manual-card manual-chapter" id="chapter-{page.data.uid}">
+                <f:if condition="{page.data.tx_ximatypo3manual_relations}">
+                    <div class="manual-badges">
+                        <span class="manual-badge manual-badge--editorial"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:badge.documented"/></span>
+                    </div>
+                </f:if>
+
+                {chapterHeadingMarkup -> f:format.raw()}
+
+                <f:if condition="{page.record}">
+                    <p class="manual-chapter_lead">{page.record -> f:render.text(field: 'subtitle')}</p>
+                </f:if>
+
+                <f:render partial="Manual/ContentArea"
+                        arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/>
+            </section>
+        </f:else>
+    </f:if>
     </f:if>
 
     <f:for each="{page.children}" as="subpage">
         <f:render section="page"
-                arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: nextLevel}"/>
+                arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: nextLevel, faqPageUid: faqPageUid, changelogPageUid: changelogPageUid}"/>
     </f:for>
 </f:section>
