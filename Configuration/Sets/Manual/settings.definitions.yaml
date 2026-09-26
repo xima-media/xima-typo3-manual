@@ -7,6 +7,9 @@ categories:
   manual.behaviour:
     label: Behaviour
     parent: manual
+  manual.navigation:
+    label: Navigation
+    parent: manual
 
 settings:
   manual.appearance.primaryColor:
@@ -39,3 +42,15 @@ settings:
     type: bool
     default: true
     category: manual.behaviour
+  manual.navigation.faqPage:
+    label: 'FAQ page'
+    description: 'Page linked from the "FAQ" entry above the navigation. Leave empty to hide the entry.'
+    type: page
+    default: 0
+    category: manual.navigation
+  manual.navigation.changelogPage:
+    label: 'Changelog page'
+    description: 'Page linked from the "Changelog" entry above the navigation. Leave empty to hide the entry.'
+    type: page
+    default: 0
+    category: manual.navigation

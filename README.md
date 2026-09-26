@@ -147,6 +147,8 @@ site under *Site Management > Sites > Settings*:
 | `manual.appearance.showToc` | enabled | Shows the "Contents" / "On this page" column. Turn it off to hide it entirely |
 | `manual.appearance.showContentInNavigation` | disabled | Lists content-element headers in the navigation tree too, not just chapter pages — how navigation worked before it became chapter-only. Combine with `showToc` off for that original look |
 | `manual.behaviour.displayFullManual` | enabled | Renders every chapter on one page. Turn it off to show one chapter per page, with the chapter list linking to the pages instead of anchors |
+| `manual.navigation.faqPage` | none | Page linked from the "FAQ" entry above the navigation. Leave empty to hide the entry |
+| `manual.navigation.changelogPage` | none | Page linked from the "Changelog" entry above the navigation. Leave empty to hide the entry |
 
 * Logo: the `media` field of the manual root page, falling back to the backend
 login logo

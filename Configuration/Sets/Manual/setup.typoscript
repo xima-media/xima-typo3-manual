@@ -19,6 +19,10 @@ page {
       currentPageUid.data = page:uid
       rootPageUid = TEXT
       rootPageUid.data = levelUid:0
+      faqPageUid = TEXT
+      faqPageUid.value = {$manual.navigation.faqPage}
+      changelogPageUid = TEXT
+      changelogPageUid.value = {$manual.navigation.changelogPage}
       displayFullManual = TEXT
       displayFullManual.value = {$manual.behaviour.displayFullManual}
       showNavigation = TEXT

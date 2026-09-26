@@ -72,6 +72,16 @@
 
     <f:if condition="{context} != 'pdf' && {showNavigation}">
         <nav class="manual-sidebar" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label')}">
+            <ol class="manual-quicklinks">
+                <li><f:link.page pageUid="{rootPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.overview"/></f:link.page></li>
+                <f:if condition="{faqPageUid}">
+                    <li><f:link.page pageUid="{faqPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.faq"/></f:link.page></li>
+                </f:if>
+                <f:if condition="{changelogPageUid}">
+                    <li><f:link.page pageUid="{changelogPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.changelog"/></f:link.page></li>
+                </f:if>
+            </ol>
+
             <p class="manual-search_status" role="status" hidden></p>
             <ol class="manual-search_results" hidden></ol>
 

@@ -260,6 +260,15 @@
 			<trans-unit id="hero.lead">
 				<source>Every chapter of this manual, on one page. Use the search or the chapter list to jump to a topic.</source>
 			</trans-unit>
+			<trans-unit id="nav.quicklinks.overview">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.faq">
+				<source>FAQ</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.changelog">
+				<source>Changelog</source>
+			</trans-unit>
 			<trans-unit id="nav.label">
 				<source>Documentation</source>
 			</trans-unit>

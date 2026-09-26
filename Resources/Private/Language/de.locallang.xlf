@@ -346,6 +346,18 @@
 				<source />
 				<target>Alle Kapitel dieses Handbuchs auf einer Seite. Nutzen Sie die Suche oder die Kapitelliste, um zu einem Thema zu springen.</target>
 			</trans-unit>
+			<trans-unit id="nav.quicklinks.overview">
+				<source />
+				<target>Übersicht</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.faq">
+				<source />
+				<target>FAQ</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.changelog">
+				<source />
+				<target>Changelog</target>
+			</trans-unit>
 			<trans-unit id="nav.label">
 				<source />
 				<target>Dokumentation</target>
