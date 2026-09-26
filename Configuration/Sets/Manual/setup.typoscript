@@ -183,6 +183,9 @@ lib.contentElement.variables.context = TEXT
 lib.contentElement.variables.context.value = frontend
 lib.contentElement.variables.context.override.data = GP:context
 
+lib.contentElement.variables.veEditMode = TEXT
+lib.contentElement.variables.veEditMode.data = GP:editMode
+
 lib.contentElement.partialRootPaths.100 = EXT:xima_typo3_manual/Resources/Private/Partials/
 
 lib.contentElement.variables.headingLevel = TEXT

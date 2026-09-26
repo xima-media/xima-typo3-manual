@@ -230,8 +230,8 @@
             </f:if>
         </f:render>
 
-        <f:if condition="{page.data.abstract}">
-            <p class="manual-chapter_lead">{page.data.abstract}</p>
+        <f:if condition="{page.record}">
+            <p class="manual-chapter_lead">{page.record -> f:render.text(field: 'subtitle')}</p>
         </f:if>
 
         <f:render partial="Manual/ContentArea"

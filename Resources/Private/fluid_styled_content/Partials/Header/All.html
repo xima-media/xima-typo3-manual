@@ -1,6 +1,9 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
-<f:if condition="{data.header} && {data.CType} != 'mbox'">
+<f:variable name="hasHeaderContent" value="0"/>
+<f:if condition="{data.header}"><f:variable name="hasHeaderContent" value="1"/></f:if>
+<f:if condition="{veEditMode}"><f:variable name="hasHeaderContent" value="1"/></f:if>
+<f:if condition="{data.CType} != 'mbox' && {hasHeaderContent}">
     <header>
         <f:variable name="contentHeadingId" value="c{data.uid}"/>
         <f:render partial="Manual/Heading" arguments="{level: headingLevel, id: contentHeadingId}" contentAs="content">

@@ -3,11 +3,7 @@
 
 <f:section name="Main">
 
-    <f:if condition="{data.bodytext}">
-        <div class="manual-annotation_intro">
-            {record -> f:render.text(field: 'bodytext')}
-        </div>
-    </f:if>
+    <div class="manual-annotation_intro">{record -> f:render.text(field: 'bodytext')}</div>
 
     <f:for each="{images}" as="image" iteration="imageIterator">
         <figure class="manual-annotation">

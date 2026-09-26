@@ -610,6 +610,10 @@ a:hover {
     margin: 0 0 24px;
 }
 
+.manual-chapter_lead:empty {
+    display: none;
+}
+
 .manual-chapter p {
     margin: 0 0 14px;
 }
@@ -702,6 +706,11 @@ h3:hover > .manual-anchor,
     text-transform: uppercase;
     color: var(--manual-text-soft);
     margin: 0 0 4px;
+}
+
+.manual-note_label:empty,
+.manual-annotation_intro:empty {
+    display: none;
 }
 
 .manual-note > :last-child {
