@@ -17,6 +17,8 @@ page {
       title.data = leveltitle:0
       currentPageUid = TEXT
       currentPageUid.data = page:uid
+      rootPageUid = TEXT
+      rootPageUid.data = levelUid:0
       displayFullManual = TEXT
       displayFullManual.value = {$manual.behaviour.displayFullManual}
       showNavigation = TEXT

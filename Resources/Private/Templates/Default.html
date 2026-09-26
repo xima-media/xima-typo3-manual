@@ -63,7 +63,12 @@
     </header>
 </f:if>
 
-<div class="manual-shell<f:if condition="!{showNavigation}"> manual-shell--no-nav</f:if><f:if condition="!{showToc}"> manual-shell--no-toc</f:if>">
+<f:variable name="hideAsideOnOverview" value="0"/>
+<f:if condition="!{displayFullManual} && {currentPageUid} == {rootPageUid}">
+    <f:variable name="hideAsideOnOverview" value="1"/>
+</f:if>
+
+<div class="manual-shell<f:if condition="!{showNavigation}"> manual-shell--no-nav</f:if><f:if condition="!{showToc} || {hideAsideOnOverview}"> manual-shell--no-toc</f:if>">
 
     <f:if condition="{context} != 'pdf' && {showNavigation}">
         <nav class="manual-sidebar" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label')}">
@@ -91,15 +96,8 @@
 
     <main class="manual-main">
 
-        <f:if condition="{context} != 'pdf'">
+        <f:if condition="{context} == 'pdf'">
             <f:then>
-                <section class="manual-hero">
-                    <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
-                    <h1 class="manual-hero_title">{title}</h1>
-                    <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
-                </section>
-            </f:then>
-            <f:else>
                 <section class="manual-hero">
                     <h1 class="manual-hero_title">{title}</h1>
                 </section>
@@ -112,6 +110,15 @@
                         </f:for>
                     </ol>
                 </section>
+            </f:then>
+            <f:else>
+                <f:if condition="{currentPageUid} == {rootPageUid}">
+                    <section class="manual-hero">
+                        <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                        <h1 class="manual-hero_title">{title}</h1>
+                        <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
+                    </section>
+                </f:if>
             </f:else>
         </f:if>
 
@@ -121,7 +128,7 @@
         </f:for>
     </main>
 
-    <f:if condition="{context} != 'pdf' && {showToc}">
+    <f:if condition="{context} != 'pdf' && {showToc} && !{hideAsideOnOverview}">
         <aside class="manual-aside">
             <p class="manual-aside_label">
                 <f:if condition="{displayFullManual}">
