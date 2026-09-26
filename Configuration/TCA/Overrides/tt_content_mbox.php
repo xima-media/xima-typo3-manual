@@ -36,7 +36,8 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
     'columnsOverrides' => [
         'bodytext' => [
             'config' => [
-                'enableRichtext' => false,
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'xima_typo3_manual',
                 'required' => true,
             ],
         ],
