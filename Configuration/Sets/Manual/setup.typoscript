@@ -103,6 +103,14 @@ page {
   }
 }
 
+[(request.getQueryParams()['colorScheme'] ?? '') == 'dark']
+  config.htmlTag.attributes.data-theme = dark
+[END]
+
+[(request.getQueryParams()['colorScheme'] ?? '') == 'light']
+  config.htmlTag.attributes.data-theme = light
+[END]
+
 pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf

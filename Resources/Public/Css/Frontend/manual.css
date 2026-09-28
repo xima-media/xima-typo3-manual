@@ -8,10 +8,13 @@
 :root {
     --manual-blue: #1A5FB4;
     --manual-blue-deep: #12315C;
-    --manual-blue-night: #0C2647;
     --manual-blue-light: #E4EDF9;
+    --manual-blue-solid: #12315C;
+    --manual-button-bg: #1A5FB4;
     --manual-plum: #6B2B52;
     --manual-plum-light: #F5EBF1;
+    --manual-plum-solid: #501F3D;
+    --manual-button-editorial-bg: #6B2B52;
     --manual-sand: #FDF1DC;
     --manual-paper: #F5F7FA;
     --manual-line: #DCE2EA;
@@ -19,6 +22,15 @@
     --manual-text-muted: #4A5461;
     --manual-text-soft: #6C7684;
     --manual-surface: #fff;
+    --manual-hero-text: #D3E1F4;
+    --manual-hero-eyebrow: #9DBFE8;
+    --manual-selection: #D7E3F5;
+    --manual-warning: #C08A2E;
+    --manual-warning-border: #EFDCB6;
+    --manual-success: #2E7D50;
+    --manual-error: #A32B2B;
+    --manual-editorial-border: #E6D3DE;
+    --manual-nav-muted: #B3BCC8;
 
     --manual-font-sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --manual-font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
@@ -27,10 +39,54 @@
     --manual-radius: 3px;
     --manual-sidebar-width: 268px;
     --manual-aside-width: 220px;
-    --manual-content-max: 760px;
 
-    /* Overridden by the installation's backend highlight colour, see BackendSettingsProcessor */
     --link-color: var(--manual-blue);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --manual-blue: #4C8EDB;
+        --manual-blue-deep: #8FBFF5;
+        --manual-blue-light: #1D3A5C;
+        --manual-plum: #D293B5;
+        --manual-plum-light: #33202C;
+        --manual-sand: #3A2E17;
+        --manual-paper: #171717;
+        --manual-line: #404040;
+        --manual-text: #D9D9D9;
+        --manual-text-muted: #A6A6A6;
+        --manual-text-soft: #8C8C8C;
+        --manual-surface: #262626;
+        --manual-selection: #2A3F5C;
+        --manual-warning: #D9A34A;
+        --manual-warning-border: #4A3B1E;
+        --manual-success: #4FAE78;
+        --manual-error: #D9605A;
+        --manual-editorial-border: #4A3540;
+        --manual-nav-muted: #666;
+    }
+}
+
+:root[data-theme="dark"] {
+    --manual-blue: #4C8EDB;
+    --manual-blue-deep: #8FBFF5;
+    --manual-blue-light: #1D3A5C;
+    --manual-plum: #D293B5;
+    --manual-plum-light: #33202C;
+    --manual-sand: #3A2E17;
+    --manual-paper: #171717;
+    --manual-line: #404040;
+    --manual-text: #D9D9D9;
+    --manual-text-muted: #A6A6A6;
+    --manual-text-soft: #8C8C8C;
+    --manual-surface: #262626;
+    --manual-selection: #2A3F5C;
+    --manual-warning: #D9A34A;
+    --manual-warning-border: #4A3B1E;
+    --manual-success: #4FAE78;
+    --manual-error: #D9605A;
+    --manual-editorial-border: #4A3540;
+    --manual-nav-muted: #4A5568;
 }
 
 *,
@@ -65,7 +121,7 @@ a:hover {
 }
 
 ::selection {
-    background: #D7E3F5;
+    background: var(--manual-selection);
 }
 
 /* ---------------------------------------------------------------- Masthead */
@@ -73,21 +129,29 @@ a:hover {
 .manual-masthead {
     background: var(--manual-surface);
     border-bottom: 1px solid var(--manual-line);
-    padding: 18px 28px;
 }
 
 .manual-masthead_inner {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr) var(--manual-aside-width);
+    align-items: flex-start;
+    gap: 32px;
     max-width: 1440px;
     margin: 0 auto;
+    padding: 18px 28px;
+}
+
+.manual-masthead_inner--no-toc {
+    grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
+}
+
+.manual-masthead_inner--no-toc .manual-masthead_aside {
+    grid-column: 2;
+    justify-self: end;
 }
 
 .manual-masthead_identity {
-    flex: none;
-    max-width: 320px;
+    min-width: 0;
 }
 
 .manual-masthead_eyebrow {
@@ -115,6 +179,7 @@ a:hover {
 }
 
 .manual-masthead_aside {
+    align-self: center;
     margin-left: auto;
     display: flex;
     align-items: center;
@@ -207,8 +272,8 @@ a:hover {
 /* --------------------------------------------------------------------- Hero */
 
 .manual-hero {
-    background: var(--manual-blue-deep);
-    color: #D3E1F4;
+    background: var(--manual-blue-solid);
+    color: var(--manual-hero-text);
     border-radius: var(--manual-radius);
     padding: 34px 40px;
     margin-bottom: 28px;
@@ -219,7 +284,7 @@ a:hover {
     font-weight: 700;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: #9DBFE8;
+    color: var(--manual-hero-eyebrow);
     margin: 0 0 10px;
 }
 
@@ -432,7 +497,7 @@ a:hover {
 }
 
 .manual-nav_sign--leaf {
-    color: #B3BCC8;
+    color: var(--manual-nav-muted);
 }
 
 .manual-nav_count {
@@ -447,10 +512,6 @@ a:hover {
 .manual-search {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    flex: 1 1 320px;
-    min-width: 240px;
-    max-width: 620px;
 }
 
 .manual-search_label {
@@ -459,6 +520,7 @@ a:hover {
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--manual-text-soft);
+    margin: 0 0 2px;
 }
 
 .manual-search_field {
@@ -630,7 +692,7 @@ a:hover {
 .manual-breadcrumb li::after {
     content: '›';
     margin-left: 6px;
-    color: #B3BCC8;
+    color: var(--manual-nav-muted);
 }
 
 .manual-breadcrumb li:last-child::after {
@@ -697,7 +759,7 @@ a:hover {
 }
 
 .manual-hero--chapter .manual-anchor {
-    color: #9DBFE8;
+    color: var(--manual-hero-eyebrow);
 }
 
 .manual-chapter_lead {
@@ -820,7 +882,7 @@ h3:hover > .manual-anchor,
 .manual-note--editorial {
     border-left-color: var(--manual-plum);
     background: var(--manual-plum-light);
-    border-color: #E6D3DE;
+    border-color: var(--manual-editorial-border);
 }
 
 .manual-note--editorial .manual-note_label {
@@ -828,17 +890,17 @@ h3:hover > .manual-anchor,
 }
 
 .manual-note--warning {
-    border-left-color: #C08A2E;
+    border-left-color: var(--manual-warning);
     background: var(--manual-sand);
-    border-color: #EFDCB6;
+    border-color: var(--manual-warning-border);
 }
 
 .manual-note--success {
-    border-left-color: #2E7D50;
+    border-left-color: var(--manual-success);
 }
 
 .manual-note--error {
-    border-left-color: #A32B2B;
+    border-left-color: var(--manual-error);
 }
 
 /* ------------------------------------------------------------------- Steps */
@@ -949,8 +1011,8 @@ a.manual-term {
     font-size: 15px;
     font-weight: 700;
     border-radius: var(--manual-radius);
-    border: 1px solid var(--manual-blue);
-    background: var(--manual-blue);
+    border: 1px solid var(--manual-button-bg);
+    background: var(--manual-button-bg);
     color: #fff;
     padding: 8px 16px;
     cursor: pointer;
@@ -958,8 +1020,8 @@ a.manual-term {
 }
 
 .manual-button:hover {
-    background: var(--manual-blue-deep);
-    border-color: var(--manual-blue-deep);
+    background: var(--manual-blue-solid);
+    border-color: var(--manual-blue-solid);
     color: #fff;
 }
 
@@ -974,13 +1036,13 @@ a.manual-term {
 }
 
 .manual-button--editorial {
-    background: var(--manual-plum);
-    border-color: var(--manual-plum);
+    background: var(--manual-button-editorial-bg);
+    border-color: var(--manual-button-editorial-bg);
 }
 
 .manual-button--editorial:hover {
-    background: #501F3D;
-    border-color: #501F3D;
+    background: var(--manual-plum-solid);
+    border-color: var(--manual-plum-solid);
 }
 
 .manual-to-top {
@@ -991,7 +1053,7 @@ a.manual-term {
     height: 38px;
     display: grid;
     place-items: center;
-    background: var(--manual-blue-deep);
+    background: var(--manual-blue-solid);
     color: #fff;
     border-radius: var(--manual-radius);
     text-decoration: none;
@@ -1050,6 +1112,15 @@ a.manual-term {
     .manual-aside {
         display: none;
     }
+
+    .manual-masthead_inner {
+        grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
+    }
+
+    .manual-masthead_aside {
+        grid-column: 2;
+        justify-self: end;
+    }
 }
 
 @media (max-width: 860px) {
@@ -1057,6 +1128,16 @@ a.manual-term {
         grid-template-columns: minmax(0, 1fr);
         padding: 20px 16px;
         gap: 20px;
+    }
+
+    .manual-masthead_inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .manual-masthead_aside {
+        grid-column: 1;
+        justify-self: start;
     }
 
     .manual-sidebar {

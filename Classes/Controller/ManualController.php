@@ -82,7 +82,7 @@ class ManualController extends ActionController
         $languageId = $this->getCurrentLanguage($pageId, $this->resolveLanguageParameter());
         $targetUrl = (string)PreviewUriBuilder::create($pageId)
             ->withSection('p' . $pageId)
-            ->withAdditionalQueryParameters(['context' => $context])
+            ->withAdditionalQueryParameters(['context' => $context, 'colorScheme' => $this->resolveColorScheme()])
             ->withLanguage($languageId)
             ->buildUri();
         $this->registerDocHeader($moduleTemplate, $pageId, $manualRoot, $languageId, $context);
@@ -290,6 +290,12 @@ class ManualController extends ActionController
     {
         $context = (string)($this->request->getQueryParams()['context'] ?? 'backend');
         return in_array($context, ['backend', 'iframe'], true) ? $context : 'backend';
+    }
+
+    protected function resolveColorScheme(): string
+    {
+        $colorScheme = (string)($this->getBackendUser()->uc['colorScheme'] ?? 'auto');
+        return in_array($colorScheme, ['light', 'dark'], true) ? $colorScheme : 'auto';
     }
 
     protected function resolveRequestedPageId(): int

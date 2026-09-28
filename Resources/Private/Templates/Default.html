@@ -1,8 +1,13 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
 {namespace core=TYPO3\CMS\Core\ViewHelpers}
+<f:variable name="hideAsideOnOverview" value="0"/>
+<f:if condition="!{displayFullManual} && {currentPageUid} == {rootPageUid}">
+    <f:variable name="hideAsideOnOverview" value="1"/>
+</f:if>
+
 <f:if condition="{context} != 'pdf'">
     <header class="manual-masthead">
-        <div class="manual-masthead_inner">
+        <div class="manual-masthead_inner<f:if condition="!{showToc} || {hideAsideOnOverview}"> manual-masthead_inner--no-toc</f:if>">
             <div class="manual-masthead_identity">
                 <f:if condition="{manualLogo.0}">
                     <f:then>
@@ -61,11 +66,6 @@
             </f:if>
         </div>
     </header>
-</f:if>
-
-<f:variable name="hideAsideOnOverview" value="0"/>
-<f:if condition="!{displayFullManual} && {currentPageUid} == {rootPageUid}">
-    <f:variable name="hideAsideOnOverview" value="1"/>
 </f:if>
 
 <div class="manual-shell<f:if condition="!{showNavigation}"> manual-shell--no-nav</f:if><f:if condition="!{showToc} || {hideAsideOnOverview}"> manual-shell--no-toc</f:if>">
