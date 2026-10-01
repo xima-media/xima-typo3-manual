@@ -21,6 +21,7 @@
 		"dompdf/dompdf": "^2.0 || ^3.0",
 		"typo3/cms-core": "^13.4 || ^14.3",
 		"typo3/cms-filelist": "^13.4 || ^14.3",
+		"typo3/cms-indexed-search": "^13.4 || ^14.3",
 		"typo3/cms-rte-ckeditor": "^13.4 || ^14.3"
 	},
 	"require-dev": {

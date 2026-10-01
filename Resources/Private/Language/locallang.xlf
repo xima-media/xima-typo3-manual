@@ -269,6 +269,12 @@
 			<trans-unit id="nav.quicklinks.changelog">
 				<source>Changelog</source>
 			</trans-unit>
+			<trans-unit id="nav.quicklinks.search">
+				<source>Search results</source>
+			</trans-unit>
+			<trans-unit id="search.hero.title">
+				<source>Search results for &#8220;%s&#8221;</source>
+			</trans-unit>
 			<trans-unit id="nav.label">
 				<source>Documentation</source>
 			</trans-unit>

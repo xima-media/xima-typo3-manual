@@ -31,6 +31,8 @@ page {
       showToc.value = {$manual.appearance.showToc}
       showContentInNavigation = TEXT
       showContentInNavigation.value = {$manual.appearance.showContentInNavigation}
+      searchWord = TEXT
+      searchWord.data = GP:tx_indexedsearch_manualresults|search|sword
     }
 
     dataProcessing {
@@ -92,8 +94,6 @@ page {
   includeJSFooter {
     navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
     navigation.type = module
-    search = EXT:xima_typo3_manual/Resources/Public/JavaScript/Search.js
-    search.type = module
     glossary = EXT:xima_typo3_manual/Resources/Public/JavaScript/Glossary.js
     glossary.type = module
     tree = EXT:xima_typo3_manual/Resources/Public/JavaScript/Tree.js
@@ -111,12 +111,44 @@ page {
   config.htmlTag.attributes.data-theme = light
 [END]
 
+config.index_enable = 1
+config.index_externals = 0
+
+[(request.getQueryParams()['context'] ?? '') == 'backend']
+  config.index_enable = 0
+[END]
+
+plugin.tx_indexedsearch {
+  settings {
+    displayAdvancedSearchLink = 0
+    displayResultNumber = 0
+  }
+  view {
+    templateRootPaths.20 = EXT:xima_typo3_manual/Resources/Private/Extensions/IndexedSearch/Templates/
+    partialRootPaths.20 = EXT:xima_typo3_manual/Resources/Private/Extensions/IndexedSearch/Partials/
+  }
+}
+
+plugin.tx_indexedsearch_pi2_form = EXTBASEPLUGIN
+plugin.tx_indexedsearch_pi2_form {
+  extensionName = IndexedSearch
+  pluginName = Pi2
+  action = form
+}
+
+plugin.tx_indexedsearch_pi2_results = EXTBASEPLUGIN
+plugin.tx_indexedsearch_pi2_results {
+  extensionName = IndexedSearch
+  pluginName = ManualResults
+  action = search
+}
+
 pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
 pdf.10.variables.context.value = pdf
+pdf.config.index_enable = 0
 pdf.includeJSFooter.navigation >
-pdf.includeJSFooter.search >
 pdf.includeJSFooter.glossary >
 pdf.includeJSFooter.tree >
 pdf.includeJSFooter.toc >

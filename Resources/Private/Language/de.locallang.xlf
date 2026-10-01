@@ -358,6 +358,14 @@
 				<source />
 				<target>Changelog</target>
 			</trans-unit>
+			<trans-unit id="nav.quicklinks.search">
+				<source />
+				<target>Suchergebnisse</target>
+			</trans-unit>
+			<trans-unit id="search.hero.title">
+				<source />
+				<target>Suchergebnisse für „%s“</target>
+			</trans-unit>
 			<trans-unit id="nav.label">
 				<source />
 				<target>Dokumentation</target>

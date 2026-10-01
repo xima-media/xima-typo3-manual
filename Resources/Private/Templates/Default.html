@@ -21,17 +21,7 @@
                 <p class="manual-masthead_title">{title}</p>
             </div>
 
-            <form class="manual-search" role="search" data-manual-search
-                data-label-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.results')}"
-                data-label-no-results="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.noResults')}">
-                <label class="manual-search_label" for="manual-search-input">
-                    <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.label"/>
-                </label>
-                <div class="manual-search_field">
-                    <input type="search" id="manual-search-input" class="manual-search_input" autocomplete="off"
-                        placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
-                </div>
-            </form>
+            <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_form"/>
 
             <f:if condition="{languageNavigation->f:count()} > 1">
                 <div class="manual-masthead_aside">
@@ -73,26 +63,40 @@
     <f:if condition="{context} != 'pdf' && {showNavigation}">
         <nav class="manual-sidebar" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label')}">
             <ol class="manual-quicklinks">
-                <li><f:link.page pageUid="{rootPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.overview"/></f:link.page></li>
+                <li>
+                    <f:link.page pageUid="{rootPageUid}" class="{f:if(condition: '{currentPageUid} == {rootPageUid} && !{searchWord}', then: 'manual-quicklinks_current')}" aria-current="{f:if(condition: '{currentPageUid} == {rootPageUid} && !{searchWord}', then: 'page')}">
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.overview"/>
+                    </f:link.page>
+                </li>
                 <f:if condition="{faqPageUid}">
-                    <li><f:link.page pageUid="{faqPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.faq"/></f:link.page></li>
+                    <li>
+                        <f:link.page pageUid="{faqPageUid}" class="{f:if(condition: '{currentPageUid} == {faqPageUid} && !{searchWord}', then: 'manual-quicklinks_current')}" aria-current="{f:if(condition: '{currentPageUid} == {faqPageUid} && !{searchWord}', then: 'page')}">
+                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.faq"/>
+                        </f:link.page>
+                    </li>
                 </f:if>
                 <f:if condition="{changelogPageUid}">
-                    <li><f:link.page pageUid="{changelogPageUid}"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.changelog"/></f:link.page></li>
+                    <li>
+                        <f:link.page pageUid="{changelogPageUid}" class="{f:if(condition: '{currentPageUid} == {changelogPageUid} && !{searchWord}', then: 'manual-quicklinks_current')}" aria-current="{f:if(condition: '{currentPageUid} == {changelogPageUid} && !{searchWord}', then: 'page')}">
+                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.changelog"/>
+                        </f:link.page>
+                    </li>
+                </f:if>
+                <f:if condition="{searchWord}">
+                    <li class="manual-quicklinks_active" aria-current="page">
+                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.quicklinks.search"/>
+                    </li>
                 </f:if>
             </ol>
-
-            <p class="manual-search_status" role="status" hidden></p>
-            <ol class="manual-search_results" hidden></ol>
 
             <p class="manual-sidebar_label">
                 <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.label"/>
                 <span class="manual-sidebar_actions">
-                    <button type="button" class="manual-sidebar_action" data-manual-tree="expand">
-                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.expandAll"/>
+                    <button type="button" class="manual-sidebar_action" data-manual-tree="expand" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.expandAll')}" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.expandAll')}">
+                        <core:icon identifier="actions-plus" size="small"/>
                     </button>
-                    <button type="button" class="manual-sidebar_action" data-manual-tree="collapse">
-                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.collapseAll"/>
+                    <button type="button" class="manual-sidebar_action" data-manual-tree="collapse" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.collapseAll')}" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:nav.collapseAll')}">
+                        <core:icon identifier="actions-minus" size="small"/>
                     </button>
                 </span>
             </p>
@@ -107,50 +111,66 @@
     </f:if>
 
     <main class="manual-main">
+        <!--TYPO3SEARCH_begin-->
 
-        <f:if condition="{context} == 'pdf'">
+        <f:if condition="{context} != 'pdf' && {searchWord}">
             <f:then>
-                <section class="manual-hero">
-                    <h1 class="manual-hero_title">{title}</h1>
+                <section class="manual-hero manual-hero--chapter">
+                    <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.label"/></p>
+                    <h1 class="manual-hero_title"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.hero.title" arguments="{0: searchWord}"/></h1>
                 </section>
 
-                <section class="manual-card manual-chapter">
-                    <h2 class="no-number"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading"/></h2>
-                    <ol>
-                        <f:for each="{pages}" as="page">
-                            <f:if condition="!{page.data.nav_hide}">
-                                <f:render section="chapter" arguments="{page: page}"/>
-                            </f:if>
-                        </f:for>
-                    </ol>
+                <section class="manual-card">
+                    <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_results"/>
                 </section>
             </f:then>
             <f:else>
-                <f:if condition="{currentPageUid} == {rootPageUid}">
-                    <section class="manual-hero">
-                        <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
-                        <h1 class="manual-hero_title">{title}</h1>
-                        <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
-                    </section>
+                <f:if condition="{context} == 'pdf'">
+                    <f:then>
+                        <section class="manual-hero">
+                            <h1 class="manual-hero_title">{title}</h1>
+                        </section>
 
-                    <section class="manual-overview-grid">
-                        <f:for each="{pages}" as="page">
-                            <f:if condition="!{page.data.nav_hide}">
-                                <f:render section="overviewCard" arguments="{page: page, displayFullManual: displayFullManual}"/>
-                            </f:if>
-                        </f:for>
-                    </section>
+                        <section class="manual-card manual-chapter">
+                            <h2 class="no-number"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading"/></h2>
+                            <ol>
+                                <f:for each="{pages}" as="page">
+                                    <f:if condition="!{page.data.nav_hide}">
+                                        <f:render section="chapter" arguments="{page: page}"/>
+                                    </f:if>
+                                </f:for>
+                            </ol>
+                        </section>
+                    </f:then>
+                    <f:else>
+                        <f:if condition="{currentPageUid} == {rootPageUid}">
+                            <section class="manual-hero">
+                                <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                                <h1 class="manual-hero_title">{title}</h1>
+                                <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
+                            </section>
+
+                            <section class="manual-overview-grid">
+                                <f:for each="{pages}" as="page">
+                                    <f:if condition="!{page.data.nav_hide}">
+                                        <f:render section="overviewCard" arguments="{page: page, displayFullManual: displayFullManual}"/>
+                                    </f:if>
+                                </f:for>
+                            </section>
+                        </f:if>
+                    </f:else>
                 </f:if>
+
+                <f:for each="{pages}" as="page">
+                    <f:render section="page"
+                            arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: 2, faqPageUid: faqPageUid, changelogPageUid: changelogPageUid}"/>
+                </f:for>
             </f:else>
         </f:if>
-
-        <f:for each="{pages}" as="page">
-            <f:render section="page"
-                    arguments="{page: page, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: 2, faqPageUid: faqPageUid, changelogPageUid: changelogPageUid}"/>
-        </f:for>
+        <!--TYPO3SEARCH_end-->
     </main>
 
-    <f:if condition="{context} != 'pdf' && {showToc} && !{hideAsideOnOverview}">
+    <f:if condition="{context} != 'pdf' && {showToc} && !{hideAsideOnOverview} && !{searchWord}">
         <aside class="manual-aside">
             <p class="manual-aside_label">
                 <f:if condition="{displayFullManual}">

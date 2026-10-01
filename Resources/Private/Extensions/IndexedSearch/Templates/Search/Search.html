@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:asset.script identifier="indexed_search_pagination" src="EXT:indexed_search/Resources/Public/JavaScript/pagination.js"/>
+<f:for each="{resultsets}" as="result" key="freeIndexUid">
+    <p class="manual-search_status" role="status">
+        <f:if condition="{result.count} > 0">
+            <f:then><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.results" arguments="{0: result.count}"/></f:then>
+            <f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.noResults"/></f:else>
+        </f:if>
+    </p>
+    <f:if condition="{result.count} > 0">
+        <f:form name="tx_indexedsearch" controller="Search" action="search" extensionName="IndexedSearch" pluginName="ManualResults" method="post">
+            <f:form.hidden name="search[sword]" value="{searchParams.sword}"/>
+            <f:form.hidden name="search[_freeIndexUid]" id="tx_indexedsearch_freeIndexUid" value="{freeIndexUid}"/>
+            <f:form.hidden name="search[pointer]" id="tx_indexedsearch_pointer" value="{searchParams.pointer}"/>
+            <ol class="manual-search_results">
+                <f:for each="{result.rows}" as="row">
+                    <f:if condition="!{row.isSectionHeader}">
+                        <f:render partial="Searchresult" arguments="{row: row}"/>
+                    </f:if>
+                </f:for>
+            </ol>
+            <f:render partial="Pagination" arguments="{pagination: result.pagination, searchParams: searchParams, freeIndexUid: freeIndexUid}"/>
+        </f:form>
+    </f:if>
+</f:for>
+</html>
