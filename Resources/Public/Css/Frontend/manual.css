@@ -6,11 +6,13 @@
 */
 
 :root {
-    --manual-blue: #1A5FB4;
-    --manual-blue-deep: #12315C;
-    --manual-blue-light: #E4EDF9;
-    --manual-blue-solid: #12315C;
-    --manual-button-bg: #1A5FB4;
+    /* The lead colour, overridable via the site setting manual.appearance.primaryColor; every shade derives from it */
+    --manual-primary: #1A5FB4;
+    --manual-blue: var(--manual-primary);
+    --manual-blue-deep: color-mix(in srgb, var(--manual-primary) 55%, #000);
+    --manual-blue-light: color-mix(in srgb, var(--manual-primary) 12%, #fff);
+    --manual-blue-solid: color-mix(in srgb, var(--manual-primary) 55%, #000);
+    --manual-button-bg: var(--manual-primary);
     --manual-plum: #6B2B52;
     --manual-plum-light: #F5EBF1;
     --manual-plum-solid: #501F3D;
@@ -22,9 +24,9 @@
     --manual-text-muted: #4A5461;
     --manual-text-soft: #6C7684;
     --manual-surface: #fff;
-    --manual-hero-text: #D3E1F4;
-    --manual-hero-eyebrow: #9DBFE8;
-    --manual-selection: #D7E3F5;
+    --manual-hero-text: color-mix(in srgb, var(--manual-primary) 18%, #fff);
+    --manual-hero-eyebrow: color-mix(in srgb, var(--manual-primary) 40%, #fff);
+    --manual-selection: color-mix(in srgb, var(--manual-primary) 18%, #fff);
     --manual-warning: #C08A2E;
     --manual-warning-border: #EFDCB6;
     --manual-success: #2E7D50;
@@ -46,9 +48,9 @@
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --manual-blue: #4C8EDB;
-        --manual-blue-deep: #8FBFF5;
-        --manual-blue-light: #1D3A5C;
+        --manual-blue: color-mix(in srgb, var(--manual-primary) 75%, #fff);
+        --manual-blue-deep: color-mix(in srgb, var(--manual-primary) 45%, #fff);
+        --manual-blue-light: color-mix(in srgb, var(--manual-primary) 40%, #171717);
         --manual-plum: #D293B5;
         --manual-plum-light: #33202C;
         --manual-sand: #3A2E17;
@@ -58,7 +60,7 @@
         --manual-text-muted: #A6A6A6;
         --manual-text-soft: #8C8C8C;
         --manual-surface: #262626;
-        --manual-selection: #2A3F5C;
+        --manual-selection: color-mix(in srgb, var(--manual-primary) 40%, #262626);
         --manual-warning: #D9A34A;
         --manual-warning-border: #4A3B1E;
         --manual-success: #4FAE78;
@@ -69,9 +71,9 @@
 }
 
 :root[data-theme="dark"] {
-    --manual-blue: #4C8EDB;
-    --manual-blue-deep: #8FBFF5;
-    --manual-blue-light: #1D3A5C;
+    --manual-blue: color-mix(in srgb, var(--manual-primary) 75%, #fff);
+    --manual-blue-deep: color-mix(in srgb, var(--manual-primary) 45%, #fff);
+    --manual-blue-light: color-mix(in srgb, var(--manual-primary) 40%, #171717);
     --manual-plum: #D293B5;
     --manual-plum-light: #33202C;
     --manual-sand: #3A2E17;
@@ -81,7 +83,7 @@
     --manual-text-muted: #A6A6A6;
     --manual-text-soft: #8C8C8C;
     --manual-surface: #262626;
-    --manual-selection: #2A3F5C;
+    --manual-selection: color-mix(in srgb, var(--manual-primary) 40%, #262626);
     --manual-warning: #D9A34A;
     --manual-warning-border: #4A3B1E;
     --manual-success: #4FAE78;

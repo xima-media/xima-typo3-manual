@@ -68,7 +68,7 @@ class ManualSettingsProcessor implements DataProcessorInterface
 
         $this->assetCollector->addInlineStyleSheet(
             'manual-primary-color',
-            ':root { --manual-blue: ' . $color . '; --link-color: ' . $color . '; }',
+            ':root { --manual-primary: ' . $color . '; }',
             [],
             // TYPO3 v14 renamed the option, v13 only knows "useNonce"
             $this->typo3Version->getMajorVersion() >= 14 ? ['csp' => true] : ['useNonce' => true]
