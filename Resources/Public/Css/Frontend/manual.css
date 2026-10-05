@@ -238,8 +238,9 @@ a:hover {
 
 .manual-anchor .t3js-icon,
 .manual-anchor .t3js-icon svg {
-    width: .6em;
-    height: .6em;
+    display: block;
+    width: .5em;
+    height: .5em;
 }
 
 /* ------------------------------------------------------------------ Layout */
@@ -1019,7 +1020,7 @@ a:hover {
     margin: 0 0 8px;
 }
 
-.manual-hero--chapter .manual-anchor {
+.manual-chapter .manual-hero--chapter .manual-anchor {
     color: var(--manual-hero-eyebrow);
 }
 
@@ -1111,17 +1112,36 @@ a:hover {
     padding: 1px 5px;
 }
 
-.manual-anchor {
-    margin-left: 8px;
-    opacity: 0;
-    text-decoration: none;
+.manual-chapter .manual-anchor {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: .9em;
+    height: .9em;
+    margin-left: .25em;
+    vertical-align: middle;
+    line-height: 1;
+    border-radius: var(--manual-radius);
     color: var(--manual-text-soft);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity .15s ease, color .15s ease;
+}
+
+.manual-chapter .manual-anchor:hover {
+    color: var(--manual-blue);
 }
 
 h2:hover > .manual-anchor,
 h3:hover > .manual-anchor,
+h4:hover > .manual-anchor,
 .manual-anchor:focus-visible {
     opacity: 1;
+}
+
+.manual-anchor:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------- Note block */

@@ -72,8 +72,15 @@ class Navigation {
     document.querySelectorAll('.manual-main a[href]').forEach(a => {
       try {
         const url = new URL(a.href, window.location.href)
-        if (url.origin === window.location.origin && this.anchorMap[url.pathname]) {
-          a.href = this.anchorMap[url.pathname]
+        if (url.origin !== window.location.origin) {
+          return
+        }
+        // A fragment that exists on this page, like the anchor of a content heading, is kept as it is
+        const target = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1)))
+          ? url.hash
+          : this.anchorMap[url.pathname]
+        if (target) {
+          a.href = target
         }
       } catch {
       }
