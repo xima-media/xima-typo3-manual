@@ -628,8 +628,19 @@ a:hover {
     border-radius: 0;
 }
 
-.manual-nav details > summary > a:hover {
+.manual-nav details > summary > a:hover,
+.manual-nav details > summary > a.active {
     background: none;
+}
+
+/* The whole row of a branch carries hover and active state, so sign and count are covered as well */
+.manual-nav details > summary:has(> a:hover) {
+    background: var(--manual-paper);
+}
+
+.manual-nav details > summary:has(> a.active),
+.manual-nav details > summary:has(> a.active):hover {
+    background: var(--manual-blue-light);
 }
 
 .manual-nav_sign {
@@ -655,6 +666,10 @@ a:hover {
 .manual-nav details > summary > .manual-nav_sign:hover {
     background: var(--manual-blue-light);
     transform: scale(1.2);
+}
+
+.manual-nav details > summary:has(> a.active) > .manual-nav_sign:hover {
+    background: var(--manual-surface);
 }
 
 .manual-nav details > summary:focus-visible {
