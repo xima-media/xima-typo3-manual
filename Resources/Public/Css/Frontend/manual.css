@@ -432,26 +432,35 @@ a:hover {
 
 /* --------------------------------------------------------------- Subpages */
 
-.manual-subpages ul {
-    list-style: none;
+.manual-subpages {
+    margin-top: 28px;
+}
+
+.manual-chapter .manual-subpages ul {
+    list-style: disc;
     margin: 0;
-    padding: 0;
+    padding-left: 22px;
 }
 
-.manual-subpages > ul {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.manual-subpages ul ul {
+.manual-chapter .manual-subpages ul ul {
+    list-style: circle;
     margin-top: 6px;
-    padding-left: 18px;
-    border-left: 1px solid var(--manual-line);
 }
 
-.manual-subpages ul ul li + li {
-    margin-top: 4px;
+.manual-chapter .manual-subpages li {
+    margin-bottom: 0;
+}
+
+.manual-chapter .manual-subpages li + li {
+    margin-top: 6px;
+}
+
+.manual-chapter .manual-subpages > ul > li + li {
+    margin-top: 10px;
+}
+
+.manual-subpages li::marker {
+    color: var(--manual-text-soft);
 }
 
 .manual-subpages a {
