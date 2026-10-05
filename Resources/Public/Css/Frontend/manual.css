@@ -430,6 +430,43 @@ a:hover {
     text-decoration: underline;
 }
 
+/* --------------------------------------------------------------- Subpages */
+
+.manual-subpages ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.manual-subpages > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.manual-subpages ul ul {
+    margin-top: 6px;
+    padding-left: 18px;
+    border-left: 1px solid var(--manual-line);
+}
+
+.manual-subpages ul ul li + li {
+    margin-top: 4px;
+}
+
+.manual-subpages a {
+    color: var(--manual-blue);
+    text-decoration: none;
+}
+
+.manual-subpages > ul > li > a {
+    font-weight: 600;
+}
+
+.manual-subpages a:hover {
+    text-decoration: underline;
+}
+
 /* ------------------------------------------------------------------ Sidebar */
 
 .manual-quicklinks {
@@ -803,8 +840,7 @@ a:hover {
 
 /* ------------------------------------------------------------------ Content */
 
-.manual-chapter + .manual-chapter,
-.manual-chapter + .manual-overview-grid--subpages {
+.manual-chapter + .manual-chapter {
     margin-top: 28px;
 }
 

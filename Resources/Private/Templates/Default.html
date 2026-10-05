@@ -384,19 +384,15 @@
 
                 <f:variable name="contentMarkup"><f:render partial="Manual/ContentArea" arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/></f:variable>
                 {contentMarkup -> f:format.raw()}
-            </section>
 
-            <f:comment>A page without content of its own lists its subpages, so it does not end up blank</f:comment>
-            <f:variable name="hasContent" value="{contentMarkup -> f:format.trim()}"/>
-            <f:if condition="!{displayFullManual} && !{hasContent} && {page.children}">
-                <section class="manual-overview-grid manual-overview-grid--subpages">
-                    <f:for each="{page.children}" as="subpage">
-                        <f:if condition="!{subpage.data.nav_hide}">
-                            <f:render section="overviewCard" arguments="{page: subpage, displayFullManual: displayFullManual}"/>
-                        </f:if>
-                    </f:for>
-                </section>
-            </f:if>
+                <f:comment>A page without content of its own lists its subpages, so it does not end up blank</f:comment>
+                <f:variable name="hasContent" value="{contentMarkup -> f:format.trim()}"/>
+                <f:if condition="!{displayFullManual} && !{hasContent} && {page.children}">
+                    <nav class="manual-subpages" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading')}">
+                        <f:render section="subpageList" arguments="{pages: page.children}"/>
+                    </nav>
+                </f:if>
+            </section>
         </f:else>
     </f:if>
     </f:if>
@@ -410,3 +406,18 @@
 <f:section name="eyebrow"><f:if condition="{eyebrow}"><f:then>{eyebrow}</f:then><f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></f:else></f:if></f:section>
 
 <f:section name="lead"><f:if condition="{lead}"><f:then>{lead}</f:then><f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></f:else></f:if></f:section>
+
+<f:section name="subpageList">
+    <ul>
+        <f:for each="{pages}" as="subpage">
+            <f:if condition="!{subpage.data.nav_hide}">
+                <li>
+                    <a href="{subpage.link}">{subpage.title}</a>
+                    <f:if condition="{subpage.children}">
+                        <f:render section="subpageList" arguments="{pages: subpage.children}"/>
+                    </f:if>
+                </li>
+            </f:if>
+        </f:for>
+    </ul>
+</f:section>
