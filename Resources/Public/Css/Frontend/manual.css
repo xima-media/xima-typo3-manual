@@ -39,6 +39,7 @@
     --manual-radius: 3px;
     --manual-sidebar-width: 268px;
     --manual-aside-width: 220px;
+    --manual-control-height: 44px;
 
     --link-color: var(--manual-blue);
 }
@@ -145,9 +146,17 @@ a:hover {
     grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
 }
 
-.manual-masthead_inner--no-toc .manual-masthead_aside {
-    grid-column: 2;
-    justify-self: end;
+.manual-masthead_tools {
+    grid-column: 2 / -1;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    min-width: 0;
+}
+
+.manual-masthead_tools > .manual-search {
+    flex: 1;
+    min-width: 0;
 }
 
 .manual-masthead_identity {
@@ -179,12 +188,11 @@ a:hover {
 }
 
 .manual-masthead_aside {
-    align-self: center;
-    margin-left: auto;
+    flex: none;
     display: flex;
     align-items: center;
     gap: 14px;
-    padding-bottom: 2px;
+    margin-left: auto;
 }
 
 .manual-masthead_nav {
@@ -554,6 +562,7 @@ a:hover {
     gap: 8px;
     background: var(--manual-surface);
     border: 1px solid var(--manual-line);
+    min-height: var(--manual-control-height);
     border-radius: var(--manual-radius);
     padding: 0 12px;
 }
@@ -1181,6 +1190,7 @@ a.manual-term {
 
 .manual-color-scheme {
     display: inline-flex;
+    height: var(--manual-control-height);
     gap: 2px;
     padding: 2px;
     border: 1px solid var(--manual-line);
@@ -1196,8 +1206,8 @@ a.manual-term {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 28px;
+    width: 36px;
+    height: 100%;
     padding: 0;
     border: 0;
     border-radius: calc(var(--manual-radius) - 2px);
@@ -1250,11 +1260,6 @@ a.manual-term {
     .manual-masthead_inner {
         grid-template-columns: var(--manual-sidebar-width) minmax(0, 1fr);
     }
-
-    .manual-masthead_aside {
-        grid-column: 2;
-        justify-self: end;
-    }
 }
 
 @media (max-width: 860px) {
@@ -1269,9 +1274,8 @@ a.manual-term {
         gap: 16px;
     }
 
-    .manual-masthead_aside {
+    .manual-masthead_tools {
         grid-column: 1;
-        justify-self: start;
     }
 
     .manual-sidebar {

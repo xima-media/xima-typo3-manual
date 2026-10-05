@@ -21,53 +21,55 @@
                 <p class="manual-masthead_title">{title}</p>
             </div>
 
-            <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_form"/>
+            <div class="manual-masthead_tools">
+                <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_form"/>
 
-            <div class="manual-masthead_aside">
-                <div class="manual-color-scheme" role="radiogroup" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.label')}" data-manual-color-scheme hidden>
-                    <button type="button" role="radio" aria-checked="true" data-scheme="auto" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto')}">
-                        <core:icon identifier="actions-circle-half" size="small"/>
-                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto"/></span>
-                    </button>
-                    <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="light" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light')}">
-                        <core:icon identifier="actions-brightness-high" size="small"/>
-                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light"/></span>
-                    </button>
-                    <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="dark" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark')}">
-                        <core:icon identifier="actions-moon" size="small"/>
-                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark"/></span>
-                    </button>
+                <div class="manual-masthead_aside">
+                    <div class="manual-color-scheme" role="radiogroup" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.label')}" data-manual-color-scheme hidden>
+                        <button type="button" role="radio" aria-checked="true" data-scheme="auto" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto')}">
+                            <core:icon identifier="actions-circle-half" size="small"/>
+                            <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto"/></span>
+                        </button>
+                        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="light" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light')}">
+                            <core:icon identifier="actions-brightness-high" size="small"/>
+                            <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light"/></span>
+                        </button>
+                        <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="dark" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark')}">
+                            <core:icon identifier="actions-moon" size="small"/>
+                            <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark"/></span>
+                        </button>
+                    </div>
+
+                    <f:if condition="{languageNavigation->f:count()} > 1">
+                        <nav class="manual-language">
+                            <ul>
+                                <f:for each="{languageNavigation}" as="language">
+                                    <f:if condition="{language.active}">
+                                        <li>
+                                            <a href="{language.link}" title="{language.title}">
+                                                <core:icon identifier="{language.flag}"/>
+                                                {language.title}
+                                                <core:icon identifier="actions-caret-down" size="small"/>
+                                            </a>
+                                            <ul>
+                                                <f:for each="{languageNavigation}" as="otherLanguage">
+                                                    <f:if condition="!{otherLanguage.active}">
+                                                        <li>
+                                                            <a href="{otherLanguage.link}" title="{otherLanguage.title}">
+                                                                <core:icon identifier="{otherLanguage.flag}"/>
+                                                                {otherLanguage.title}
+                                                            </a>
+                                                        </li>
+                                                    </f:if>
+                                                </f:for>
+                                            </ul>
+                                        </li>
+                                    </f:if>
+                                </f:for>
+                            </ul>
+                        </nav>
+                    </f:if>
                 </div>
-
-                <f:if condition="{languageNavigation->f:count()} > 1">
-                    <nav class="manual-language">
-                        <ul>
-                            <f:for each="{languageNavigation}" as="language">
-                                <f:if condition="{language.active}">
-                                    <li>
-                                        <a href="{language.link}" title="{language.title}">
-                                            <core:icon identifier="{language.flag}"/>
-                                            {language.title}
-                                            <core:icon identifier="actions-caret-down" size="small"/>
-                                        </a>
-                                        <ul>
-                                            <f:for each="{languageNavigation}" as="otherLanguage">
-                                                <f:if condition="!{otherLanguage.active}">
-                                                    <li>
-                                                        <a href="{otherLanguage.link}" title="{otherLanguage.title}">
-                                                            <core:icon identifier="{otherLanguage.flag}"/>
-                                                            {otherLanguage.title}
-                                                        </a>
-                                                    </li>
-                                                </f:if>
-                                            </f:for>
-                                        </ul>
-                                    </li>
-                                </f:if>
-                            </f:for>
-                        </ul>
-                    </nav>
-                </f:if>
             </div>
         </div>
     </header>
