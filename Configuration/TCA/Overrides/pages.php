@@ -21,7 +21,7 @@ ExtensionManagementUtility::addTcaSelectItem(
     [
         'label' => Configuration::LANGUAGE_FILE . 'manual_page_type',
         'value' => Configuration::DOKTYPE_MANUAL,
-        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/apps-pagetree-manual.svg',
+        'icon' => 'apps-pagetree-manual',
         'group' => 'default',
     ],
     '1',
