@@ -291,6 +291,58 @@ a:hover {
     padding: 34px 40px;
 }
 
+/* -------------------------------------------------------------------- Pager */
+
+.manual-pager {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.manual-pager_link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 22px;
+    background: var(--manual-surface);
+    border: 1px solid var(--manual-line);
+    border-radius: var(--manual-radius);
+    color: var(--manual-text);
+    text-decoration: none;
+}
+
+.manual-pager_link--next {
+    grid-column: 2;
+    text-align: right;
+}
+
+.manual-pager_link:hover {
+    border-color: var(--manual-blue);
+    color: var(--manual-text);
+}
+
+.manual-pager_link:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
+.manual-pager_direction {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--manual-text-soft);
+}
+
+.manual-pager_title {
+    font-family: var(--manual-font-serif);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--manual-blue);
+}
+
 /* --------------------------------------------------------------------- Hero */
 
 .manual-hero {
@@ -1292,6 +1344,14 @@ a.manual-term {
         grid-column: 1;
     }
 
+    .manual-pager {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .manual-pager_link--next {
+        grid-column: 1;
+    }
+
     .manual-sidebar {
         position: static;
         max-height: none;
@@ -1330,6 +1390,7 @@ a.manual-term {
 
     .manual-masthead_aside,
     .manual-search,
+    .manual-pager,
     .manual-sidebar,
     .manual-aside,
     .manual-to-top,

@@ -257,6 +257,15 @@
 			<trans-unit id="masthead.eyebrow">
 				<source>Editor manual</source>
 			</trans-unit>
+			<trans-unit id="pager.label">
+				<source>Chapter navigation</source>
+			</trans-unit>
+			<trans-unit id="pager.previous">
+				<source>Previous chapter</source>
+			</trans-unit>
+			<trans-unit id="pager.next">
+				<source>Next chapter</source>
+			</trans-unit>
 			<trans-unit id="colorScheme.label">
 				<source>Colour scheme</source>
 			</trans-unit>

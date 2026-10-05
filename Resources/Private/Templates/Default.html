@@ -185,6 +185,23 @@
             </f:else>
         </f:if>
         <!--TYPO3SEARCH_end-->
+
+        <f:if condition="!{displayFullManual} && {context} != 'pdf' && !{searchWord} && {pageNavigation}">
+            <nav class="manual-pager" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:pager.label')}">
+                <f:if condition="{pageNavigation.previous}">
+                    <a class="manual-pager_link manual-pager_link--previous" href="{pageNavigation.previous.link}" rel="prev">
+                        <span class="manual-pager_direction">&larr; <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:pager.previous"/></span>
+                        <span class="manual-pager_title">{pageNavigation.previous.title}</span>
+                    </a>
+                </f:if>
+                <f:if condition="{pageNavigation.next}">
+                    <a class="manual-pager_link manual-pager_link--next" href="{pageNavigation.next.link}" rel="next">
+                        <span class="manual-pager_direction"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:pager.next"/> &rarr;</span>
+                        <span class="manual-pager_title">{pageNavigation.next.title}</span>
+                    </a>
+                </f:if>
+            </nav>
+        </f:if>
     </main>
 
     <f:if condition="{context} != 'pdf' && {showToc} && !{hideAsideOnOverview} && !{searchWord}">

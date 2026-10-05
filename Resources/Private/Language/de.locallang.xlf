@@ -342,6 +342,18 @@
 				<source />
 				<target>Redakteurshandbuch</target>
 			</trans-unit>
+			<trans-unit id="pager.label">
+				<source />
+				<target>Kapitelnavigation</target>
+			</trans-unit>
+			<trans-unit id="pager.previous">
+				<source />
+				<target>Vorheriges Kapitel</target>
+			</trans-unit>
+			<trans-unit id="pager.next">
+				<source />
+				<target>Nächstes Kapitel</target>
+			</trans-unit>
 			<trans-unit id="colorScheme.label">
 				<source />
 				<target>Farbschema</target>
