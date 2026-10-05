@@ -852,6 +852,25 @@ a:hover {
     height: auto;
 }
 
+/* Icons inserted with the RTE icon picker sit inline with the text */
+.manual-chapter img[data-icon-name] {
+    display: inline-block;
+    width: auto;
+    height: 1.25em;
+    margin: 0 .1em;
+    vertical-align: text-bottom;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .manual-chapter img[data-icon-base-name^="actions-"] {
+        filter: invert(1);
+    }
+}
+
+:root[data-theme="dark"] .manual-chapter img[data-icon-base-name^="actions-"] {
+    filter: invert(1);
+}
+
 .manual-chapter figure {
     margin: 0 0 18px;
 }
