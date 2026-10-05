@@ -821,10 +821,41 @@ a:hover {
     border: 1px solid var(--manual-line);
     border-radius: var(--manual-radius);
     padding: 20px 24px;
+    color: var(--manual-text);
+    text-decoration: none;
 }
 
 .manual-search_hit:hover {
     border-color: var(--manual-blue);
+    color: var(--manual-text);
+}
+
+.manual-search_hit:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
+.manual-search_hit-path {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: var(--manual-text-soft);
+}
+
+.manual-search_hit-path > span + span::before {
+    content: "\203A";
+    margin-right: 4px;
+}
+
+/* The path ends with the page of the hit, which the title below names already */
+.manual-search_hit-path > span:last-child {
+    display: none;
+}
+
+.manual-search_hit-path:has(> span:only-child) {
+    display: none;
 }
 
 .manual-search_hit-title {
@@ -835,12 +866,7 @@ a:hover {
     line-height: 1.25;
 }
 
-.manual-search_hit-title a {
-    color: var(--manual-text);
-    text-decoration: none;
-}
-
-.manual-search_hit-title a:hover {
+.manual-search_hit:hover .manual-search_hit-title {
     color: var(--manual-blue);
 }
 

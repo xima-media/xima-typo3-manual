@@ -146,6 +146,8 @@ plugin.tx_indexedsearch {
   settings {
     displayAdvancedSearchLink = 0
     displayResultNumber = 0
+    # One element per page of the result path, the stylesheet adds the separators
+    breadcrumbWrap = <span>|</span>
   }
   view {
     templateRootPaths.20 = EXT:xima_typo3_manual/Resources/Private/Extensions/IndexedSearch/Templates/
