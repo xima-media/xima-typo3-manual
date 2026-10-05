@@ -590,6 +590,7 @@ a:hover {
 .manual-nav a,
 .manual-nav details > summary {
     display: flex;
+    transition: background-color .15s ease, color .15s ease;
     align-items: baseline;
     gap: 7px;
     padding: 6px 8px;
@@ -600,8 +601,10 @@ a:hover {
     text-decoration: none;
 }
 
+/* A faint version of the active state */
 .manual-nav a:hover {
-    background: var(--manual-paper);
+    background: color-mix(in srgb, var(--manual-blue-light) 50%, transparent);
+    color: var(--manual-blue);
 }
 
 .manual-nav a.active {
@@ -638,7 +641,11 @@ a:hover {
 
 /* The whole row of a branch carries hover and active state, so sign and count are covered as well */
 .manual-nav details > summary:has(> a:hover) {
-    background: var(--manual-paper);
+    background: color-mix(in srgb, var(--manual-blue-light) 50%, transparent);
+}
+
+.manual-nav details > summary > a:hover {
+    color: var(--manual-blue);
 }
 
 .manual-nav details > summary:has(> a.active),
