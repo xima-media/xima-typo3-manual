@@ -180,6 +180,20 @@ a:hover {
     margin: 0;
 }
 
+.manual-masthead_title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.manual-masthead_title a:hover {
+    color: var(--manual-blue);
+}
+
+.manual-masthead_title a:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
 .manual-masthead_logo {
     display: block;
     max-height: 48px;
