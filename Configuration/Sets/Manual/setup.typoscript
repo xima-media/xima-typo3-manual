@@ -1,5 +1,7 @@
 @import 'EXT:bw_focuspoint_images/Configuration/TypoScript/setup.typoscript'
 
+config.admPanel = 1
+
 page = PAGE
 page {
   10 = FLUIDTEMPLATE
@@ -151,19 +153,17 @@ plugin.tx_indexedsearch {
   }
 }
 
-plugin.tx_indexedsearch_pi2_form = EXTBASEPLUGIN
-plugin.tx_indexedsearch_pi2_form {
-  extensionName = IndexedSearch
-  pluginName = Pi2
-  action = form
-}
-
 plugin.tx_indexedsearch_pi2_results = EXTBASEPLUGIN
 plugin.tx_indexedsearch_pi2_results {
   extensionName = IndexedSearch
   pluginName = ManualResults
   action = search
 }
+
+# The search word shows up in the page around the results, so result pages must not come from the page cache
+[traverse(request.getQueryParams(), 'tx_indexedsearch_manualresults/action') == 'search']
+  config.no_cache = 1
+[END]
 
 pdf < page
 pdf.typeNum = 1664618986

@@ -25,7 +25,7 @@
             </div>
 
             <div class="manual-masthead_tools">
-                <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_form"/>
+                <f:render partial="Manual/SearchForm" arguments="{rootPageUid: rootPageUid, searchWord: searchWord}"/>
 
                 <div class="manual-masthead_aside">
                     <div class="manual-color-scheme" role="radiogroup" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.label')}" data-manual-color-scheme hidden>
