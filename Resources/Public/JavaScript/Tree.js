@@ -45,22 +45,10 @@ class Tree {
     this.updateSign(details)
   }
 
-  // Only the sign and the keyboard toggle a branch, the browser would otherwise toggle on a click anywhere in the row,
-  // the link included. A link click therefore cancels the toggle and navigates itself; modified clicks (new tab,
-  // new window) are left to the browser.
+  // Only the sign and the keyboard toggle a branch, the browser would otherwise toggle on a click anywhere in the row
   restrictToggle(event) {
-    const link = event.target.closest('a')
-    if (link) {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-        return
-      }
-      event.preventDefault()
-      window.location.assign(link.href)
-      return
-    }
-
     const keyboard = event.detail === 0
-    if (keyboard || event.target.closest('.manual-nav_sign')) {
+    if (keyboard || event.target.closest('.manual-nav_sign, a')) {
       return
     }
     event.preventDefault()
