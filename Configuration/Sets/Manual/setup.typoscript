@@ -83,14 +83,14 @@ page {
         maxItems = 1
       }
 
-      # One content heading of the current page is enough to know whether "on this page" has entries, the steps of an
-      # msteps element bring their own headings
+      # "On this page" is only worth showing from two headings on: content headings of the page, the steps of an msteps
+      # element included
       50 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
       50 {
         table = tt_content
         pidInList.data = page:uid
-        where = colPos=0 and ((header!="" and CType!="mbox") or CType="msteps")
-        max = 1
+        where = header!="" and CType!="mbox" and (colPos=0 or tx_ximatypo3manual_parent>0)
+        max = 2
         as = currentHeadings
       }
 

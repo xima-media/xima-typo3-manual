@@ -4,7 +4,7 @@
 <f:if condition="!{displayFullManual} && {currentPageUid} == {rootPageUid}">
     <f:variable name="hideAside" value="1"/>
 </f:if>
-<f:if condition="!{displayFullManual} && !{currentHeadings}">
+<f:if condition="!{displayFullManual} && {currentHeadings -> f:count()} < 2">
     <f:variable name="hideAside" value="1"/>
 </f:if>
 

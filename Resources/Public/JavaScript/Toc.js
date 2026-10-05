@@ -13,7 +13,7 @@ class Toc {
     }
 
     this.build()
-    if (this.#links.size === 0) {
+    if (this.#links.size < 2) {
       this.#list.closest('.manual-aside')?.setAttribute('hidden', '')
       return
     }
