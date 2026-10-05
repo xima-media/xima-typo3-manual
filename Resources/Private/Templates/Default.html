@@ -23,8 +23,23 @@
 
             <f:cObject typoscriptObjectPath="plugin.tx_indexedsearch_pi2_form"/>
 
-            <f:if condition="{languageNavigation->f:count()} > 1">
-                <div class="manual-masthead_aside">
+            <div class="manual-masthead_aside">
+                <div class="manual-color-scheme" role="radiogroup" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.label')}" data-manual-color-scheme hidden>
+                    <button type="button" role="radio" aria-checked="true" data-scheme="auto" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto')}">
+                        <core:icon identifier="actions-circle-half" size="small"/>
+                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.auto"/></span>
+                    </button>
+                    <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="light" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light')}">
+                        <core:icon identifier="actions-brightness-high" size="small"/>
+                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.light"/></span>
+                    </button>
+                    <button type="button" role="radio" aria-checked="false" tabindex="-1" data-scheme="dark" title="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark')}">
+                        <core:icon identifier="actions-moon" size="small"/>
+                        <span class="manual-visually-hidden"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:colorScheme.dark"/></span>
+                    </button>
+                </div>
+
+                <f:if condition="{languageNavigation->f:count()} > 1">
                     <nav class="manual-language">
                         <ul>
                             <f:for each="{languageNavigation}" as="language">
@@ -52,8 +67,8 @@
                             </f:for>
                         </ul>
                     </nav>
-                </div>
-            </f:if>
+                </f:if>
+            </div>
         </div>
     </header>
 </f:if>

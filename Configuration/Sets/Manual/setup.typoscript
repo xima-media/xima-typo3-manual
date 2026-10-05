@@ -91,6 +91,10 @@ page {
     focuspoint = EXT:xima_typo3_manual/Resources/Public/Css/Frontend/focuspoint.css
   }
 
+  includeJS {
+    colorScheme = EXT:xima_typo3_manual/Resources/Public/JavaScript/ColorScheme.js
+  }
+
   includeJSFooter {
     navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
     navigation.type = module
@@ -148,6 +152,7 @@ pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
 pdf.10.variables.context.value = pdf
 pdf.config.index_enable = 0
+pdf.includeJS.colorScheme >
 pdf.includeJSFooter.navigation >
 pdf.includeJSFooter.glossary >
 pdf.includeJSFooter.tree >

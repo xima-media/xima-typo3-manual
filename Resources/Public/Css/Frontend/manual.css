@@ -1158,6 +1158,61 @@ a.manual-term {
     display: block;
 }
 
+/* ------------------------------------------------------------ Colour scheme */
+
+.manual-color-scheme {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--manual-line);
+    border-radius: var(--manual-radius);
+    background: var(--manual-surface);
+}
+
+.manual-color-scheme[hidden] {
+    display: none;
+}
+
+.manual-color-scheme button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--manual-radius) - 2px);
+    background: transparent;
+    color: var(--manual-text-soft);
+    cursor: pointer;
+}
+
+.manual-color-scheme button:hover {
+    color: var(--manual-text);
+}
+
+.manual-color-scheme button[aria-checked="true"] {
+    background: var(--manual-blue-light);
+    color: var(--manual-blue-deep);
+}
+
+.manual-color-scheme button:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 1px;
+}
+
+.manual-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* ------------------------------------------------------------- Responsive */
 
 @media (max-width: 1180px) {

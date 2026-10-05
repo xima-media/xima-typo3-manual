@@ -257,6 +257,18 @@
 			<trans-unit id="masthead.eyebrow">
 				<source>Editor manual</source>
 			</trans-unit>
+			<trans-unit id="colorScheme.label">
+				<source>Colour scheme</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.auto">
+				<source>Automatic (system setting)</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.light">
+				<source>Light</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.dark">
+				<source>Dark</source>
+			</trans-unit>
 			<trans-unit id="hero.lead">
 				<source>Every chapter of this manual, on one page. Use the search or the chapter list to jump to a topic.</source>
 			</trans-unit>
