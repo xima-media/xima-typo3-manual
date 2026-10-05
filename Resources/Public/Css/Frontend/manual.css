@@ -597,8 +597,7 @@ a:hover {
     text-decoration: none;
 }
 
-.manual-nav a:hover,
-.manual-nav details > summary:hover {
+.manual-nav a:hover {
     background: var(--manual-paper);
 }
 
@@ -617,7 +616,7 @@ a:hover {
 
 .manual-nav details > summary {
     list-style: none;
-    cursor: pointer;
+    cursor: default;
 }
 
 .manual-nav details > summary::-webkit-details-marker {
@@ -639,6 +638,38 @@ a:hover {
     text-align: center;
     color: var(--manual-blue);
     font-weight: 700;
+}
+
+.manual-nav details > summary > .manual-nav_sign {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: -3px -3px -3px -4px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color .15s ease, transform .15s ease;
+}
+
+.manual-nav details > summary > .manual-nav_sign:hover {
+    background: var(--manual-blue-light);
+    transform: scale(1.2);
+}
+
+.manual-nav details > summary:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-nav details > summary > .manual-nav_sign {
+        transition: none;
+    }
+
+    .manual-nav details > summary > .manual-nav_sign:hover {
+        transform: none;
+    }
 }
 
 .manual-nav_sign--leaf {

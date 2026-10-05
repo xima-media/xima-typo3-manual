@@ -16,6 +16,7 @@ class Tree {
 
     this.details.forEach((details, index) => {
       this.decorate(details, index)
+      details.querySelector(':scope > summary')?.addEventListener('click', event => this.restrictToggle(event))
       details.addEventListener('toggle', () => {
         this.updateSign(details)
         if (rememberState) {
@@ -42,6 +43,15 @@ class Tree {
     }
 
     this.updateSign(details)
+  }
+
+  // Only the sign and the keyboard toggle a branch, the browser would otherwise toggle on a click anywhere in the row
+  restrictToggle(event) {
+    const keyboard = event.detail === 0
+    if (keyboard || event.target.closest('.manual-nav_sign, a')) {
+      return
+    }
+    event.preventDefault()
   }
 
   countLeaves(details) {
