@@ -976,6 +976,12 @@ a:hover {
     margin: 28px 0 8px;
 }
 
+/* The page title opens its card, whatever level it is rendered at */
+.manual-chapter h3[data-page-url],
+.manual-chapter h4[data-page-url] {
+    margin-top: 0;
+}
+
 .manual-hero--chapter h2,
 .manual-hero--chapter h3,
 .manual-hero--chapter h4 {
