@@ -10,8 +10,12 @@ class Navigation {
     }
     document.querySelectorAll('.manual-nav a').forEach(item => item.classList.remove('active'))
     navItem.classList.add('active')
-    // Open every branch on the way to the active entry, without collapsing the rest
+    // Open every branch on the way to the active entry, without collapsing the rest. The branch of the entry itself
+    // stays as it is, only its sign expands it.
     let branch = navItem.closest('details')
+    if (branch && navItem.closest('summary')?.parentElement === branch) {
+      branch = branch.parentElement?.closest('details')
+    }
     while (branch) {
       branch.open = true
       branch = branch.parentElement?.closest('details')
@@ -37,7 +41,11 @@ class Navigation {
     })
   }
 
+  // With one page per chapter a click loads the next page, which comes with its navigation state from the server
   bindNavLinks() {
+    if (document.querySelector('.manual-nav')?.dataset.fullManual !== '1') {
+      return
+    }
     document.querySelectorAll('.manual-nav a').forEach(link => {
       link.addEventListener('click', e => {
         const href = e.currentTarget.getAttribute('href')
