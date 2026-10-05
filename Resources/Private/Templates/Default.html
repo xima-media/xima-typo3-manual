@@ -120,7 +120,7 @@
                     </button>
                 </span>
             </p>
-            <ol class="manual-nav">
+            <ol class="manual-nav" data-full-manual="{displayFullManual}">
                 <f:for each="{pages}" as="page">
                     <f:if condition="!{page.data.nav_hide}">
                         <f:render section="navigation" arguments="{page: page, displayFullManual: displayFullManual, showContentInNavigation: showContentInNavigation}"/>
@@ -278,11 +278,11 @@
     <li>
         <f:if condition="{page.hasSubpages} || {navChapters}">
             <f:then>
-                <details>
+                <details {f:if(condition: '!{displayFullManual} && {page.active}', then: 'open')}>
                     <summary>
                         <span class="manual-nav_sign" aria-hidden="true">+</span>
                         <a href="{f:if(condition: displayFullManual, then: '#p{page.data.uid}', else: page.link)}"
-                        title="{page.title}">{page.title}</a>
+                        title="{page.title}" class="{f:if(condition: '!{displayFullManual} && {page.current}', then: 'active')}" aria-current="{f:if(condition: '!{displayFullManual} && {page.current}', then: 'page', else: 'false')}">{page.title}</a>
                     </summary>
                     <ol>
                         <f:if condition="{showContentInNavigation}">
@@ -307,7 +307,7 @@
             </f:then>
             <f:else>
                 <a href="{f:if(condition: displayFullManual, then: '#p{page.data.uid}', else: page.link)}"
-                title="{page.title}">
+                title="{page.title}" class="{f:if(condition: '!{displayFullManual} && {page.current}', then: 'active')}" aria-current="{f:if(condition: '!{displayFullManual} && {page.current}', then: 'page', else: 'false')}">
                     <span class="manual-nav_sign manual-nav_sign--leaf" aria-hidden="true">·</span>
                     {page.title}
                 </a>

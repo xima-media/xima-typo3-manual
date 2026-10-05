@@ -1,6 +1,7 @@
 /**
 * The chapter tree of the sidebar: a leaf count per branch, the +/− sign of the design, and the expand/collapse all
-* controls. The open state survives a reload, so an editor keeps the branch they were working in.
+* controls. On the single-page manual the open state survives a reload, so an editor keeps the branch they were
+* working in. With one page per chapter the server opens the branches leading to the current page instead.
 */
 class Tree {
   #storageKey = 'ximaTypo3Manual.openChapters'
@@ -11,15 +12,21 @@ class Tree {
       return
     }
 
+    const rememberState = document.querySelector('.manual-nav')?.dataset.fullManual === '1'
+
     this.details.forEach((details, index) => {
       this.decorate(details, index)
       details.addEventListener('toggle', () => {
         this.updateSign(details)
-        this.persist()
+        if (rememberState) {
+          this.persist()
+        }
       })
     })
 
-    this.restore()
+    if (rememberState) {
+      this.restore()
+    }
     this.bindControls()
   }
 
