@@ -15,6 +15,10 @@ page {
       context.override.data = GP:context
       title = TEXT
       title.data = leveltitle:0
+      eyebrow = TEXT
+      eyebrow.value = {$manual.appearance.eyebrow}
+      lead = TEXT
+      lead.data = levelfield:0, subtitle
       currentPageUid = TEXT
       currentPageUid.data = page:uid
       rootPageUid = TEXT

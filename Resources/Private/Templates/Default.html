@@ -17,7 +17,7 @@
                         <img class="manual-masthead_logo" src="{f:uri.resource(path: backendSettings.loginLogo)}" height="48" alt=""/>
                     </f:else>
                 </f:if>
-                <p class="manual-masthead_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                <p class="manual-masthead_eyebrow"><f:render section="eyebrow" arguments="{eyebrow: eyebrow}"/></p>
                 <p class="manual-masthead_title"><f:link.page pageUid="{rootPageUid}">{title}</f:link.page></p>
             </div>
 
@@ -162,9 +162,9 @@
                     <f:else>
                         <f:if condition="{currentPageUid} == {rootPageUid}">
                             <section class="manual-hero">
-                                <p class="manual-hero_eyebrow"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></p>
+                                <p class="manual-hero_eyebrow"><f:render section="eyebrow" arguments="{eyebrow: eyebrow}"/></p>
                                 <h1 class="manual-hero_title">{title}</h1>
-                                <p class="manual-hero_lead"><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></p>
+                                <p class="manual-hero_lead"><f:render section="lead" arguments="{lead: lead}"/></p>
                             </section>
 
                             <section class="manual-overview-grid">
@@ -374,3 +374,7 @@
                 arguments="{page: subpage, context: context, currentPageUid: currentPageUid, displayFullManual: displayFullManual, level: nextLevel, faqPageUid: faqPageUid, changelogPageUid: changelogPageUid}"/>
     </f:for>
 </f:section>
+
+<f:section name="eyebrow"><f:if condition="{eyebrow}"><f:then>{eyebrow}</f:then><f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:masthead.eyebrow"/></f:else></f:if></f:section>
+
+<f:section name="lead"><f:if condition="{lead}"><f:then>{lead}</f:then><f:else><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:hero.lead"/></f:else></f:if></f:section>

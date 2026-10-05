@@ -18,6 +18,12 @@ settings:
     type: color
     default: '#1A5FB4'
     category: manual.appearance
+  manual.appearance.eyebrow:
+    label: 'Eyebrow text'
+    description: 'Short line above the manual title in the masthead and on the start page. Leave empty to use the translated default "Editor manual".'
+    type: string
+    default: ''
+    category: manual.appearance
   manual.appearance.showNavigation:
     label: 'Show navigation'
     description: 'Whether to display the navigation menu.'
