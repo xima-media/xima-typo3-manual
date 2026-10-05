@@ -1,3 +1,14 @@
 # Legacy entry point for manuals that include the static template instead of the site set "xima/manual"
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
 @import 'EXT:xima_typo3_manual/Configuration/Sets/Manual/constants.typoscript'
+
+styles {
+  templates {
+    templateRootPath = EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Templates/
+    partialRootPath = EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Partials/
+  }
+  content.textmedia {
+    maxW = 1200
+    maxWInText = 640
+  }
+}
