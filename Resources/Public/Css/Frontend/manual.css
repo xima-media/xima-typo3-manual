@@ -1080,6 +1080,29 @@ a:hover {
     filter: invert(1);
 }
 
+/* Bright screenshots glare on a dark page, they are toned down until looked at closely */
+.manual-chapter img:not([data-icon-name]),
+.manual-chapter video {
+    transition: filter .2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .manual-chapter img:not([data-icon-name]),
+    :root:not([data-theme="light"]) .manual-chapter video {
+        filter: brightness(.85);
+    }
+}
+
+:root[data-theme="dark"] .manual-chapter img:not([data-icon-name]),
+:root[data-theme="dark"] .manual-chapter video {
+    filter: brightness(.85);
+}
+
+:root .manual-chapter img:not([data-icon-name]):hover,
+:root .manual-chapter video:hover {
+    filter: none;
+}
+
 .manual-chapter figure {
     margin: 0 0 18px;
 }
