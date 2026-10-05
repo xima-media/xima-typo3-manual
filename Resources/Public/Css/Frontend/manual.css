@@ -803,7 +803,8 @@ a:hover {
 
 /* ------------------------------------------------------------------ Content */
 
-.manual-chapter + .manual-chapter {
+.manual-chapter + .manual-chapter,
+.manual-chapter + .manual-overview-grid--subpages {
     margin-top: 28px;
 }
 
