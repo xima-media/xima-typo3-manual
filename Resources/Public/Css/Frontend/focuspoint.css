@@ -33,7 +33,7 @@
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     display: block;
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 
