@@ -4,13 +4,13 @@
     into an uncached one. The results plugin reads the search word from the request.
 </f:comment>
 <form class="manual-search" role="search" method="post"
-      action="{f:uri.page(pageUid: rootPageUid, additionalParams: {tx_indexedsearch_manualresults: {action: 'search', controller: 'Search'}})}">
+        action="{f:uri.page(pageUid: rootPageUid, additionalParams: {tx_indexedsearch_manualresults: {action: 'search', controller: 'Search'}})}">
     <label class="manual-search_label" for="manual-search-input">
         <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.label"/>
     </label>
     <div class="manual-search_field">
         <input class="manual-search_input" id="manual-search-input" type="text" name="tx_indexedsearch_manualresults[search][sword]"
-               value="{searchWord}" placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
+                value="{searchWord}" placeholder="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:search.placeholder')}"/>
     </div>
 </form>
 </html>
