@@ -1236,13 +1236,20 @@ h4:hover > .manual-anchor,
 /* ------------------------------------------------------------------- Steps */
 
 .manual-steps {
-    counter-reset: manual-step;
-    list-style: none;
     margin: 0 0 24px;
     padding: 0;
 }
 
-.manual-steps_item {
+.manual-steps_body > :last-child {
+    margin-bottom: 0;
+}
+
+.manual-steps--roadmap {
+    counter-reset: manual-step;
+    list-style: none;
+}
+
+.manual-steps--roadmap .manual-steps_item {
     counter-increment: manual-step;
     display: grid;
     grid-template-columns: 34px minmax(0, 1fr);
@@ -1251,7 +1258,7 @@ h4:hover > .manual-anchor,
     position: relative;
 }
 
-.manual-steps_item::before {
+.manual-steps--roadmap .manual-steps_item::before {
     content: counter(manual-step);
     grid-row: 1 / span 2;
     width: 30px;
@@ -1265,7 +1272,7 @@ h4:hover > .manual-anchor,
     border-radius: 50%;
 }
 
-.manual-steps_item:not(:last-child)::after {
+.manual-steps--roadmap .manual-steps_item:not(:last-child)::after {
     content: '';
     position: absolute;
     left: 15px;
@@ -1275,22 +1282,210 @@ h4:hover > .manual-anchor,
     background: var(--manual-line);
 }
 
-.manual-steps_body > :last-child {
-    margin-bottom: 0;
+/* Accordion: native <details>/<summary>, no JS required */
+
+.manual-steps--accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-/* --------------------------------------------------------------- Annotation */
-
-.manual-annotation {
-    margin: 0 0 24px;
-}
-
-.manual-annotation figure {
-    margin: 0;
+.manual-steps--accordion .manual-steps_item {
     border: 1px solid var(--manual-line);
     border-radius: var(--manual-radius);
     overflow: hidden;
+}
+
+.manual-steps--accordion .manual-steps_summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--manual-text);
+    list-style: none;
+}
+
+.manual-steps--accordion .manual-steps_summary::-webkit-details-marker {
+    display: none;
+}
+
+.manual-steps--accordion .manual-steps_summary-label {
+    flex: 1;
+}
+
+.manual-steps--accordion .manual-steps_chevron {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--manual-text-muted);
+    border-bottom: 2px solid var(--manual-text-muted);
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+}
+
+.manual-steps--accordion .manual-steps_item[open] .manual-steps_chevron {
+    transform: rotate(225deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-steps--accordion .manual-steps_chevron {
+        transition: none;
+    }
+}
+
+.manual-steps--accordion .manual-steps_item[open] .manual-steps_summary {
+    border-bottom: 1px solid var(--manual-line);
+}
+
+.manual-steps--accordion .manual-steps_body {
+    padding: 16px;
+}
+
+.manual-steps_input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.manual-steps--tabs {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4px;
+    row-gap: 0;
+}
+
+.manual-steps--tabs .manual-steps_tab {
+    order: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    margin-bottom: -1px;
+    border: 1px solid var(--manual-line);
+    border-bottom: none;
+    border-radius: var(--manual-radius) var(--manual-radius) 0 0;
+    background: var(--manual-paper);
+    color: var(--manual-text-muted);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.manual-steps_tab-input:checked + .manual-steps_tab {
+    position: relative;
+    z-index: 1;
     background: var(--manual-surface);
+    color: var(--manual-text);
+}
+
+.manual-steps_tab-input:focus-visible + .manual-steps_tab {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
+.manual-steps--tabs .manual-steps_panel {
+    order: 2;
+    flex-basis: 100%;
+    display: none;
+    border: 1px solid var(--manual-line);
+    border-radius: 0 var(--manual-radius) var(--manual-radius) var(--manual-radius);
+    background: var(--manual-surface);
+    padding: 16px;
+}
+
+.manual-steps_tab-input:checked + .manual-steps_tab + .manual-steps_panel {
+    display: block;
+}
+
+.manual-steps--slider .manual-steps_panels {
+    display: grid;
+}
+
+.manual-steps--slider .manual-steps_panel {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid var(--manual-line);
+    border-radius: var(--manual-radius);
+    background: var(--manual-surface);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .25s ease, visibility 0s linear .25s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-steps--slider .manual-steps_panel {
+        transition: none;
+    }
+}
+
+.manual-steps_slide-input:checked + .manual-steps_panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .25s ease, visibility 0s linear;
+}
+
+.manual-steps--slider .manual-steps_controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--manual-line);
+}
+
+.manual-steps--slider .manual-steps_control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border: 1px solid var(--manual-line);
+    border-radius: var(--manual-radius);
+    background: var(--manual-paper);
+    cursor: pointer;
+}
+
+.manual-steps--slider .manual-steps_control:empty {
+    visibility: hidden;
+}
+
+.manual-steps--slider .manual-steps_control-icon {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--manual-text);
+    border-bottom: 2px solid var(--manual-text);
+}
+
+.manual-steps--slider .manual-steps_control--prev .manual-steps_control-icon {
+    transform: rotate(135deg);
+}
+
+.manual-steps--slider .manual-steps_control--next .manual-steps_control-icon {
+    transform: rotate(-45deg);
+}
+
+.manual-steps--slider .manual-steps_counter {
+    color: var(--manual-text-muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.manual-annotation {
+    margin: 0 0 24px;
 }
 
 /* ----------------------------------------------------------------- Glossary */
@@ -1614,5 +1809,26 @@ a.manual-term {
 
     .manual-note {
         break-inside: avoid;
+    }
+
+    .manual-steps--accordion details:not([open]) > :not(summary) {
+        display: block;
+    }
+
+    .manual-steps--tabs .manual-steps_tab,
+    .manual-steps--slider .manual-steps_controls {
+        display: none;
+    }
+
+    .manual-steps--tabs .manual-steps_panel,
+    .manual-steps--slider .manual-steps_panel {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        break-inside: avoid;
+    }
+
+    .manual-steps--slider .manual-steps_panels {
+        display: block;
     }
 }

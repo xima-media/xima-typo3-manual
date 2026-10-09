@@ -2,14 +2,129 @@
 <f:layout name="Default"/>
 
 <f:section name="Main">
-    <ol class="manual-steps">
-        <f:for each="{slides}" as="slide">
-            <li class="manual-steps_item" id="slide-{slide.data.uid}">
-                <div class="manual-steps_body">
-                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                </div>
-            </li>
-        </f:for>
-    </ol>
+
+    <f:if condition="{context} == 'pdf'">
+        <f:then>
+            <!-- PDF export has no interactivity, so every variant is flattened into one linear list -->
+            <ol class="manual-steps manual-steps--roadmap">
+                <f:for each="{slides}" as="slide">
+                    <li class="manual-steps_item" id="slide-{slide.data.uid}">
+                        <div class="manual-steps_body">
+                            <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                        </div>
+                    </li>
+                </f:for>
+            </ol>
+        </f:then>
+        <f:else>
+            <f:switch expression="{data.layout}">
+                <f:case value="1"><f:variable name="variant" value="accordion"/></f:case>
+                <f:case value="2"><f:variable name="variant" value="tabs"/></f:case>
+                <f:case value="3"><f:variable name="variant" value="slider"/></f:case>
+                <f:defaultCase><f:variable name="variant" value="roadmap"/></f:defaultCase>
+            </f:switch>
+
+            <f:switch expression="{variant}">
+
+                <f:case value="accordion">
+                    <div class="manual-steps manual-steps--accordion">
+                        <f:for each="{slides}" as="slide" iteration="i">
+                            <details class="manual-steps_item" id="slide-{slide.data.uid}">
+                                <summary class="manual-steps_summary">
+                                    <span class="manual-steps_summary-label">{slide.data.header}</span>
+                                    <span class="manual-steps_chevron" aria-hidden="true"></span>
+                                </summary>
+                                <div class="manual-steps_body">
+                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                                </div>
+                            </details>
+                        </f:for>
+                    </div>
+                </f:case>
+
+                <f:case value="tabs">
+                    <div class="manual-steps manual-steps--tabs">
+                        <f:for each="{slides}" as="slide" iteration="i">
+                            <f:if condition="{i.isFirst}">
+                                <f:then>
+                                    <input type="radio" class="manual-steps_input manual-steps_tab-input" name="msteps-{data.uid}" id="msteps-{data.uid}-tab-{i.cycle}" checked="checked"/>
+                                </f:then>
+                                <f:else>
+                                    <input type="radio" class="manual-steps_input manual-steps_tab-input" name="msteps-{data.uid}" id="msteps-{data.uid}-tab-{i.cycle}"/>
+                                </f:else>
+                            </f:if>
+                            <label class="manual-steps_tab" for="msteps-{data.uid}-tab-{i.cycle}">
+                                <span class="manual-steps_tab-label">{slide.data.header}</span>
+                            </label>
+                            <div class="manual-steps_panel" id="slide-{slide.data.uid}">
+                                <div class="manual-steps_body">
+                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                                </div>
+                            </div>
+                        </f:for>
+                    </div>
+                </f:case>
+
+                <f:case value="slider">
+                    <div class="manual-steps manual-steps--slider">
+                        <div class="manual-steps_panels">
+                            <f:for each="{slides}" as="slide" iteration="i">
+                                <f:if condition="{i.isFirst}">
+                                    <f:then>
+                                        <input type="radio" class="manual-steps_input manual-steps_slide-input" name="msteps-{data.uid}" id="msteps-{data.uid}-slide-{i.cycle}" checked="checked"/>
+                                    </f:then>
+                                    <f:else>
+                                        <input type="radio" class="manual-steps_input manual-steps_slide-input" name="msteps-{data.uid}" id="msteps-{data.uid}-slide-{i.cycle}"/>
+                                    </f:else>
+                                </f:if>
+                                <div class="manual-steps_panel" id="slide-{slide.data.uid}">
+                                    <div class="manual-steps_body">
+                                        <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                                    </div>
+                                    <div class="manual-steps_controls">
+                                        <f:if condition="{i.isFirst}">
+                                            <f:then>
+                                                <span class="manual-steps_control" aria-hidden="true"></span>
+                                            </f:then>
+                                            <f:else>
+                                                <label class="manual-steps_control manual-steps_control--prev" for="msteps-{data.uid}-slide-{i.cycle - 1}" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.slider.prev')}">
+                                                    <span class="manual-steps_control-icon" aria-hidden="true"></span>
+                                                </label>
+                                            </f:else>
+                                        </f:if>
+                                        <span class="manual-steps_counter">{i.cycle} / {i.total}</span>
+                                        <f:if condition="{i.isLast}">
+                                            <f:then>
+                                                <span class="manual-steps_control" aria-hidden="true"></span>
+                                            </f:then>
+                                            <f:else>
+                                                <label class="manual-steps_control manual-steps_control--next" for="msteps-{data.uid}-slide-{i.cycle + 1}" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.slider.next')}">
+                                                    <span class="manual-steps_control-icon" aria-hidden="true"></span>
+                                                </label>
+                                            </f:else>
+                                        </f:if>
+                                    </div>
+                                </div>
+                            </f:for>
+                        </div>
+                    </div>
+                </f:case>
+
+                <f:defaultCase>
+                    <ol class="manual-steps manual-steps--roadmap">
+                        <f:for each="{slides}" as="slide">
+                            <li class="manual-steps_item" id="slide-{slide.data.uid}">
+                                <div class="manual-steps_body">
+                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+                                </div>
+                            </li>
+                        </f:for>
+                    </ol>
+                </f:defaultCase>
+
+            </f:switch>
+        </f:else>
+    </f:if>
+
 </f:section>
 </html>

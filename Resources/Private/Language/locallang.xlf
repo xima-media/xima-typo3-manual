@@ -86,6 +86,27 @@
 			<trans-unit id="wizard.msteps.description">
 				<source>Slider that showcases content elements in individual slides</source>
 			</trans-unit>
+			<trans-unit id="msteps.layout.label">
+				<source>Display as</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.roadmap">
+				<source>Roadmap</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.accordion">
+				<source>Accordion</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.tabs">
+				<source>Tabs</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.slider">
+				<source>Slider</source>
+			</trans-unit>
+			<trans-unit id="msteps.slider.prev">
+				<source>Previous</source>
+			</trans-unit>
+			<trans-unit id="msteps.slider.next">
+				<source>Next</source>
+			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source>Related records</source>
 			</trans-unit>

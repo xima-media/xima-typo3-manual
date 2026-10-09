@@ -23,7 +23,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['msteps'] = 'content-c
 
 $GLOBALS['TCA']['tt_content']['palettes']['msteps'] = [
     'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.palette',
-    'showitem' => 'CType,--linebreak--,header,--linebreak--,tx_ximatypo3manual_children',
+    'showitem' => 'CType,--linebreak--,header,--linebreak--,layout,--linebreak--,tx_ximatypo3manual_children',
 ];
 
 $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
@@ -36,6 +36,29 @@ $GLOBALS['TCA']['tt_content']['types']['msteps'] = [
     'columnsOverrides' => [
         'tx_ximatypo3manual_children' => [
             'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.elements',
+        ],
+        'layout' => [
+            'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.layout.label',
+            'config' => [
+                'items' => [
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.layout.roadmap',
+                        'value' => 0,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.layout.accordion',
+                        'value' => 1,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.layout.tabs',
+                        'value' => 2,
+                    ],
+                    [
+                        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:msteps.layout.slider',
+                        'value' => 3,
+                    ],
+                ],
+            ],
         ],
     ],
 ];

@@ -114,6 +114,34 @@
 				<source />
 				<target>Zeigt Inhaltselemente in einzelnen Schritten an</target>
 			</trans-unit>
+			<trans-unit id="msteps.layout.label">
+				<source />
+				<target>Darstellung</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.roadmap">
+				<source />
+				<target>Roadmap</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.accordion">
+				<source />
+				<target>Akkordeon</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.tabs">
+				<source />
+				<target>Tabs</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.slider">
+				<source />
+				<target>Slider</target>
+			</trans-unit>
+			<trans-unit id="msteps.slider.prev">
+				<source />
+				<target>Zurück</target>
+			</trans-unit>
+			<trans-unit id="msteps.slider.next">
+				<source />
+				<target>Weiter</target>
+			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
 				<target>Verlinkte Elemente</target>
