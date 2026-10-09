@@ -19,6 +19,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
 
     protected array $coreExtensionsToLoad = [
         'filelist',
+        'indexed_search',
         'rte_ckeditor',
     ];
 }
