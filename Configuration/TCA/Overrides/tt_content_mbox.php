@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+defined('TYPO3') || die();
 
 ExtensionManagementUtility::addTcaSelectItem(
     'tt_content',
@@ -32,7 +36,8 @@ $GLOBALS['TCA']['tt_content']['types']['mbox'] = [
     'columnsOverrides' => [
         'bodytext' => [
             'config' => [
-                'enableRichtext' => false,
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'xima_typo3_manual',
                 'required' => true,
             ],
         ],

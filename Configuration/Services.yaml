@@ -4,24 +4,21 @@ services:
     autoconfigure: true
     public: false
 
+  _instanceof:
+    Xima\XimaTypo3Manual\Generator\Preset\PresetInterface:
+      tags: ['xima_typo3_manual.preset']
+
   Xima\XimaTypo3Manual\:
     resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
+    exclude: '../Classes/Configuration.php'
 
-  Xima\XimaTypo3Manual\Preview\MtextPreviewRenderer:
+  # Data processors are resolved through GeneralUtility::makeInstance(), which only reaches public services
+  Xima\XimaTypo3Manual\DataProcessing\ManualSettingsProcessor:
     public: true
 
-  Xima\XimaTypo3Manual\EventListener\ModifyButtonBarEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'xima-typo3-manual/event-listener/modify-button-bar'
+  Xima\XimaTypo3Manual\DataProcessing\FocuspointProcessor:
+    public: true
 
-  Xima\XimaTypo3Manual\EventListener\ContentUsedOnPageEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'xima-typo3-manual/event-listener/content-used-on-page'
-
-  Xima\XimaTypo3Manual\EventListener\PageContentPreviewEventListener:
-    tags:
-      - name: event.listener
-        identifier: 'xima-typo3-manual/event-listener/page-content-preview'
+  Xima\XimaTypo3Manual\Generator\ManualGenerator:
+    arguments:
+      $presets: !tagged_iterator xima_typo3_manual.preset

@@ -1,4 +1,7 @@
-{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 <be:link.editRecord uid="{data.uid}" table="tt_content">
-    <f:be.infobox state="{state}">{data.bodytext}</f:be.infobox>
+    <f:be.infobox state="{state}"><f:sanitize.html>{data.bodytext}</f:sanitize.html></f:be.infobox>
 </be:link.editRecord>
+</html>

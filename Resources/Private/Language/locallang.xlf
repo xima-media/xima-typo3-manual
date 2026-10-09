@@ -75,16 +75,37 @@
 				<source>Text element with heading and body text</source>
 			</trans-unit>
 			<trans-unit id="msteps">
-				<source>Content Slider</source>
+				<source>Steps</source>
 			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source>Slides</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
-				<source>Slider element</source>
+				<source>Steps</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
-				<source>Slider that showcases content elements in individual slides</source>
+				<source>Shows content elements as a sequence of numbered steps, displayed as a roadmap, accordion, tabs, or slider</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.label">
+				<source>Display as</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.roadmap">
+				<source>Roadmap</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.accordion">
+				<source>Accordion</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.tabs">
+				<source>Tabs</source>
+			</trans-unit>
+			<trans-unit id="msteps.layout.slider">
+				<source>Slider</source>
+			</trans-unit>
+			<trans-unit id="msteps.slider.prev">
+				<source>Previous</source>
+			</trans-unit>
+			<trans-unit id="msteps.slider.next">
+				<source>Next</source>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source>Related records</source>
@@ -125,6 +146,15 @@
 			<trans-unit id="button.manual.close">
 				<source>Close manual</source>
 			</trans-unit>
+			<trans-unit id="modal.title.editRecord">
+				<source>Edit record</source>
+			</trans-unit>
+			<trans-unit id="modal.title.manual">
+				<source>Manual</source>
+			</trans-unit>
+			<trans-unit id="button.download.pdf">
+				<source>Download PDF</source>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source>Associated chapters</source>
 			</trans-unit>
@@ -146,16 +176,16 @@
 			<trans-unit id="installation.createFromPreset">
 				<source>Create new manual from preset</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.title">
+			<trans-unit id="installation.preset.empty.title">
 				<source>Empty Manual</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.subtitle">
+			<trans-unit id="installation.preset.empty.subtitle">
 				<source>Do it by yourself</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.body">
+			<trans-unit id="installation.preset.empty.description">
 				<source>This creates a new site root with pre-configured TypoScript template, PageTS and site configuration.</source>
 			</trans-unit>
-			<trans-unit id="installation.preset1.button">
+			<trans-unit id="installation.preset.create">
 				<source>Create new manual</source>
 			</trans-unit>
 			<trans-unit id="installation.creating">
@@ -175,6 +205,144 @@
 			</trans-unit>
 			<trans-unit id="installation.result.success.openNewManual">
 				<source>Navigate to new manual</source>
+			</trans-unit>
+			<trans-unit id="search.label">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="search.placeholder">
+				<source>Search the manual</source>
+			</trans-unit>
+			<trans-unit id="search.results">
+				<source>%s results</source>
+			</trans-unit>
+			<trans-unit id="search.noResults">
+				<source>No results</source>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.title">
+				<source>Glossary</source>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.description">
+				<source>A list of terms with their definition. Each term is linked automatically wherever it appears in the manual.</source>
+			</trans-unit>
+			<trans-unit id="mglossary.palette">
+				<source>Glossary</source>
+			</trans-unit>
+			<trans-unit id="mglossary.terms">
+				<source>Terms</source>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.title">
+				<source>Glossary term</source>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.description">
+				<source>A single glossary entry, used inside a glossary element.</source>
+			</trans-unit>
+			<trans-unit id="mterm.palette">
+				<source>Glossary term</source>
+			</trans-unit>
+			<trans-unit id="mterm.term">
+				<source>Term</source>
+			</trans-unit>
+			<trans-unit id="mterm.definition">
+				<source>Definition</source>
+			</trans-unit>
+			<trans-unit id="coverage.title">
+				<source>Documentation coverage</source>
+			</trans-unit>
+			<trans-unit id="coverage.description">
+				<source>Which record types the manual documents, and which are still undocumented.</source>
+			</trans-unit>
+			<trans-unit id="coverage.recordType">
+				<source>Record type</source>
+			</trans-unit>
+			<trans-unit id="coverage.documentedBy">
+				<source>Documented by</source>
+			</trans-unit>
+			<trans-unit id="coverage.undocumented">
+				<source>Not documented</source>
+			</trans-unit>
+			<trans-unit id="coverage.summary">
+				<source>%1$s of %2$s record types documented</source>
+			</trans-unit>
+			<trans-unit id="coverage.filter.all">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="coverage.filter.undocumented">
+				<source>Only undocumented</source>
+			</trans-unit>
+			<trans-unit id="button.coverage">
+				<source>Coverage</source>
+			</trans-unit>
+			<trans-unit id="menu.manual">
+				<source>Manual</source>
+			</trans-unit>
+			<trans-unit id="masthead.eyebrow">
+				<source>Editor manual</source>
+			</trans-unit>
+			<trans-unit id="pager.label">
+				<source>Chapter navigation</source>
+			</trans-unit>
+			<trans-unit id="pager.previous">
+				<source>Previous chapter</source>
+			</trans-unit>
+			<trans-unit id="pager.next">
+				<source>Next chapter</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.label">
+				<source>Colour scheme</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.auto">
+				<source>Automatic (system setting)</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.light">
+				<source>Light</source>
+			</trans-unit>
+			<trans-unit id="colorScheme.dark">
+				<source>Dark</source>
+			</trans-unit>
+			<trans-unit id="hero.lead">
+				<source>Every chapter of this manual, on one page. Use the search or the chapter list to jump to a topic.</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.overview">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.faq">
+				<source>FAQ</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.changelog">
+				<source>Changelog</source>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.search">
+				<source>Search results</source>
+			</trans-unit>
+			<trans-unit id="search.hero.title">
+				<source>Search results for &#8220;%s&#8221;</source>
+			</trans-unit>
+			<trans-unit id="nav.label">
+				<source>Documentation</source>
+			</trans-unit>
+			<trans-unit id="nav.expandAll">
+				<source>expand</source>
+			</trans-unit>
+			<trans-unit id="nav.collapseAll">
+				<source>collapse</source>
+			</trans-unit>
+			<trans-unit id="toc.heading">
+				<source>Table of contents</source>
+			</trans-unit>
+			<trans-unit id="toc.onThisPage">
+				<source>On this page</source>
+			</trans-unit>
+			<trans-unit id="toc.contents">
+				<source>Contents</source>
+			</trans-unit>
+			<trans-unit id="toTop">
+				<source>Back to top</source>
+			</trans-unit>
+			<trans-unit id="anchor.permalink">
+				<source>Permalink to this section</source>
+			</trans-unit>
+			<trans-unit id="badge.documented">
+				<source>Linked to records</source>
 			</trans-unit>
 		</body>
 	</file>

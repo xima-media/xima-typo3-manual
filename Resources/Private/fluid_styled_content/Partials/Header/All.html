@@ -1,16 +1,23 @@
 {namespace be=TYPO3\CMS\Backend\ViewHelpers}
-<f:if condition="{data.header}">
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<f:variable name="hasHeaderContent" value="0"/>
+<f:if condition="{data.header}"><f:variable name="hasHeaderContent" value="1"/></f:if>
+<f:if condition="{veEditMode}"><f:variable name="hasHeaderContent" value="1"/></f:if>
+<f:if condition="{data.CType} != 'mbox' && {hasHeaderContent}">
     <header>
-        <h3 class="ce-headline-{data.header_position}" id="c{data.uid}">
-            {data.header}
+        <f:variable name="contentHeadingId" value="c{data.uid}"/>
+        <f:render partial="Manual/Heading" arguments="{level: headingLevel, id: contentHeadingId}" contentAs="content">
+            {record -> f:render.text(field: 'header')}
             <f:if condition="{context} == 'frontend'">
-                <a href="#c{data.uid}"><core:icon identifier="actions-link" size="small" /></a>
+                <a href="#c{data.uid}" class="manual-anchor" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:anchor.permalink')}">
+                    <core:icon identifier="actions-link" size="small"/>
+                </a>
             </f:if>
             <f:if condition="{context} == 'backend'">
-                <be:link.editRecord uid="{data.uid}" table="tt_content" fields="header,bodytext" returnUrl="manual" class="edit-record">
+                <be:link.editRecord uid="{data.uid}" table="tt_content" fields="header,bodytext" returnUrl="manual" class="edit-record manual-anchor">
                     <core:icon identifier="actions-open" size="small"/>
                 </be:link.editRecord>
             </f:if>
-        </h3>
+        </f:render>
     </header>
 </f:if>

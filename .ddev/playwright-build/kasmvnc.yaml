@@ -1,0 +1,6 @@
+kasmvnc:
+  user_session:
+    sdl_console:
+      enable: false
+    sdl:
+      enable_ipc: false

@@ -1,70 +1,105 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xima\XimaTypo3Manual\EventListener;
 
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Domain\RecordInterface;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
-final class PageContentPreviewEventListener
+final readonly class PageContentPreviewEventListener
 {
+    /**
+     * Infobox states of EXT:backend, indexed by the "layout" value of an mbox element.
+     */
+    private const MBOX_STATES = [0 => -2, 1 => -1, 2 => 0, 3 => 1, 4 => 2];
+
+    public function __construct(
+        private ConnectionPool $connectionPool,
+        private ViewFactoryInterface $viewFactory
+    ) {
+    }
+
+    #[AsEventListener(identifier: 'xima-typo3-manual/page-content-preview')]
     public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
         if ($event->getTable() !== 'tt_content') {
             return;
         }
 
-        $record = $event->getRecord();
+        $record = $this->toArray($event->getRecord());
 
-        if ($record['CType'] === 'msteps') {
-            $event->setPreviewContent($this->getMstepsPreviewHtml($event->getRecord()));
-        }
+        $preview = match ($record['CType'] ?? '') {
+            'msteps' => $this->renderPreview('Backend/MstepsPreview', [
+                'data' => $record,
+                'steps' => $this->getChildren((int)($record['uid'] ?? 0)),
+            ]),
+            'mglossary' => $this->renderPreview('Backend/MglossaryPreview', [
+                'data' => $record,
+                'terms' => $this->getChildren((int)($record['uid'] ?? 0)),
+            ]),
+            'mbox' => $this->renderPreview('Backend/MboxPreview', [
+                'data' => $record,
+                'state' => self::MBOX_STATES[(int)($record['layout'] ?? 0)] ?? -2,
+            ]),
+            default => null,
+        };
 
-        if ($record['CType'] === 'mbox') {
-            $event->setPreviewContent($this->getMboxPreviewHtml($event->getRecord()));
+        if ($preview !== null) {
+            $event->setPreviewContent($preview);
         }
     }
 
-    private function getMstepsPreviewHtml(array $record): string
+    /**
+     * TYPO3 v13 hands over a plain record array, v14 a RecordInterface.
+     *
+     * @param RecordInterface|array<string, mixed> $record
+     * @return array<string, mixed>
+     */
+    private function toArray(RecordInterface|array $record): array
     {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Backend/MstepsPreview.html');
+        return $record instanceof RecordInterface ? $record->toArray() : $record;
+    }
 
-        if ($record['tx_ximatypo3manual_children'] !== 0) {
-            $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
-            $steps = $qb->select('header')
-                ->from('tt_content')
-                ->where(
-                    $qb->expr()->eq('tx_ximatypo3manual_parent', $record['uid']),
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function getChildren(int $parentUid): array
+    {
+        if ($parentUid === 0) {
+            return [];
+        }
+
+        $qb = $this->connectionPool->getQueryBuilderForTable('tt_content');
+
+        return $qb->select('uid', 'header')
+            ->from('tt_content')
+            ->where(
+                $qb->expr()->eq(
+                    'tx_ximatypo3manual_parent',
+                    $qb->createNamedParameter($parentUid, Connection::PARAM_INT)
                 )
-                ->orderBy('sorting', 'ASC')
-                ->executeQuery()
-                ->fetchAllAssociative();
-
-            $view->assign('steps', $steps);
-        }
-
-        $view->assign('data', $record);
-
-        return $view->render();
+            )
+            ->orderBy('sorting', 'ASC')
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
-    private function getMboxPreviewHtml(array $record): string
+    /**
+     * @param array<string, mixed> $variables
+     */
+    private function renderPreview(string $template, array $variables): string
     {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setTemplatePathAndFilename('EXT:xima_typo3_manual/Resources/Private/Backend/MboxPreview.html');
+        $view = $this->viewFactory->create(new ViewFactoryData(
+            templateRootPaths: ['EXT:xima_typo3_manual/Resources/Private/'],
+        ));
+        $view->assignMultiple($variables);
 
-        $stateMapping = [
-            0 => -2,
-            1 => -1,
-            2 => 0,
-            3 => 1,
-            4 => 2,
-        ];
-        $view->assign('state', $stateMapping[$record['layout']] ?? -2);
-        $view->assign('data', $record);
-
-        return $view->render();
+        return $view->render($template);
     }
 }

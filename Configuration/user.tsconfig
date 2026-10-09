@@ -1,0 +1,4 @@
+# TYPO3 v14 derives the page types of the drag area from the group permissions and deprecates this option
+[typo3.branch == "13.4"]
+  options.pageTree.doktypesToShowInNewPageDragArea := addToList(701)
+[END]

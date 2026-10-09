@@ -12,8 +12,12 @@ class Installation {
   }
 
   navigateToStep(stepNr) {
+    const target = document.querySelector(`.manual-installation-step[data-step="${stepNr}"]`)
+    if (!target) {
+      return
+    }
     document.querySelectorAll('.manual-installation-step').forEach(step => step.classList.add('hidden'))
-    document.querySelector(`.manual-installation-step[data-step="${stepNr}"]`).classList.remove('hidden')
+    target.classList.remove('hidden')
   }
 
   onInstallClick(e) {
@@ -38,6 +42,12 @@ class Installation {
       })
 
       // navigate to step 3
+      this.navigateToStep(3)
+    }).catch(() => {
+      const target = document.querySelector('.manual-installation-step[data-step="3"]')
+      if (target) {
+        target.innerHTML = `<div class="callout callout-danger">${TYPO3.lang['installation.result.error.message'] || 'An error occurred while creating the manual.'}</div>`
+      }
       this.navigateToStep(3)
     })
   }

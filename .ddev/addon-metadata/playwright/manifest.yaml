@@ -1,0 +1,13 @@
+name: playwright
+repository: xima-media/ddev-playwright
+version: 3.0.0
+install_date: "2026-07-14T12:00:00+02:00"
+project_files:
+    - commands/playwright/playwright
+    - playwright-build/Dockerfile
+    - playwright-build/kasmvnc.yaml
+    - playwright-build/entrypoint.sh
+    - playwright-build/xstartup
+    - docker-compose.playwright.yaml
+global_files: []
+removal_actions: []

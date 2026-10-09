@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2022-06-23T11:36:30Z">
 		<body>
 			<trans-unit id="manual_page_type">
 				<source />
@@ -100,7 +100,7 @@
 			</trans-unit>
 			<trans-unit id="msteps">
 				<source />
-				<target>Inhaltsslider</target>
+				<target>Schritte</target>
 			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source />
@@ -108,11 +108,39 @@
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
 				<source />
-				<target>Slider</target>
+				<target>Schritte</target>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
 				<source />
-				<target>Zeigt Inhaltselemente in einzelnen Schritten an</target>
+				<target>Zeigt Inhaltselemente als Abfolge nummerierter Schritte, dargestellt als Roadmap, Akkordeon, Tabs oder Slider</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.label">
+				<source />
+				<target>Darstellung</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.roadmap">
+				<source />
+				<target>Roadmap</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.accordion">
+				<source />
+				<target>Akkordeon</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.tabs">
+				<source />
+				<target>Tabs</target>
+			</trans-unit>
+			<trans-unit id="msteps.layout.slider">
+				<source />
+				<target>Slider</target>
+			</trans-unit>
+			<trans-unit id="msteps.slider.prev">
+				<source />
+				<target>Zurück</target>
+			</trans-unit>
+			<trans-unit id="msteps.slider.next">
+				<source />
+				<target>Weiter</target>
 			</trans-unit>
 			<trans-unit id="tab.manual_relations">
 				<source />
@@ -166,6 +194,18 @@
 				<source />
 				<target>Handbuch schließen</target>
 			</trans-unit>
+			<trans-unit id="modal.title.editRecord">
+				<source />
+				<target>Datensatz bearbeiten</target>
+			</trans-unit>
+			<trans-unit id="modal.title.manual">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="button.download.pdf">
+				<source />
+				<target>PDF herunterladen</target>
+			</trans-unit>
 			<trans-unit id="button.dropdown.header">
 				<source />
 				<target>Zugehörige Kapitel</target>
@@ -194,19 +234,19 @@
 				<source />
 				<target>Neues Handbuch aus Voreinstellung erstellen</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.title">
+			<trans-unit id="installation.preset.empty.title">
 				<source />
 				<target>Leeres Handbuch</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.subtitle">
+			<trans-unit id="installation.preset.empty.subtitle">
 				<source />
-				<target>Start from scratch</target>
+				<target>Selbst gestalten</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.body">
+			<trans-unit id="installation.preset.empty.description">
 				<source />
 				<target>Dies erstellt eine neue Site-Root mit vorkonfiguriertem TypoScript-Template, PageTS und Site-Konfiguration.</target>
 			</trans-unit>
-			<trans-unit id="installation.preset1.button">
+			<trans-unit id="installation.preset.create">
 				<source />
 				<target>Neues Handbuch erstellen</target>
 			</trans-unit>
@@ -233,6 +273,190 @@
 			<trans-unit id="installation.result.success.openNewManual">
 				<source />
 				<target>Zum neuen Handbuch</target>
+			</trans-unit>
+			<trans-unit id="search.label">
+				<source />
+				<target>Suche</target>
+			</trans-unit>
+			<trans-unit id="search.placeholder">
+				<source />
+				<target>Handbuch durchsuchen</target>
+			</trans-unit>
+			<trans-unit id="search.results">
+				<source />
+				<target>%s Treffer</target>
+			</trans-unit>
+			<trans-unit id="search.noResults">
+				<source />
+				<target>Keine Treffer</target>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.title">
+				<source />
+				<target>Glossar</target>
+			</trans-unit>
+			<trans-unit id="wizard.mglossary.description">
+				<source />
+				<target>Eine Liste von Begriffen mit ihrer Erklärung. Jeder Begriff wird im Handbuch automatisch verlinkt.</target>
+			</trans-unit>
+			<trans-unit id="mglossary.palette">
+				<source />
+				<target>Glossar</target>
+			</trans-unit>
+			<trans-unit id="mglossary.terms">
+				<source />
+				<target>Begriffe</target>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.title">
+				<source />
+				<target>Glossarbegriff</target>
+			</trans-unit>
+			<trans-unit id="wizard.mterm.description">
+				<source />
+				<target>Ein einzelner Glossareintrag innerhalb eines Glossars.</target>
+			</trans-unit>
+			<trans-unit id="mterm.palette">
+				<source />
+				<target>Glossarbegriff</target>
+			</trans-unit>
+			<trans-unit id="mterm.term">
+				<source />
+				<target>Begriff</target>
+			</trans-unit>
+			<trans-unit id="mterm.definition">
+				<source />
+				<target>Erklärung</target>
+			</trans-unit>
+			<trans-unit id="coverage.title">
+				<source />
+				<target>Dokumentationsabdeckung</target>
+			</trans-unit>
+			<trans-unit id="coverage.description">
+				<source />
+				<target>Welche Datensatztypen das Handbuch dokumentiert und welche noch fehlen.</target>
+			</trans-unit>
+			<trans-unit id="coverage.recordType">
+				<source />
+				<target>Datensatztyp</target>
+			</trans-unit>
+			<trans-unit id="coverage.documentedBy">
+				<source />
+				<target>Dokumentiert durch</target>
+			</trans-unit>
+			<trans-unit id="coverage.undocumented">
+				<source />
+				<target>Nicht dokumentiert</target>
+			</trans-unit>
+			<trans-unit id="coverage.summary">
+				<source />
+				<target>%1$s von %2$s Datensatztypen dokumentiert</target>
+			</trans-unit>
+			<trans-unit id="coverage.filter.all">
+				<source />
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="coverage.filter.undocumented">
+				<source />
+				<target>Nur undokumentierte</target>
+			</trans-unit>
+			<trans-unit id="button.coverage">
+				<source />
+				<target>Abdeckung</target>
+			</trans-unit>
+			<trans-unit id="menu.manual">
+				<source />
+				<target>Handbuch</target>
+			</trans-unit>
+			<trans-unit id="masthead.eyebrow">
+				<source />
+				<target>Redakteurshandbuch</target>
+			</trans-unit>
+			<trans-unit id="pager.label">
+				<source />
+				<target>Kapitelnavigation</target>
+			</trans-unit>
+			<trans-unit id="pager.previous">
+				<source />
+				<target>Vorheriges Kapitel</target>
+			</trans-unit>
+			<trans-unit id="pager.next">
+				<source />
+				<target>Nächstes Kapitel</target>
+			</trans-unit>
+			<trans-unit id="colorScheme.label">
+				<source />
+				<target>Farbschema</target>
+			</trans-unit>
+			<trans-unit id="colorScheme.auto">
+				<source />
+				<target>Automatisch (Systemeinstellung)</target>
+			</trans-unit>
+			<trans-unit id="colorScheme.light">
+				<source />
+				<target>Hell</target>
+			</trans-unit>
+			<trans-unit id="colorScheme.dark">
+				<source />
+				<target>Dunkel</target>
+			</trans-unit>
+			<trans-unit id="hero.lead">
+				<source />
+				<target>Alle Kapitel dieses Handbuchs auf einer Seite. Nutzen Sie die Suche oder die Kapitelliste, um zu einem Thema zu springen.</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.overview">
+				<source />
+				<target>Übersicht</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.faq">
+				<source />
+				<target>FAQ</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.changelog">
+				<source />
+				<target>Changelog</target>
+			</trans-unit>
+			<trans-unit id="nav.quicklinks.search">
+				<source />
+				<target>Suchergebnisse</target>
+			</trans-unit>
+			<trans-unit id="search.hero.title">
+				<source />
+				<target>Suchergebnisse für „%s“</target>
+			</trans-unit>
+			<trans-unit id="nav.label">
+				<source />
+				<target>Dokumentation</target>
+			</trans-unit>
+			<trans-unit id="nav.expandAll">
+				<source />
+				<target>alle</target>
+			</trans-unit>
+			<trans-unit id="nav.collapseAll">
+				<source />
+				<target>zu</target>
+			</trans-unit>
+			<trans-unit id="toc.heading">
+				<source />
+				<target>Inhaltsverzeichnis</target>
+			</trans-unit>
+			<trans-unit id="toc.onThisPage">
+				<source />
+				<target>Auf dieser Seite</target>
+			</trans-unit>
+			<trans-unit id="toc.contents">
+				<source />
+				<target>Inhalt</target>
+			</trans-unit>
+			<trans-unit id="toTop">
+				<source />
+				<target>Nach oben</target>
+			</trans-unit>
+			<trans-unit id="anchor.permalink">
+				<source />
+				<target>Link zu diesem Abschnitt</target>
+			</trans-unit>
+			<trans-unit id="badge.documented">
+				<source />
+				<target>Mit Datensätzen verknüpft</target>
 			</trans-unit>
 		</body>
 	</file>
