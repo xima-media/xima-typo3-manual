@@ -100,7 +100,7 @@
 			</trans-unit>
 			<trans-unit id="msteps">
 				<source />
-				<target>Inhaltsslider</target>
+				<target>Schritte</target>
 			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source />
@@ -108,11 +108,11 @@
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
 				<source />
-				<target>Slider</target>
+				<target>Schritte</target>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
 				<source />
-				<target>Zeigt Inhaltselemente in einzelnen Schritten an</target>
+				<target>Zeigt Inhaltselemente als Abfolge nummerierter Schritte, dargestellt als Roadmap, Akkordeon, Tabs oder Slider</target>
 			</trans-unit>
 			<trans-unit id="msteps.layout.label">
 				<source />

@@ -75,16 +75,16 @@
 				<source>Text element with heading and body text</source>
 			</trans-unit>
 			<trans-unit id="msteps">
-				<source>Content Slider</source>
+				<source>Steps</source>
 			</trans-unit>
 			<trans-unit id="msteps.elements">
 				<source>Slides</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.title">
-				<source>Slider element</source>
+				<source>Steps</source>
 			</trans-unit>
 			<trans-unit id="wizard.msteps.description">
-				<source>Slider that showcases content elements in individual slides</source>
+				<source>Shows content elements as a sequence of numbered steps, displayed as a roadmap, accordion, tabs, or slider</source>
 			</trans-unit>
 			<trans-unit id="msteps.layout.label">
 				<source>Display as</source>
