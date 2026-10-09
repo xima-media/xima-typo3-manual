@@ -22,6 +22,8 @@ special doktype.
 * Backend module with preview
 * Its own design system: serif headings, a calm blue lead colour and self-hosted fonts
 * Full text search over the whole manual
+* Call-out boxes in five colour variants: default, info, success, warning, error
+* Step-by-step guides: a sequence of content elements shown as a roadmap, accordion, tabs, or slider
 * Glossary elements: terms are linked and explained automatically wherever they appear
 * Documentation coverage report: which record types are documented, and which are not
 * Several manuals side by side, for example one per editor role or per website
@@ -58,7 +60,7 @@ Download the zip file from
 
 ## Configuration
 
-This extension works like a sitepackege. You can configure it manually or use
+This extension works like a sitepackage. You can configure it manually or use
 the installation wizard to create from a preset.
 
 ### From Preset
@@ -122,6 +124,32 @@ Add content elements to the pages to fill the chapters:
 
 ![Add_content_elements](./Documentation/Images/usage_content_elements.png)
 
+### Content elements
+
+Besides the standard TYPO3 content elements, this extension ships five of its
+own, purpose-built for documentation:
+
+* **Text with image** — a heading and body text, with an optional image
+* **Info box** — a highlighted aside in five colour variants: default, info,
+success, warning, error
+
+![Call-out boxes](./Documentation/Images/frontend_mbox.png)
+
+* **Steps** — a sequence of content elements, displayed as a roadmap,
+accordion, tabs, or slider
+
+![Tabs variant](./Documentation/Images/frontend_tabs.png)
+![Accordion variant](./Documentation/Images/frontend_accordion.png)
+
+* **Image with focus points** — an image with highlighted areas and
+call-out text, powered by
+[bw_focuspoint_images](https://extensions.typo3.org/extension/bw_focuspoint_images)
+
+![Annotated screenshot](./Documentation/Images/frontend_annotation.png)
+
+* **Glossary** — a list of terms with their definition. Each term is linked
+automatically wherever it appears in the manual
+
 ### Link chapters to records
 
 You can link chapters to records by selecting the record types in the **Related
@@ -131,7 +159,8 @@ tab of manual pages and text elements:
 ![Link_chapters_to_records](./Documentation/Images/backend_linking.png)
 
 If manual elements are found while editing a record, a dropdown button will
-appear in the doc header. These links are opened in a modal:
+appear in the doc header, grouped by manual when there is more than one.
+These links are opened in a modal:
 
 ![Open_chapter_in_modal](./Documentation/Images/usage_dropdown.png)
 
