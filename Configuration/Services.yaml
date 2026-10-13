@@ -19,6 +19,9 @@ services:
   Xima\XimaTypo3Manual\DataProcessing\FocuspointProcessor:
     public: true
 
+  Xima\XimaTypo3Manual\DataProcessing\PageNavigationProcessor:
+    public: true
+
   Xima\XimaTypo3Manual\Generator\ManualGenerator:
     arguments:
       $presets: !tagged_iterator xima_typo3_manual.preset
