@@ -1484,8 +1484,36 @@ h4:hover > .manual-anchor,
     font-weight: 700;
 }
 
-.manual-annotation {
+/* ------------------------------------------------------------------- Text */
+
+.manual-text {
     margin: 0 0 24px;
+}
+
+.manual-text_media {
+    margin-bottom: 16px;
+}
+
+.manual-text--beside {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.manual-text--beside .manual-text_media {
+    flex: 0 0 40%;
+    margin-bottom: 0;
+}
+
+.manual-text--beside .manual-text_body {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 860px) {
+    .manual-text--beside {
+        flex-direction: column;
+    }
 }
 
 /* ----------------------------------------------------------------- Lightbox */
