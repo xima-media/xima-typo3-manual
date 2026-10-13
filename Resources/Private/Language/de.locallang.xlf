@@ -290,6 +290,10 @@
 				<source />
 				<target>Keine Treffer</target>
 			</trans-unit>
+			<trans-unit id="lightbox.close">
+				<source />
+				<target>Bild schließen</target>
+			</trans-unit>
 			<trans-unit id="coverage.title">
 				<source />
 				<target>Dokumentationsabdeckung</target>

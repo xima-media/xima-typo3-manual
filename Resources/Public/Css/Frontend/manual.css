@@ -1488,6 +1488,135 @@ h4:hover > .manual-anchor,
     margin: 0 0 24px;
 }
 
+/* ----------------------------------------------------------------- Lightbox */
+
+.manual-lightbox-trigger {
+    display: block;
+    cursor: zoom-in;
+}
+
+.manual-lightbox-trigger:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
+.manual-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 14, 20, .88);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility 0s linear .2s;
+}
+
+.manual-lightbox:target {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .2s ease, visibility 0s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-lightbox {
+        transition: none;
+    }
+}
+
+body:has(.manual-lightbox:target) {
+    overflow: hidden;
+}
+
+.manual-lightbox_close {
+    position: absolute;
+    inset: 0;
+    cursor: zoom-out;
+}
+
+.manual-lightbox_content {
+    position: relative;
+    max-width: min(1100px, 100%);
+    max-height: 100%;
+    overflow: auto;
+    background: var(--manual-surface);
+    border-radius: var(--manual-radius);
+    padding: 20px;
+    transform: scale(.96);
+    transition: transform .2s ease;
+}
+
+.manual-lightbox:target .manual-lightbox_content {
+    transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manual-lightbox_content {
+        transition: none;
+    }
+}
+
+.manual-lightbox_content img {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+}
+
+.manual-lightbox_caption {
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--manual-text-soft);
+}
+
+.manual-lightbox_dismiss {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--manual-paper);
+    cursor: zoom-out;
+}
+
+.manual-lightbox_dismiss::before,
+.manual-lightbox_dismiss::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 2px;
+    background: var(--manual-text);
+}
+
+.manual-lightbox_dismiss::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.manual-lightbox_dismiss::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.manual-lightbox_dismiss:hover {
+    background: var(--manual-line);
+}
+
+.manual-lightbox_dismiss:focus-visible {
+    outline: 2px solid var(--manual-blue);
+    outline-offset: 2px;
+}
+
+@media print {
+    .manual-lightbox {
+        display: none !important;
+    }
+}
+
 /* ------------------------------------------------------------------ Buttons */
 
 .manual-button {

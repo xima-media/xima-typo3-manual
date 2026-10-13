@@ -6,86 +6,107 @@
     <div class="manual-annotation_intro">{record -> f:render.text(field: 'bodytext')}</div>
 
     <f:for each="{images}" as="image" iteration="imageIterator">
+        <f:variable name="imagePoints" value="{points.{imageIterator.index}}"/>
+
         <figure class="manual-annotation">
-            <div class="focuspoint">
-                <f:image image="{image}" alt="{image.alternative}"/>
+            <a href="#manual-lightbox-{data.uid}-{imageIterator.index}" class="manual-lightbox-trigger">
+                <f:render section="FocuspointImage" arguments="{image: image, points: imagePoints, color: color, filterId: 'solid-{data.uid}-{imageIterator.index}'}"/>
+            </a>
 
-                <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="solid-{data.uid}">
-                            <feFlood flood-color="{color}" result="bg"/>
-                            <feMerge>
-                                <feMergeNode in="bg"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-
-                    <f:for each="{points.{imageIterator.index}}" as="point" iteration="i">
-                        <f:if condition="{point.type} == 'marking'">
-                            <f:then>
-                                <rect x="{point.x}%"
-                                    y="{point.y}%"
-                                    width="{point.width}%"
-                                    height="{point.height}%"
-                                    class="focuspoint__svg__rect marking"
-                                    stroke="{color}"
-                                    stroke-width="2px"
-                                    fill="transparent"/>
-                                <g transform="{point.markerTransform}">
-                                    <circle r="13" cx="{point.markerCx}%" cy="{point.markerCy}%" fill="{color}"/>
-                                    <text x="{point.markerCx}%"
-                                        y="{point.markerCy}%"
-                                        dy="0.35em"
-                                        class="focuspoint__svg__marker"
-                                        fill="#fff"
-                                        text-anchor="middle">{i.cycle}</text>
-                                </g>
-                            </f:then>
-                            <f:else>
-                                <text x="{point.textX}%"
-                                    y="{point.textY}%"
-                                    class="focuspoint__svg__label"
-                                    fill="#fff"
-                                    filter="url(#solid-{data.uid})"
-                                    alignment-baseline="middle"
-                                    text-anchor="middle">{point.title}</text>
-                            </f:else>
-                        </f:if>
-                    </f:for>
-                </svg>
-            </div>
-
-            <f:variable name="hasDescriptions">0</f:variable>
-            <f:for each="{points.{imageIterator.index}}" as="point">
-                <f:if condition="{point.title} || {point.description}">
-                    <f:variable name="hasDescriptions">1</f:variable>
-                </f:if>
-            </f:for>
-
-            <f:if condition="{hasDescriptions}">
-                <figcaption>
-                    <ol class="manual-annotation_points">
-                        <f:for each="{points.{imageIterator.index}}" as="point" iteration="i">
-                            <f:if condition="{point.title} || {point.description}">
-                                <li class="manual-annotation_point">
-                                    <span class="manual-annotation_marker" aria-hidden="true">{i.cycle}</span>
-                                    <div class="manual-annotation_body">
-                                        <f:if condition="{point.title}">
-                                            <span class="manual-annotation_title">{point.title}</span>
-                                        </f:if>
-                                        <f:if condition="{point.description}">
-                                            <p><f:format.nl2br>{point.description}</f:format.nl2br></p>
-                                        </f:if>
-                                    </div>
-                                </li>
-                            </f:if>
-                        </f:for>
-                    </ol>
-                </figcaption>
-            </f:if>
+            <f:render section="AnnotationPointsList" arguments="{points: imagePoints}"/>
         </figure>
+
+        <div class="manual-lightbox" id="manual-lightbox-{data.uid}-{imageIterator.index}">
+            <a href="#" class="manual-lightbox_close" tabindex="-1" aria-hidden="true"></a>
+            <div class="manual-lightbox_content">
+                <a href="#" class="manual-lightbox_dismiss" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:lightbox.close')}"></a>
+                <f:render section="FocuspointImage" arguments="{image: image, points: imagePoints, color: color, filterId: 'solid-{data.uid}-{imageIterator.index}-lightbox'}"/>
+                <f:render section="AnnotationPointsList" arguments="{points: imagePoints}"/>
+            </div>
+        </div>
     </f:for>
 
+</f:section>
+
+<f:section name="FocuspointImage">
+    <div class="focuspoint">
+        <f:image image="{image}" alt="{image.alternative}"/>
+
+        <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="{filterId}">
+                    <feFlood flood-color="{color}" result="bg"/>
+                    <feMerge>
+                        <feMergeNode in="bg"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <f:for each="{points}" as="point" iteration="i">
+                <f:if condition="{point.type} == 'marking'">
+                    <f:then>
+                        <rect x="{point.x}%"
+                            y="{point.y}%"
+                            width="{point.width}%"
+                            height="{point.height}%"
+                            class="focuspoint__svg__rect marking"
+                            stroke="{color}"
+                            stroke-width="2px"
+                            fill="transparent"/>
+                        <g transform="{point.markerTransform}">
+                            <circle r="13" cx="{point.markerCx}%" cy="{point.markerCy}%" fill="{color}"/>
+                            <text x="{point.markerCx}%"
+                                y="{point.markerCy}%"
+                                dy="0.35em"
+                                class="focuspoint__svg__marker"
+                                fill="#fff"
+                                text-anchor="middle">{i.cycle}</text>
+                        </g>
+                    </f:then>
+                    <f:else>
+                        <text x="{point.textX}%"
+                            y="{point.textY}%"
+                            class="focuspoint__svg__label"
+                            fill="#fff"
+                            filter="url(#{filterId})"
+                            alignment-baseline="middle"
+                            text-anchor="middle">{point.title}</text>
+                    </f:else>
+                </f:if>
+            </f:for>
+        </svg>
+    </div>
+</f:section>
+
+<f:section name="AnnotationPointsList">
+    <f:variable name="hasDescriptions">0</f:variable>
+    <f:for each="{points}" as="point">
+        <f:if condition="{point.title} || {point.description}">
+            <f:variable name="hasDescriptions">1</f:variable>
+        </f:if>
+    </f:for>
+
+    <f:if condition="{hasDescriptions}">
+        <figcaption>
+            <ol class="manual-annotation_points">
+                <f:for each="{points}" as="point" iteration="i">
+                    <f:if condition="{point.title} || {point.description}">
+                        <li class="manual-annotation_point">
+                            <span class="manual-annotation_marker" aria-hidden="true">{i.cycle}</span>
+                            <div class="manual-annotation_body">
+                                <f:if condition="{point.title}">
+                                    <span class="manual-annotation_title">{point.title}</span>
+                                </f:if>
+                                <f:if condition="{point.description}">
+                                    <p><f:format.nl2br>{point.description}</f:format.nl2br></p>
+                                </f:if>
+                            </div>
+                        </li>
+                    </f:if>
+                </f:for>
+            </ol>
+        </figcaption>
+    </f:if>
 </f:section>
 </html>

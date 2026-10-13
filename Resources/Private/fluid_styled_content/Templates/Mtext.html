@@ -5,13 +5,25 @@
     <div class="manual-text{f:if(condition: '{data.imageorient} == 25 || {data.imageorient} == 26', then: ' manual-text--beside')}">
         <f:if condition="{files}">
             <div class="manual-text_media">
-                <f:for each="{files}" as="file">
+                <f:for each="{files}" as="file" iteration="fileIterator">
                     <figure>
-                        <f:image image="{file}" maxWidth="{settings.media.maxWidth}" alt="{file.alternative}"/>
+                        <a href="#manual-lightbox-{data.uid}-{fileIterator.index}" class="manual-lightbox-trigger">
+                            <f:image image="{file}" maxWidth="{settings.media.maxWidth}" alt="{file.alternative}"/>
+                        </a>
                         <f:if condition="{file.description}">
                             <figcaption>{file.description}</figcaption>
                         </f:if>
                     </figure>
+                    <div class="manual-lightbox" id="manual-lightbox-{data.uid}-{fileIterator.index}">
+                        <a href="#" class="manual-lightbox_close" tabindex="-1" aria-hidden="true"></a>
+                        <div class="manual-lightbox_content">
+                            <a href="#" class="manual-lightbox_dismiss" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:lightbox.close')}"></a>
+                            <f:image image="{file}" alt="{file.alternative}"/>
+                            <f:if condition="{file.description}">
+                                <p class="manual-lightbox_caption">{file.description}</p>
+                            </f:if>
+                        </div>
+                    </div>
                 </f:for>
             </div>
         </f:if>

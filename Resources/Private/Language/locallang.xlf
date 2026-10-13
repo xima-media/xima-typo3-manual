@@ -218,6 +218,9 @@
 			<trans-unit id="search.noResults">
 				<source>No results</source>
 			</trans-unit>
+			<trans-unit id="lightbox.close">
+				<source>Close image</source>
+			</trans-unit>
 			<trans-unit id="coverage.title">
 				<source>Documentation coverage</source>
 			</trans-unit>
