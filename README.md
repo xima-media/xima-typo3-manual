@@ -20,7 +20,7 @@ special doktype.
 ## Features
 
 * Backend module with preview
-* Its own design system: serif headings, a calm blue lead colour and self-hosted fonts
+* Its own design system: serif headings, a configurable lead colour (calm blue by default) and self-hosted fonts
 * Full text search over the whole manual
 * Call-out boxes in five colour variants: default, info, success, warning, error
 * Step-by-step guides: a sequence of content elements shown as a roadmap, accordion, tabs, or slider
