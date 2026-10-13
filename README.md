@@ -192,7 +192,6 @@ ddev start
 ddev init-typo3          # empty database, fixtures and site configuration
 ddev composer sca        # composer normalize, php-cs-fixer, PHPStan, rector, linters
 ddev exec vendor/bin/phpunit -c phpunit.xml.dist
-ddev playwright test     # acceptance tests, needs the ddev playwright add-on
 ```
 
 To try the extension against the other supported TYPO3 version, put a second
