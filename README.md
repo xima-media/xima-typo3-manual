@@ -24,7 +24,6 @@ special doktype.
 * Full text search over the whole manual
 * Call-out boxes in five colour variants: default, info, success, warning, error
 * Step-by-step guides: a sequence of content elements shown as a roadmap, accordion, tabs, or slider
-* Glossary elements: terms are linked and explained automatically wherever they appear
 * Documentation coverage report: which record types are documented, and which are not
 * Several manuals side by side, for example one per editor role or per website
 * Associate individual chapters to TYPO3 records for easy access
@@ -126,7 +125,7 @@ Add content elements to the pages to fill the chapters:
 
 ### Content elements
 
-Besides the standard TYPO3 content elements, this extension ships five of its
+Besides the standard TYPO3 content elements, this extension ships four of its
 own, purpose-built for documentation:
 
 * **Text with image** — a heading and body text, with an optional image
@@ -146,9 +145,6 @@ call-out text, powered by
 [bw_focuspoint_images](https://extensions.typo3.org/extension/bw_focuspoint_images)
 
 ![Annotated screenshot](./Documentation/Images/frontend_annotation.png)
-
-* **Glossary** — a list of terms with their definition. Each term is linked
-automatically wherever it appears in the manual
 
 ### Link chapters to records
 

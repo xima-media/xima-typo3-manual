@@ -118,8 +118,6 @@ page {
   includeJSFooter {
     navigation = EXT:xima_typo3_manual/Resources/Public/JavaScript/Navigation.js
     navigation.type = module
-    glossary = EXT:xima_typo3_manual/Resources/Public/JavaScript/Glossary.js
-    glossary.type = module
     tree = EXT:xima_typo3_manual/Resources/Public/JavaScript/Tree.js
     tree.type = module
     toc = EXT:xima_typo3_manual/Resources/Public/JavaScript/Toc.js
@@ -174,7 +172,6 @@ pdf.10.variables.context.value = pdf
 pdf.config.index_enable = 0
 pdf.includeJS.colorScheme >
 pdf.includeJSFooter.navigation >
-pdf.includeJSFooter.glossary >
 pdf.includeJSFooter.tree >
 pdf.includeJSFooter.toc >
 pdf.includeCSS {
@@ -206,25 +203,6 @@ tt_content {
       }
     }
   }
-
-  mglossary =< tt_content.textmedia
-  mglossary.templateName = Mglossary
-  mglossary {
-    dataProcessing {
-      30 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-      30 {
-        as = terms
-        table = tt_content
-        pidInList.field = pid
-        where = {#tx_ximatypo3manual_parent}=###uid###
-        markers.uid.field = uid
-        orderBy = sorting
-      }
-    }
-  }
-
-  mterm =< tt_content.textmedia
-  mterm.templateName = Mterm
 
   mannotation =< tt_content.textmedia
   mannotation.templateName = Mannotation

@@ -1488,44 +1488,6 @@ h4:hover > .manual-anchor,
     margin: 0 0 24px;
 }
 
-/* ----------------------------------------------------------------- Glossary */
-
-.manual-glossary {
-    margin: 0 0 24px;
-    padding: 0;
-    border-top: 1px solid var(--manual-line);
-}
-
-.manual-glossary_entry {
-    padding: 14px 0;
-    border-bottom: 1px solid var(--manual-line);
-    display: grid;
-    grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
-    gap: 18px;
-}
-
-.manual-glossary_term {
-    font-weight: 700;
-    color: var(--manual-text);
-}
-
-.manual-glossary_definition {
-    margin: 0;
-    color: var(--manual-text-muted);
-}
-
-.manual-glossary_definition > :last-child {
-    margin-bottom: 0;
-}
-
-a.manual-term {
-    color: inherit;
-    text-decoration: underline dotted;
-    text-decoration-color: var(--manual-plum);
-    text-underline-offset: .2em;
-    cursor: help;
-}
-
 /* ------------------------------------------------------------------ Buttons */
 
 .manual-button {
@@ -1744,11 +1706,6 @@ a.manual-term {
     .manual-chapter h3 {
         font-size: 23px;
     }
-
-    .manual-glossary_entry {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 4px;
-    }
 }
 
 /* ----------------------------------------------------------------- Printing */
@@ -1801,10 +1758,6 @@ a.manual-term {
 
     .manual-chapter:first-child h2 {
         break-before: avoid;
-    }
-
-    a.manual-term {
-        text-decoration: none;
     }
 
     .manual-note {

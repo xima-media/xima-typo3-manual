@@ -16,7 +16,6 @@ straight edges instead of rounded cards. The design tokens live as custom proper
 - The note element (`mbox`) became the design's note block with an info, editorial, warning, success and error
 variant; its heading is rendered inside the block
 - The step element (`msteps`) is a numbered list with a connector line instead of a carousel
-- The glossary is a two column definition list
 - Search results replace the chapter tree while a query is active and are shown as result cards
 - The chapter tree remembers its open branches per browser and shows the number of entries per branch
 - The chapter list holds chapters only; the headings of the content elements moved to the "on this page" column
@@ -64,8 +63,6 @@ registered": the manual uses file relations, but never declared its dependency o
 - Site set `xima/manual`, so a manual no longer needs a TypoScript record. The static template and the static page
 TSconfig stay available for existing installations
 - Full text search over the manual, rendered into the chapter navigation and answered in the browser
-- Glossary content element with its own term elements. Every term is linked automatically wherever it appears in
-the manual and carries its definition as a tooltip
 - Documentation coverage report listing every record type next to the chapters documenting it, reachable from the
 doc header of the manual module
 - `Configuration/ContentSecurityPolicies.php`; the only inline stylesheet of the manual is registered through the

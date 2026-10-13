@@ -290,42 +290,6 @@
 				<source />
 				<target>Keine Treffer</target>
 			</trans-unit>
-			<trans-unit id="wizard.mglossary.title">
-				<source />
-				<target>Glossar</target>
-			</trans-unit>
-			<trans-unit id="wizard.mglossary.description">
-				<source />
-				<target>Eine Liste von Begriffen mit ihrer Erklärung. Jeder Begriff wird im Handbuch automatisch verlinkt.</target>
-			</trans-unit>
-			<trans-unit id="mglossary.palette">
-				<source />
-				<target>Glossar</target>
-			</trans-unit>
-			<trans-unit id="mglossary.terms">
-				<source />
-				<target>Begriffe</target>
-			</trans-unit>
-			<trans-unit id="wizard.mterm.title">
-				<source />
-				<target>Glossarbegriff</target>
-			</trans-unit>
-			<trans-unit id="wizard.mterm.description">
-				<source />
-				<target>Ein einzelner Glossareintrag innerhalb eines Glossars.</target>
-			</trans-unit>
-			<trans-unit id="mterm.palette">
-				<source />
-				<target>Glossarbegriff</target>
-			</trans-unit>
-			<trans-unit id="mterm.term">
-				<source />
-				<target>Begriff</target>
-			</trans-unit>
-			<trans-unit id="mterm.definition">
-				<source />
-				<target>Erklärung</target>
-			</trans-unit>
 			<trans-unit id="coverage.title">
 				<source />
 				<target>Dokumentationsabdeckung</target>

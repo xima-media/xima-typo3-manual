@@ -1,6 +1,6 @@
 # Remove the exclusion of the bw_focuspoint_images_svg content element from the new content element wizard
 mod.wizards.newContentElement.wizardItems {
-  default.removeItems := removeFromList(mannotation,mbox,msteps,mtext,mglossary)
+  default.removeItems := removeFromList(mannotation,mbox,msteps,mtext)
 }
 
 # Legacy content element registration for v12
@@ -36,15 +36,6 @@ mod.wizards.newContentElement.wizardItems {
         }
       }
 
-      tt_content_mglossary {
-        iconIdentifier = content-special-indexed_search
-        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mglossary.title
-        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mglossary.description
-        tt_content_defValues {
-          CType = mglossary
-        }
-      }
-
       tt_content_mannotation {
         iconIdentifier = bw_focuspoint_images_svg
         title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title
@@ -55,7 +46,7 @@ mod.wizards.newContentElement.wizardItems {
       }
     }
 
-    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,tt_content_mannotation,tt_content_mglossary
+    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,tt_content_mannotation
   }
 
   common.show =
@@ -69,7 +60,7 @@ mod.wizards.newContentElement.wizardItems {
 }
 
 TCEFORM.tt_content {
-  CType.keepItems = mtext,mbox,msteps,mannotation,mglossary,mterm
+  CType.keepItems = mtext,mbox,msteps,mannotation
   assets.config.maxitems = 1
   imageorient.disabled = 0
   imageorient.keepItems = 0,8,25,26

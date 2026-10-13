@@ -39,10 +39,6 @@ final readonly class PageContentPreviewEventListener
                 'data' => $record,
                 'steps' => $this->getChildren((int)($record['uid'] ?? 0)),
             ]),
-            'mglossary' => $this->renderPreview('Backend/MglossaryPreview', [
-                'data' => $record,
-                'terms' => $this->getChildren((int)($record['uid'] ?? 0)),
-            ]),
             'mbox' => $this->renderPreview('Backend/MboxPreview', [
                 'data' => $record,
                 'state' => self::MBOX_STATES[(int)($record['layout'] ?? 0)] ?? -2,
