@@ -183,7 +183,7 @@ final class EncodeImagesBase64Middleware implements MiddlewareInterface
         $publicPath = Environment::getPublicPath();
         $path = realpath($publicPath . '/' . ltrim(rawurldecode($path), '/'));
 
-        if ($path === false || !str_starts_with($path, $publicPath) || !is_file($path)) {
+        if ($path === false || !str_starts_with($path, $publicPath . '/') || !is_file($path)) {
             return null;
         }
 
