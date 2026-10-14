@@ -2,6 +2,8 @@
     xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
     data-namespace-typo3-fluid="true">
 <be:link.editRecord uid="{data.uid}" table="tt_content">
-    <f:be.infobox state="{state}"><f:sanitize.html>{data.bodytext}</f:sanitize.html></f:be.infobox>
+    <f:be.infobox state="{state}">
+        <div class="element-preview-mtext"><f:sanitize.html>{data.bodytext}</f:sanitize.html></div>
+    </f:be.infobox>
 </be:link.editRecord>
 </html>
