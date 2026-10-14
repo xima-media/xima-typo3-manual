@@ -25,6 +25,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Controller\ManualController;
 use Xima\XimaTypo3Manual\Service\ManualRegistry;
+use Xima\XimaTypo3Manual\Utility\RequestParameterResolver;
 
 /**
  * Adds the manual button to every backend doc header. Which button is shown depends on what the current view is
@@ -50,7 +51,7 @@ final readonly class ModifyButtonBarEventListener
             return;
         }
 
-        $pageId = $this->resolvePageId($request);
+        $pageId = RequestParameterResolver::getPageId($request);
 
         $path = $request->getUri()->getPath();
         $isRecordEdit = str_contains($path, 'record/edit');
@@ -257,16 +258,6 @@ final readonly class ModifyButtonBarEventListener
     private function hasColumn(string $table, string $column): bool
     {
         return isset($GLOBALS['TCA'][$table]['columns'][$column]);
-    }
-
-    private function resolvePageId(ServerRequestInterface $request): int
-    {
-        $parsedBody = $request->getParsedBody();
-        $id = (is_array($parsedBody) ? $parsedBody['id'] ?? null : null)
-            ?? $request->getQueryParams()['id']
-            ?? 0;
-
-        return max(0, (int)$id);
     }
 
     /**

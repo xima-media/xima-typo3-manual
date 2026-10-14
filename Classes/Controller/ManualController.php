@@ -29,6 +29,7 @@ use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Xima\XimaTypo3Manual\Configuration;
 use Xima\XimaTypo3Manual\Service\ManualRegistry;
+use Xima\XimaTypo3Manual\Utility\RequestParameterResolver;
 
 class ManualController extends ActionController
 {
@@ -300,22 +301,12 @@ class ManualController extends ActionController
 
     protected function resolveRequestedPageId(): int
     {
-        $parsedBody = $this->request->getParsedBody();
-        $id = (is_array($parsedBody) ? $parsedBody['id'] ?? null : null)
-            ?? $this->request->getQueryParams()['id']
-            ?? 0;
-
-        return max(0, (int)$id);
+        return RequestParameterResolver::getPageId($this->request);
     }
 
     protected function resolveLanguageParameter(): ?string
     {
-        $parsedBody = $this->request->getParsedBody();
-        $language = (is_array($parsedBody) ? $parsedBody['language'] ?? null : null)
-            ?? $this->request->getQueryParams()['language']
-            ?? null;
-
-        return $language === null ? null : (string)$language;
+        return RequestParameterResolver::getLanguage($this->request);
     }
 
     protected function translate(string $key): string
