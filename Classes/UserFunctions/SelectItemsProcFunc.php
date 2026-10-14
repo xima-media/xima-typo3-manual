@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Manual\UserFunctions;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Manual\Service\RecordTypeRegistry;
 
 /**
@@ -12,13 +11,18 @@ use Xima\XimaTypo3Manual\Service\RecordTypeRegistry;
  */
 class SelectItemsProcFunc
 {
+    public function __construct(
+        private readonly RecordTypeRegistry $recordTypeRegistry
+    ) {
+    }
+
     /**
      * @param array{items?: list<array<string, mixed>>} $params
      */
     public function getItems(array &$params): void
     {
         $items = [];
-        foreach (GeneralUtility::makeInstance(RecordTypeRegistry::class)->getAll() as $recordType) {
+        foreach ($this->recordTypeRegistry->getAll() as $recordType) {
             $items[] = [
                 'value' => $recordType->identifier,
                 'label' => $recordType->label,
