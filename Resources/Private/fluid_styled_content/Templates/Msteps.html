@@ -1,6 +1,12 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Default"/>
 
+<f:section name="StepBody">
+    <div class="manual-steps_body">
+        <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
+    </div>
+</f:section>
+
 <f:section name="Main">
 
     <f:if condition="{context} == 'pdf'">
@@ -9,9 +15,7 @@
             <ol class="manual-steps manual-steps--roadmap">
                 <f:for each="{slides}" as="slide">
                     <li class="manual-steps_item" id="slide-{slide.data.uid}">
-                        <div class="manual-steps_body">
-                            <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                        </div>
+                        <f:render section="StepBody" arguments="{slide: slide}"/>
                     </li>
                 </f:for>
             </ol>
@@ -34,9 +38,7 @@
                                     <span class="manual-steps_summary-label">{slide.data.header}</span>
                                     <span class="manual-steps_chevron" aria-hidden="true"></span>
                                 </summary>
-                                <div class="manual-steps_body">
-                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                                </div>
+                                <f:render section="StepBody" arguments="{slide: slide}"/>
                             </details>
                         </f:for>
                     </div>
@@ -57,9 +59,7 @@
                                 <span class="manual-steps_tab-label">{slide.data.header}</span>
                             </label>
                             <div class="manual-steps_panel" id="slide-{slide.data.uid}">
-                                <div class="manual-steps_body">
-                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                                </div>
+                                <f:render section="StepBody" arguments="{slide: slide}"/>
                             </div>
                         </f:for>
                     </div>
@@ -78,9 +78,7 @@
                                     </f:else>
                                 </f:if>
                                 <div class="manual-steps_panel" id="slide-{slide.data.uid}">
-                                    <div class="manual-steps_body">
-                                        <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                                    </div>
+                                    <f:render section="StepBody" arguments="{slide: slide}"/>
                                     <div class="manual-steps_controls">
                                         <f:if condition="{i.isFirst}">
                                             <f:then>
@@ -114,9 +112,7 @@
                     <ol class="manual-steps manual-steps--roadmap">
                         <f:for each="{slides}" as="slide">
                             <li class="manual-steps_item" id="slide-{slide.data.uid}">
-                                <div class="manual-steps_body">
-                                    <f:cObject typoscriptObjectPath="lib.singleContent" data="{uid: slide.data.uid, pid: slide.data.pid}"/>
-                                </div>
+                                <f:render section="StepBody" arguments="{slide: slide}"/>
                             </li>
                         </f:for>
                     </ol>
