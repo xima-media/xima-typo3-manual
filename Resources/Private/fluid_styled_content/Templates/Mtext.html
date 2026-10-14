@@ -14,18 +14,13 @@
                             <figcaption>{file.description}</figcaption>
                         </f:if>
                     </figure>
-                    <div class="manual-lightbox" id="manual-lightbox-{data.uid}-{fileIterator.index}">
-                        <a href="#" class="manual-lightbox_close" tabindex="-1" aria-hidden="true"></a>
-                        <div class="manual-lightbox_content">
-                            <a href="#" class="manual-lightbox_dismiss" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:lightbox.close')}"></a>
-                            <div class="manual-lightbox_body">
-                                <f:image image="{file}" alt="{file.alternative}"/>
-                                <f:if condition="{file.description}">
-                                    <p class="manual-lightbox_caption">{file.description}</p>
-                                </f:if>
-                            </div>
-                        </div>
-                    </div>
+                    <f:variable name="lightboxId">manual-lightbox-{data.uid}-{fileIterator.index}</f:variable>
+                    <f:render partial="Media/Lightbox" arguments="{id: lightboxId}" contentAs="body">
+                        <f:image image="{file}" alt="{file.alternative}"/>
+                        <f:if condition="{file.description}">
+                            <p class="manual-lightbox_caption">{file.description}</p>
+                        </f:if>
+                    </f:render>
                 </f:for>
             </div>
         </f:if>

@@ -16,16 +16,11 @@
             <f:render section="AnnotationPointsList" arguments="{points: imagePoints}"/>
         </figure>
 
-        <div class="manual-lightbox" id="manual-lightbox-{data.uid}-{imageIterator.index}">
-            <a href="#" class="manual-lightbox_close" tabindex="-1" aria-hidden="true"></a>
-            <div class="manual-lightbox_content">
-                <a href="#" class="manual-lightbox_dismiss" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:lightbox.close')}"></a>
-                <div class="manual-lightbox_body">
-                    <f:render section="FocuspointImage" arguments="{image: image, points: imagePoints, color: color, filterId: 'solid-{data.uid}-{imageIterator.index}-lightbox'}"/>
-                    <f:render section="AnnotationPointsList" arguments="{points: imagePoints}"/>
-                </div>
-            </div>
-        </div>
+        <f:variable name="lightboxId">manual-lightbox-{data.uid}-{imageIterator.index}</f:variable>
+        <f:render partial="Media/Lightbox" arguments="{id: lightboxId}" contentAs="body">
+            <f:render section="FocuspointImage" arguments="{image: image, points: imagePoints, color: color, filterId: 'solid-{data.uid}-{imageIterator.index}-lightbox'}"/>
+            <f:render section="AnnotationPointsList" arguments="{points: imagePoints}"/>
+        </f:render>
     </f:for>
 
 </f:section>
