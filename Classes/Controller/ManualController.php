@@ -33,6 +33,8 @@ use Xima\XimaTypo3Manual\Utility\RequestParameterResolver;
 
 class ManualController extends ActionController
 {
+    use ManualMenuTrait;
+
     public function __construct(
         protected ModuleTemplateFactory $moduleTemplateFactory,
         protected IconFactory $iconFactory,
@@ -171,7 +173,9 @@ class ManualController extends ActionController
 
     protected function registerDocHeader(ModuleTemplate $moduleTemplate, int $pageId, int $manualRoot, int $languageId, string $context): void
     {
-        $this->registerManualMenu($moduleTemplate, $manualRoot, $context);
+        if ($context === 'backend') {
+            $this->registerManualMenu($moduleTemplate, $manualRoot);
+        }
 
         $languages = $this->getPreviewLanguages($pageId);
         if (count($languages) > 1) {
@@ -258,33 +262,6 @@ class ManualController extends ActionController
                 ->setIcon($this->iconFactory->getIcon('actions-close', IconSize::SMALL));
             $buttonBar->addButton($closePreviewButton, ButtonBar::BUTTON_POSITION_RIGHT, 2);
         }
-    }
-
-    /**
-     * With more than one manual in the installation the doc header offers a menu to switch between them.
-     */
-    protected function registerManualMenu(ModuleTemplate $moduleTemplate, int $manualRoot, string $context): void
-    {
-        if ($context !== 'backend' || !$this->manualRegistry->hasSeveralManuals()) {
-            return;
-        }
-
-        $menu = GeneralUtility::makeInstance(Menu::class);
-        $menu->setIdentifier('_manualSelector');
-        $menu->setLabel($this->translate('menu.manual'));
-
-        foreach ($this->manualRegistry->getAccessibleManuals() as $manual) {
-            $menuItem = GeneralUtility::makeInstance(MenuItem::class);
-            $menuItem
-                ->setTitle($manual->title !== '' ? $manual->title : '#' . $manual->uid)
-                ->setHref($this->uriBuilder->uriFor('index', ['id' => $manual->uid]));
-            if ($manual->uid === $manualRoot) {
-                $menuItem->setActive(true);
-            }
-            $menu->addMenuItem($menuItem);
-        }
-
-        $moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
     protected function resolveContext(): string

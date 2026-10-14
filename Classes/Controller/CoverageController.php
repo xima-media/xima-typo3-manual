@@ -6,9 +6,6 @@ namespace Xima\XimaTypo3Manual\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
-use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
-use TYPO3\CMS\Backend\Template\Components\Menu\MenuItem;
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
@@ -25,6 +22,8 @@ use Xima\XimaTypo3Manual\Service\ManualRegistry;
  */
 class CoverageController extends ActionController
 {
+    use ManualMenuTrait;
+
     public function __construct(
         private readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly CoverageService $coverageService,
@@ -58,30 +57,6 @@ class CoverageController extends ActionController
         $moduleTemplate->assign('manualTitle', $this->manualRegistry->getTitle($rootPageUid));
 
         return $moduleTemplate->renderResponse('Coverage/Index');
-    }
-
-    private function registerManualMenu(ModuleTemplate $moduleTemplate, int $rootPageUid): void
-    {
-        if (!$this->manualRegistry->hasSeveralManuals()) {
-            return;
-        }
-
-        $menu = GeneralUtility::makeInstance(Menu::class);
-        $menu->setIdentifier('_manualSelector');
-        $menu->setLabel($this->translate('menu.manual'));
-
-        foreach ($this->manualRegistry->getAccessibleManuals() as $manual) {
-            $menuItem = GeneralUtility::makeInstance(MenuItem::class);
-            $menuItem
-                ->setTitle($manual->title !== '' ? $manual->title : '#' . $manual->uid)
-                ->setHref($this->uriBuilder->uriFor('index', ['id' => $manual->uid]));
-            if ($manual->uid === $rootPageUid) {
-                $menuItem->setActive(true);
-            }
-            $menu->addMenuItem($menuItem);
-        }
-
-        $moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
     private function translate(string $key): string
