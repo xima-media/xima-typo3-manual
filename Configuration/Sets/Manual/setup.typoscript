@@ -56,6 +56,18 @@ page {
             where = header!="" and colPos=0
           }
 
+          # Whether the page has any content of its own, regardless of whether it carries a header. Used to decide
+          # between showing that content and falling back to a subpage list, so unlike "chapters" above it must not
+          # miss a content element just because it has no header.
+          15 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
+          15 {
+            as = ownContent
+            table = tt_content
+            pidInList.field = uid
+            where = colPos=0
+            max = 1
+          }
+
           # Turns the page row of a menu item into a Record, which f:render.text needs to make the chapter title editable
           20 = record-transformation
           20 {

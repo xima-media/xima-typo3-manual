@@ -382,12 +382,10 @@
                     <p class="manual-chapter_lead">{page.record -> f:render.text(field: 'subtitle')}</p>
                 </f:if>
 
-                <f:variable name="contentMarkup"><f:render partial="Manual/ContentArea" arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/></f:variable>
-                {contentMarkup -> f:format.raw()}
+                <f:render partial="Manual/ContentArea" arguments="{pid: page.data.uid, colPos: '0', currentPageUid: currentPageUid, headingLevel: nextLevel}"/>
 
                 <f:comment>A page without content of its own lists its subpages, so it does not end up blank</f:comment>
-                <f:variable name="hasContent" value="{contentMarkup -> f:format.trim()}"/>
-                <f:if condition="!{displayFullManual} && !{hasContent} && {page.children}">
+                <f:if condition="!{displayFullManual} && !{page.ownContent} && {page.children}">
                     <nav class="manual-subpages" aria-label="{f:translate(key: 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:toc.heading')}">
                         <f:render section="subpageList" arguments="{pages: page.children}"/>
                     </nav>
