@@ -14,6 +14,7 @@ editor:
     contentsCss:
       - "EXT:bw_icons/Resources/Public/Css/Rte.css"
       - "EXT:xima_typo3_manual/Resources/Public/Css/Frontend/rte-content.css"
+      - "EXT:xima_typo3_manual/Resources/Public/Css/Backend/Rte.css"
     table:
       contentToolbar:
         - tableColumn
