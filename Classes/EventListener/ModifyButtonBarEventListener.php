@@ -208,7 +208,7 @@ final readonly class ModifyButtonBarEventListener
                     sprintf(
                         'FIND_IN_SET(%s, %s)',
                         $qb->createNamedParameter($relation),
-                        $qb->quoteIdentifier('tx_ximatypo3manual_relations')
+                        $qb->quoteIdentifier(Configuration::RELATIONS_FIELD)
                     )
                 )
                 ->executeQuery()

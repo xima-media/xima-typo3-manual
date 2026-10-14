@@ -21,6 +21,11 @@ final class Configuration
     public const LANGUAGE_FILE = 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:';
 
     /**
+     * The field a manual chapter or element stores its documented relations in, e.g. "tt_content:textmedia".
+     */
+    public const RELATIONS_FIELD = 'tx_ximatypo3manual_relations';
+
+    /**
      * @var non-empty-list<string>
      */
     public const CONTENT_TYPES = ['mtext', 'mbox', 'msteps', 'mannotation'];

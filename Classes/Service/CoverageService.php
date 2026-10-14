@@ -60,14 +60,14 @@ class CoverageService
 
         foreach ([['pages', 'title', 'uid'], ['tt_content', 'header', 'pid']] as [$table, $titleField, $pidField]) {
             $qb = $this->connectionPool->getQueryBuilderForTable($table);
-            $rows = $qb->select('uid', $pidField, $titleField, 'tx_ximatypo3manual_relations')
+            $rows = $qb->select('uid', $pidField, $titleField, Configuration::RELATIONS_FIELD)
                 ->from($table)
                 ->where(
                     $qb->expr()->in(
                         $table === 'pages' ? 'uid' : 'pid',
                         $qb->createNamedParameter($manualPageUids, Connection::PARAM_INT_ARRAY)
                     ),
-                    $qb->expr()->neq('tx_ximatypo3manual_relations', $qb->createNamedParameter(''))
+                    $qb->expr()->neq(Configuration::RELATIONS_FIELD, $qb->createNamedParameter(''))
                 )
                 ->executeQuery()
                 ->fetchAllAssociative();
@@ -79,7 +79,7 @@ class CoverageService
                     'title' => (string)($row[$titleField] ?? ''),
                     'table' => $table,
                 ];
-                foreach (GeneralUtility::trimExplode(',', (string)$row['tx_ximatypo3manual_relations'], true) as $identifier) {
+                foreach (GeneralUtility::trimExplode(',', (string)$row[Configuration::RELATIONS_FIELD], true) as $identifier) {
                     $relations[$identifier][] = $entry;
                 }
             }
