@@ -1,3 +1,5 @@
+import { getChapterHeadings } from '@xima/xima-typo3-manual/Helper/Headings.js'
+
 class Navigation {
 
   anchorMap = {}
@@ -55,7 +57,7 @@ class Navigation {
   }
 
   bindObserver() {
-    document.querySelectorAll('.manual-chapter [data-level][id]').forEach(headline => {
+    getChapterHeadings().forEach(headline => {
       this.headlineObserver.observe(headline)
     })
   }

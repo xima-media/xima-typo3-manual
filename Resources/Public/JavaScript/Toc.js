@@ -1,3 +1,5 @@
+import { getChapterHeadings } from '@xima/xima-typo3-manual/Helper/Headings.js'
+
 /**
 * Builds the "on this page" column from the headings of the chapter currently in view and keeps the active entry in
 * sync while scrolling.
@@ -21,7 +23,7 @@ class Toc {
   }
 
   build() {
-    let headings = [...document.querySelectorAll('.manual-chapter [data-level][id]')]
+    let headings = getChapterHeadings()
 
     if (this.#list.dataset.fullManual !== '1') {
       headings = headings.filter(heading => heading.closest('.manual-chapter').querySelector('[data-level][id]') !== heading)
