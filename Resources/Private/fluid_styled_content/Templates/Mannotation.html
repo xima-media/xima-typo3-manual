@@ -26,10 +26,10 @@
 </f:section>
 
 <f:section name="FocuspointImage">
-    <div class="focuspoint">
+    <div class="manual-focuspoint">
         <f:image image="{image}" alt="{image.alternative}"/>
 
-        <svg class="focuspoint__svg" xmlns="http://www.w3.org/2000/svg">
+        <svg class="manual-focuspoint_svg" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <filter x="-0.1" y="-0.1" width="1.2" height="1.2" id="{filterId}">
                     <feFlood flood-color="{color}" result="bg"/>
@@ -47,7 +47,7 @@
                             y="{point.y}%"
                             width="{point.width}%"
                             height="{point.height}%"
-                            class="focuspoint__svg__rect marking"
+                            class="manual-focuspoint_svg-rect marking"
                             stroke="{color}"
                             stroke-width="2px"
                             fill="transparent"/>
@@ -56,7 +56,7 @@
                             <text x="{point.markerCx}%"
                                 y="{point.markerCy}%"
                                 dy="0.35em"
-                                class="focuspoint__svg__marker"
+                                class="manual-focuspoint_svg-marker"
                                 fill="#fff"
                                 text-anchor="middle">{i.cycle}</text>
                         </g>
@@ -64,7 +64,7 @@
                     <f:else>
                         <text x="{point.textX}%"
                             y="{point.textY}%"
-                            class="focuspoint__svg__label"
+                            class="manual-focuspoint_svg-label"
                             fill="#fff"
                             filter="url(#{filterId})"
                             alignment-baseline="middle"

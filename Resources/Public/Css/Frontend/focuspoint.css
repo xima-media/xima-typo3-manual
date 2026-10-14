@@ -2,7 +2,7 @@
 
 @-moz-document url-prefix() {
     :root {
-        --focuspoint-label-offset: 6px;
+        --manual-focuspoint-label-offset: 6px;
     }
 }
 
@@ -18,7 +18,7 @@
     margin-bottom: 16px;
 }
 
-.focuspoint {
+.manual-focuspoint {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: auto min-content;
@@ -29,7 +29,7 @@
     background: var(--manual-surface);
 }
 
-.focuspoint img {
+.manual-focuspoint img {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     display: block;
@@ -37,7 +37,7 @@
     height: auto;
 }
 
-.focuspoint__svg {
+.manual-focuspoint_svg {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     align-self: stretch;
@@ -46,13 +46,13 @@
     pointer-events: none;
 }
 
-.focuspoint__svg__label {
+.manual-focuspoint_svg-label {
     font-family: var(--manual-font-sans);
     font-size: 13px;
-    transform: translate3d(0, var(--focuspoint-label-offset, 1px), 0);
+    transform: translate3d(0, var(--manual-focuspoint-label-offset, 1px), 0);
 }
 
-.focuspoint__svg__marker {
+.manual-focuspoint_svg-marker {
     font-family: var(--manual-font-sans);
     font-size: 14px;
     font-weight: 700;
@@ -105,7 +105,7 @@
 }
 
 @media print {
-    .focuspoint {
+    .manual-focuspoint {
         break-inside: avoid;
     }
 
