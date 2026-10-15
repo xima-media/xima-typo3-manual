@@ -24,6 +24,7 @@
     --manual-text-muted: #4A5461;
     --manual-text-soft: #6C7684;
     --manual-surface: #fff;
+    --manual-on-solid: #fff;
     --manual-hero-text: color-mix(in srgb, var(--manual-primary) 18%, #fff);
     --manual-hero-eyebrow: color-mix(in srgb, var(--manual-primary) 40%, #fff);
     --manual-selection: color-mix(in srgb, var(--manual-primary) 18%, #fff);
@@ -370,7 +371,7 @@ a:hover {
     font-size: 44px;
     font-weight: 600;
     line-height: 1.1;
-    color: #fff;
+    color: var(--manual-on-solid);
     margin: 0 0 12px;
 }
 
@@ -814,7 +815,7 @@ a:hover {
 .tx-indexedsearch-browsebox a[aria-current="page"],
 .tx-indexedsearch-browsebox span[aria-current="page"] {
     background: var(--manual-button-bg);
-    color: #fff;
+    color: var(--manual-on-solid);
 }
 
 .tx-indexedsearch-browselist-next a {
@@ -1023,7 +1024,7 @@ a:hover {
 .manual-hero--chapter h4 {
     font-size: 34px;
     line-height: 1.15;
-    color: #fff;
+    color: var(--manual-on-solid);
     margin: 0 0 8px;
 }
 
@@ -1661,7 +1662,7 @@ body:has(.manual-lightbox:target) {
     border-radius: var(--manual-radius);
     border: 1px solid var(--manual-button-bg);
     background: var(--manual-button-bg);
-    color: #fff;
+    color: var(--manual-on-solid);
     padding: 8px 16px;
     cursor: pointer;
     text-decoration: none;
@@ -1670,7 +1671,7 @@ body:has(.manual-lightbox:target) {
 .manual-button:hover {
     background: var(--manual-blue-solid);
     border-color: var(--manual-blue-solid);
-    color: #fff;
+    color: var(--manual-on-solid);
 }
 
 .manual-button--secondary {
@@ -1702,7 +1703,7 @@ body:has(.manual-lightbox:target) {
     display: grid;
     place-items: center;
     background: var(--manual-blue-solid);
-    color: #fff;
+    color: var(--manual-on-solid);
     border-radius: var(--manual-radius);
     text-decoration: none;
 }
