@@ -1,253 +1,101 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Xima\XimaTypo3Manual\EventListener;
 
-use Exception;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownDivider;
-use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownHeader;
-use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItem;
-use TYPO3\CMS\Backend\Template\Components\Buttons\DropDown\DropDownItemInterface;
-use TYPO3\CMS\Backend\Template\Components\Buttons\DropDownButton;
-use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\Template\Components\ModifyButtonBarEvent;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Imaging\Icon;
-use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Manual\Controller\ManualController;
+use Xima\XimaTypo3Manual\Service\ManualButtonFactory;
+use Xima\XimaTypo3Manual\Service\ManualRegistry;
+use Xima\XimaTypo3Manual\Service\ManualRelationLookupService;
+use Xima\XimaTypo3Manual\Utility\RequestParameterResolver;
 
-final class ModifyButtonBarEventListener
+/**
+ * Adds the manual button to every backend doc header. Which button is shown depends on what the current view is
+ * documented by: a dropdown of matching chapters, a preview button while editing the manual itself, or a plain link
+ * to the whole manual.
+ */
+final readonly class ModifyButtonBarEventListener
 {
-    public function __construct(private IconFactory $iconFactory, private UriBuilder $uriBuilder)
-    {
+    public function __construct(
+        private PageRenderer $pageRenderer,
+        private ManualRegistry $manualRegistry,
+        private ManualRelationLookupService $relationLookup,
+        private ManualButtonFactory $buttonFactory
+    ) {
     }
 
+    #[AsEventListener(identifier: 'xima-typo3-manual/modify-button-bar')]
     public function __invoke(ModifyButtonBarEvent $event): void
     {
-        /** @var ServerRequestInterface $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
-        $pageId = (int)($request->getParsedBody()['id'] ?? $request->getQueryParams()['id'] ?? 0);
-
-        $uri = $request->getUri()->getPath();
-        if (str_contains($uri, 'help/manual') || (!$pageId && !str_contains($uri, 'record/edit'))) {
+        $request = $this->getRequest($event);
+        if (!$request instanceof ServerRequestInterface) {
             return;
         }
 
-        $hasManualRootPage = ManualController::hasManualRootPage($pageId);
+        $pageId = RequestParameterResolver::getPageId($request);
 
-        /** @var PageRenderer $pageRenderer */
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
-        $pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+        $path = $request->getUri()->getPath();
+        $isRecordEdit = str_contains($path, 'record/edit');
+        if (str_contains($path, 'help/manual') || ($pageId === 0 && !$isRecordEdit)) {
+            return;
+        }
 
-        // extract manual pages that fit current view
-        $manualPages = $this->getManualPages($uri, $request, $pageId);
+        $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/ManualModal.js');
+        $this->pageRenderer->addInlineLanguageLabelFile('EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf');
+
+        $manualPages = $this->groupByManual($this->relationLookup->findForRecord($request, $pageId, $isRecordEdit));
+
+        if ($manualPages !== []) {
+            $button = $this->buttonFactory->dropdown($manualPages);
+        } elseif (ManualController::hasManualRootPage($pageId)) {
+            $button = $this->buttonFactory->preview($pageId);
+        } else {
+            $button = $this->buttonFactory->small($pageId);
+        }
 
         $buttons = $event->getButtons();
         $buttons['right'] ??= [];
-
-        if (count($manualPages)) {
-            $button = $this->getDropdownManualButton($event, $manualPages);
-        } elseif ($hasManualRootPage) {
-            $button = $this->getPreviewManualButton($event, $pageId);
-        } else {
-            $button = $this->getSmallManualButton($event, $pageId);
-        }
-
         $buttons['right'][] = [$button];
         $event->setButtons($buttons);
     }
 
-    public function getManualPages(string $uri, ServerRequestInterface $request, int $pageId): array
+    /**
+     * ModifyButtonBarEvent only carries the request since TYPO3 v14.
+     */
+    private function getRequest(ModifyButtonBarEvent $event): ?ServerRequestInterface
     {
-        $manualPages = [];
+        if (method_exists($event, 'getRequest')) {
+            return $event->getRequest();
+        }
 
-        // edit record view
-        if (str_contains($uri, 'record/edit')) {
-            $editParam = $request->getQueryParams()['edit'] ?? '';
-            if (!is_array($editParam)) {
-                return [];
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+
+        return $request instanceof ServerRequestInterface ? $request : null;
+    }
+
+    /**
+     * Chapters of manuals the user may not read are dropped, the rest is grouped by the manual they belong to.
+     *
+     * @param list<array<string, mixed>> $manualPages
+     * @return array<int, list<array<string, mixed>>>
+     */
+    private function groupByManual(array $manualPages): array
+    {
+        $grouped = [];
+        foreach ($manualPages as $manualPage) {
+            $pageUid = (int)($manualPage['pid'] ?? $manualPage['uid'] ?? 0);
+            $manualRoot = $this->manualRegistry->getManualRootForPage($pageUid);
+            if ($manualRoot === 0 || !$this->manualRegistry->isAccessible($manualRoot)) {
+                continue;
             }
-            $recordTable = array_key_first($editParam);
-            $recordUid = (int)array_key_first($editParam[$recordTable] ?? []);
-            $recordType = $GLOBALS['TCA'][$recordTable]['ctrl']['type'] ?? '0';
-            array_push($manualPages, ...$this->getManualElementsForRecord($recordUid, $recordTable, $recordType));
-            array_push($manualPages, ...$this->getManualPagesForRecord($recordUid, $recordTable, $recordType));
-            if ($recordTable === 'tt_content') {
-                array_push($manualPages, ...$this->getManualElementsForPlugin($recordUid));
-                array_push($manualPages, ...$this->getManualPagesForPlugin($recordUid));
-            }
+            $grouped[$manualRoot][] = $manualPage;
         }
 
-        // page view, list view, etc.
-        if ($pageId) {
-            array_push($manualPages, ...$this->getManualPagesForRecord($pageId, 'pages', 'doktype'));
-            array_push($manualPages, ...$this->getManualElementsForRecord($pageId, 'tt_content', 'CType'));
-        }
-
-        return $manualPages;
-    }
-
-    protected function getManualElementsForRecord(int $recordUid, string $recordTable, string $recordType): array
-    {
-        return $this->fetchRecords(
-            sprintf(
-                'select c.uid, c.pid, c.header from %s r, tt_content c where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0',
-                $recordTable,
-                $recordUid,
-                $recordTable,
-                $recordType
-            ),
-            'tt_content'
-        );
-    }
-
-    protected function fetchRecords(string $sql, string $table): array
-    {
-        try {
-            $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
-            $result = $connection->executeQuery($sql)->fetchAllAssociative();
-        } catch (Exception) {
-            return [];
-        }
-
-        return $result;
-    }
-
-    protected function getManualPagesForRecord(int $recordUid, string $recordTable, string $recordType): array
-    {
-        return $this->fetchRecords(
-            sprintf(
-                'select p.uid, p.title from %s r, pages p where r.uid=%s and FIND_IN_SET(concat("%s:", r.%s), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0',
-                $recordTable,
-                $recordUid,
-                $recordTable,
-                $recordType
-            ),
-            'pages'
-        );
-    }
-
-    protected function getManualElementsForPlugin(int $recordUid): array
-    {
-        return $this->fetchRecords(
-            sprintf(
-                'select c.uid, c.pid, c.header from tt_content r, tt_content c where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (c.tx_ximatypo3manual_relations)) and c.deleted=0 and c.hidden=0 and r.CType="list" and r.list_type!=""',
-                $recordUid
-            ),
-            'tt_content'
-        );
-    }
-
-    protected function getManualPagesForPlugin(int $recordUid): array
-    {
-        return $this->fetchRecords(
-            sprintf(
-                'select p.uid, p.title from tt_content r, pages p where r.uid=%s and FIND_IN_SET(concat("tt_content:list:", r.list_type), (p.tx_ximatypo3manual_relations)) and p.deleted=0 and p.hidden=0 and r.CType="list" and r.list_type!=""',
-                $recordUid
-            ),
-            'pages'
-        );
-    }
-
-    public function getDropdownManualButton(
-        ModifyButtonBarEvent $event,
-        array $manualPages
-    ): DropDownButton {
-        // create dropdown button
-        $dropdown = $event->getButtonBar()->makeDropDownButton();
-        $dropdown->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown'));
-        $dropdown->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.title'));
-        $dropdown->setShowLabelText(true);
-        $dropdown->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-
-        // headline
-        $dropdown->addItem(
-            GeneralUtility::makeInstance(DropDownHeader::class)
-                ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.header'))
-        );
-
-        // chapter items
-        foreach ($manualPages as $key => $manualPage) {
-            $title = $manualPage['title'] ?? $manualPage['header'];
-            $title = $title ?: $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.no-title') . ' ' . ($key + 1);
-            $pid = $manualPage['pid'] ?? $manualPage['uid'];
-            /** @var DropDownItemInterface $dropdownItem */
-            $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
-                ->setIcon($this->iconFactory->getIcon('actions-dot', Icon::SIZE_SMALL))
-                ->setLabel($title)
-                ->setAttributes([
-                    'data-manual-modal' => 'open',
-                    'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
-                        'xima_typo3_manual',
-                        ['id' => $pid, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-                    ),
-                ])
-                ->setHref($this->uriBuilder->buildUriFromRoute(
-                    'xima_typo3_manual',
-                    ['id' => $pid, 'context' => 'iframe', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-                ));
-            $dropdown->addItem($dropdownItem);
-        }
-
-        // divider
-        $dropdown->addItem(GeneralUtility::makeInstance(DropDownDivider::class));
-
-        // generic manual link
-        /** @var DropDownItemInterface $dropdownItem */
-        $dropdownItem = GeneralUtility::makeInstance(DropDownItem::class)
-            ->setHref($this->uriBuilder->buildUriFromRoute('xima_typo3_manual', ['id' => 0, 'context' => 'iframe']))
-            ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'))
-            ->setLabel($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all'))
-            ->setAttributes([
-                'data-manual-modal' => 'open',
-                'data-manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
-                    'xima_typo3_manual',
-                    ['id' => 0, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-                ),
-            ])
-            ->setIcon($this->iconFactory->getIcon('actions-notebook', Icon::SIZE_SMALL));
-        $dropdown->addItem($dropdownItem);
-
-        return $dropdown;
-    }
-
-    private function getPreviewManualButton(ModifyButtonBarEvent $event, int $pageId): LinkButton
-    {
-        $manualButton = $event->getButtonBar()->makeLinkButton();
-        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
-            'xima_typo3_manual',
-            ['id' => $pageId, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-        ));
-        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.preview'));
-        $manualButton->setShowLabelText(true);
-        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-        $manualButton->setDataAttributes(['manual-preview' => ManualController::getRootPageUid($pageId)]);
-        return $manualButton;
-    }
-
-    public function getSmallManualButton(
-        ModifyButtonBarEvent $event,
-        int $pageId
-    ): \TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton {
-        $manualButton = $event->getButtonBar()->makeLinkButton();
-        $manualButton->setHref($this->uriBuilder->buildUriFromRoute(
-            'xima_typo3_manual',
-            ['id' => $pageId, 'context' => 'iframe', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-        ));
-        $manualButton->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:button.dropdown.all.title'));
-        $manualButton->setShowLabelText(true);
-        $manualButton->setIcon($this->iconFactory->getIcon('apps-pagetree-manual-root', Icon::SIZE_SMALL));
-        $manualButton->setDataAttributes([
-            'manual-modal' => 'open',
-            'manual-backend-url' => $this->uriBuilder->buildUriFromRoute(
-                'xima_typo3_manual',
-                ['id' => $pageId, 'context' => 'backend', 'language' => $GLOBALS['BE_USER']->uc['lang'] ?? '']
-            ),
-        ]);
-        return $manualButton;
+        return $grouped;
     }
 }

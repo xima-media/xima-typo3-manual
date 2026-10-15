@@ -1,3 +1,5 @@
+dependencies:
+  - xima/manual
 base: /manual/
 rootPageId: 3
 websiteTitle: 'Manual'

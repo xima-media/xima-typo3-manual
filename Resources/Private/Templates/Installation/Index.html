@@ -1,4 +1,6 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 <f:layout name="Module" />
 <f:section name="Content">
 
@@ -12,32 +14,30 @@
             <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.createFromPreset" />
         </h2>
         <div class="card-container">
-            <div class="card card-size-fixed-small">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <core:icon identifier="apps-pagetree-manual-root" size="large" />
+            <f:for each="{presets}" as="preset">
+                <div class="card card-size-fixed-small">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <core:icon identifier="{preset.iconIdentifier}" size="large" />
+                        </div>
+                        <div class="card-header-body">
+                            <h2 class="card-title"><f:translate key="{preset.title}" /></h2>
+                            <span class="card-subtitle">
+                                <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset.empty.subtitle" />
+                            </span>
+                        </div>
                     </div>
-                    <div class="card-header-body">
-                        <h2 class="card-title">
-                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.title" />
-                        </h2>
-                        <span class="card-subtitle">
-                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.subtitle" />
-                        </span>
+                    <div class="card-body">
+                        <p><f:translate key="{preset.description}" /></p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary install" data-preset="{preset.identifier}">
+                            <core:icon identifier="actions-add" size="small" />
+                            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset.create" />
+                        </button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <p>
-                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.body" />
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary install" data-preset="1">
-                        <core:icon identifier="actions-add" size="small" />
-                        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:installation.preset1.button" />
-                    </button>
-                </div>
-            </div>
+            </f:for>
         </div>
     </div>
 
@@ -47,10 +47,11 @@
             ...
         </h1>
         <div class="px-4 py-4">
-            <core:icon identifier="spinner-circle" size="medium"></core:icon>
+            <core:icon identifier="spinner-circle" size="medium" />
         </div>
     </div>
 
     <div class="manual-installation-step hidden" data-step="3"></div>
 
 </f:section>
+</html>

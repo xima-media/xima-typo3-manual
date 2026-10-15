@@ -9,7 +9,7 @@ class ManualModal {
         const backendUrl = e.currentTarget.getAttribute('data-manual-backend-url')
         Modal.advanced({
           type: Modal.types.iframe,
-          title: 'Manual',
+          title: TYPO3.lang['modal.title.manual'] || 'Manual',
           content: url,
           size: Modal.sizes.large,
           staticBackdrop: true,
@@ -20,7 +20,7 @@ class ManualModal {
               icon: 'actions-window-open',
               btnClass: 'btn-secondary',
               trigger: function() {
-                window.open(backendUrl, '_blank').focus();
+                window.open(backendUrl, '_blank')?.focus();
               }
             },
             {
