@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - v14
       - 'renovate/**'
   pull_request:
     branches:
       - main
+      - v14
 
 jobs:
   sca:

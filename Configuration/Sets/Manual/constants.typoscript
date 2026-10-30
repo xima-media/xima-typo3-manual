@@ -1,0 +1,12 @@
+@import 'EXT:bw_focuspoint_images/Configuration/TypoScript/constants.typoscript'
+
+##############################
+#### BW_FOCUSPOINT_IMAGES ####
+##############################
+plugin.tx_bwfocuspointimages {
+  view {
+    templateRootPath = EXT:xima_typo3_manual/Resources/Private/bw_focuspoint_images/Templates/
+    partialRootPath = EXT:fluid_styled_content/Resources/Private/Partials/
+    layoutRootPath = EXT:fluid_styled_content/Resources/Private/Layouts/
+  }
+}

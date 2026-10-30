@@ -7,6 +7,12 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class FocuspointProcessor extends BaseFocuspointProcessor
 {
+    /**
+     * @param mixed[] $contentObjectConfiguration
+     * @param mixed[] $processorConfiguration
+     * @param mixed[] $processedData
+     * @return mixed[]
+     */
     public function process(
         ContentObjectRenderer $cObj,
         array $contentObjectConfiguration,

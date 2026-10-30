@@ -1,0 +1,8 @@
+styles:
+  templates:
+    templateRootPath: 'EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Templates/'
+    partialRootPath: 'EXT:xima_typo3_manual/Resources/Private/fluid_styled_content/Partials/'
+  content:
+    textmedia:
+      maxW: 1200
+      maxWInText: 640

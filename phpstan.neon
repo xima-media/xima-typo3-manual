@@ -1,12 +1,25 @@
 includes:
 - vendor/saschaegerer/phpstan-typo3/extension.neon
-- phpstan-baseline.neon
 
 parameters:
 		parallel:
 				maximumNumberOfProcesses: 5
 
-		level: 5
+		level: 8
+
+		# The extension supports TYPO3 v13 and v14, so the bridges below resolve differently per major version
+		reportUnmatchedIgnoredErrors: false
+
+		ignoreErrors:
+				-
+						identifier: function.alreadyNarrowedType
+						path: Classes/EventListener/ModifyButtonBarEventListener.php
+				-
+						identifier: function.impossibleType
+						path: Classes/EventListener/ModifyButtonBarEventListener.php
+				-
+						identifier: property.notFound
+						path: Classes/Generator/ManualGenerator.php
 
 		bootstrapFiles:
 				- vendor/autoload.php

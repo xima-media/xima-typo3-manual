@@ -1,0 +1,18 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{pageUrl}">
+    <f:then>
+        <f:switch expression="{level}">
+            <f:case value="2"><h2 id="{id}" data-page-url="{pageUrl}" data-level="{level}">{content -> f:format.raw()}</h2></f:case>
+            <f:case value="3"><h3 id="{id}" data-page-url="{pageUrl}" data-level="{level}">{content -> f:format.raw()}</h3></f:case>
+            <f:defaultCase><h4 id="{id}" data-page-url="{pageUrl}" data-level="{level}">{content -> f:format.raw()}</h4></f:defaultCase>
+        </f:switch>
+    </f:then>
+    <f:else>
+        <f:switch expression="{level}">
+            <f:case value="2"><h2 id="{id}" data-level="{level}">{content -> f:format.raw()}</h2></f:case>
+            <f:case value="3"><h3 id="{id}" data-level="{level}">{content -> f:format.raw()}</h3></f:case>
+            <f:defaultCase><h4 id="{id}" data-level="{level}">{content -> f:format.raw()}</h4></f:defaultCase>
+        </f:switch>
+    </f:else>
+</f:if>
+</html>
