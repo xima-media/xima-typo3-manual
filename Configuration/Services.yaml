@@ -12,7 +12,10 @@ services:
     resource: '../Classes/*'
     exclude: '../Classes/Configuration.php'
 
-  # Data processors are resolved through GeneralUtility::makeInstance(), which only reaches public services
+  # Data processors and TCA itemsProcFuncs are resolved through GeneralUtility::makeInstance(), which only reaches public services
+  Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc:
+    public: true
+
   Xima\XimaTypo3Manual\DataProcessing\ManualSettingsProcessor:
     public: true
 
