@@ -17,6 +17,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Context\LanguageAspectFactory;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
+use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -52,7 +53,12 @@ class ManualController extends ActionController
             return 0;
         }
 
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        try {
+            $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        } catch (PageNotFoundException) {
+            return 0;
+        }
+
         return (int)($rootline[0]['uid'] ?? 0);
     }
 
@@ -107,7 +113,12 @@ class ManualController extends ActionController
             return false;
         }
 
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        try {
+            $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        } catch (PageNotFoundException) {
+            return false;
+        }
+
         return (int)($rootline[0]['doktype'] ?? 0) === Configuration::DOKTYPE_MANUAL;
     }
 

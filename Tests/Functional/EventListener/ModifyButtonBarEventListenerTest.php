@@ -50,6 +50,22 @@ final class ModifyButtonBarEventListenerTest extends AbstractFunctionalTestCase
         self::assertSame([], $buttons);
     }
 
+    #[Test]
+    public function aFolderIdentifierInTheFileListIsNotTreatedAsPageId(): void
+    {
+        $buttons = $this->dispatch('/typo3/module/file/list', ['id' => '999:/']);
+
+        self::assertSame([], $buttons);
+    }
+
+    #[Test]
+    public function aNonExistingPageGetsTheDefaultButton(): void
+    {
+        $buttons = $this->dispatch('/typo3/module/web/layout', ['id' => '999']);
+
+        self::assertCount(1, $buttons['right'] ?? []);
+    }
+
     /**
      * @param array<string, string> $queryParams
      * @return array<string, mixed>
