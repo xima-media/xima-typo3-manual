@@ -1,0 +1,72 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+<f:layout name="Module"/>
+<f:section name="Content">
+
+    <h1>
+        <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.title"/>
+        <f:if condition="{manualTitle}"><small class="text-body-secondary">{manualTitle}</small></f:if>
+    </h1>
+    <p><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.description"/></p>
+
+    <div class="manual-coverage" data-manual-coverage>
+        <div class="btn-group mb-3" role="group">
+            <button type="button" class="btn btn-default active" data-coverage-filter="all">
+                <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.filter.all"/>
+            </button>
+            <button type="button" class="btn btn-default" data-coverage-filter="undocumented">
+                <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.filter.undocumented"/>
+            </button>
+        </div>
+
+        <p>
+            <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.summary"
+                        arguments="{0: documented, 1: total}"/>
+        </p>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.recordType"/></th>
+                <th><f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.documentedBy"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <f:for each="{rows}" as="row">
+                <tr data-documented="{f:if(condition: row.documentedBy, then: '1', else: '0')}">
+                    <td>
+                        <f:if condition="{row.recordType.icon}">
+                            <core:icon identifier="{row.recordType.icon}" size="small"/>
+                        </f:if>
+                        {row.recordType.label}
+                        <small class="text-body-secondary">{row.recordType.group}</small>
+                    </td>
+                    <td>
+                        <f:if condition="{row.documentedBy}">
+                            <f:then>
+                                <f:for each="{row.documentedBy}" as="chapter">
+                                    <be:link.editRecord uid="{chapter.uid}" table="{chapter.table}" class="badge bg-success text-decoration-none">
+                                        <f:if condition="{chapter.title}">
+                                            <f:then>{chapter.title}</f:then>
+                                            <f:else>#{chapter.uid}</f:else>
+                                        </f:if>
+                                    </be:link.editRecord>
+                                </f:for>
+                            </f:then>
+                            <f:else>
+                                <span class="badge bg-warning">
+                                    <f:translate key="LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:coverage.undocumented"/>
+                                </span>
+                            </f:else>
+                        </f:if>
+                    </td>
+                </tr>
+            </f:for>
+            </tbody>
+        </table>
+    </div>
+
+</f:section>
+</html>

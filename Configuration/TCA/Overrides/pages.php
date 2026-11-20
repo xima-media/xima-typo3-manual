@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use Xima\XimaTypo3Manual\Configuration;
+use Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc;
+
+defined('TYPO3') || die();
 
 ExtensionManagementUtility::registerPageTSConfigFile(
     'xima_typo3_manual',
@@ -13,20 +19,20 @@ ExtensionManagementUtility::addTcaSelectItem(
     'pages',
     'doktype',
     [
-        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:manual_page_type',
-        'value' => 701,
-        'icon' => 'EXT:xima_typo3_manual/Resources/Public/Icons/apps-pagetree-manual.svg',
+        'label' => Configuration::LANGUAGE_FILE . 'manual_page_type',
+        'value' => Configuration::DOKTYPE_MANUAL,
+        'icon' => 'apps-pagetree-manual',
         'group' => 'default',
     ],
     '1',
     'after'
 );
 
-$tempFields = [
+ExtensionManagementUtility::addTCAcolumns('pages', [
     'tx_ximatypo3manual_relations' => [
         'exclude' => true,
-        'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tx_ximatypo3manual_relation',
-        'description' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tx_ximatypo3manual_relation.description',
+        'label' => Configuration::LANGUAGE_FILE . 'tx_ximatypo3manual_relation',
+        'description' => Configuration::LANGUAGE_FILE . 'tx_ximatypo3manual_relation.description',
         'config' => [
             'type' => 'select',
             'renderType' => 'selectCheckBox',
@@ -34,36 +40,36 @@ $tempFields = [
             'appearance' => [
                 'expandAll' => true,
             ],
-            'itemsProcFunc' => \Xima\XimaTypo3Manual\UserFunctions\SelectItemsProcFunc::class . '->getItems',
+            'itemsProcFunc' => SelectItemsProcFunc::class . '->getItems',
         ],
     ],
-];
+]);
 
 $GLOBALS['TCA']['pages']['palettes']['manual-relations'] = [
-    'label' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:palettes.manual_relations',
+    'label' => Configuration::LANGUAGE_FILE . 'palettes.manual_relations',
     'showitem' => 'tx_ximatypo3manual_relations',
 ];
-
-ExtensionManagementUtility::addTCAcolumns('pages', $tempFields);
 
 ArrayUtility::mergeRecursiveWithOverrule(
     $GLOBALS['TCA']['pages'],
     [
         'ctrl' => [
             'typeicon_classes' => [
-                701 => 'apps-pagetree-manual',
-                '701-contentFromPid' => 'apps-pagetree-manual-contentFromPid',
-                '701-root' => 'apps-pagetree-manual-root',
-                '701-hideinmenu' => 'apps-pagetree-manual-hideinmenu',
+                Configuration::DOKTYPE_MANUAL => 'apps-pagetree-manual',
+                Configuration::DOKTYPE_MANUAL . '-contentFromPid' => 'apps-pagetree-manual-contentFromPid',
+                Configuration::DOKTYPE_MANUAL . '-root' => 'apps-pagetree-manual-root',
+                Configuration::DOKTYPE_MANUAL . '-hideinmenu' => 'apps-pagetree-manual-hideinmenu',
             ],
         ],
         'types' => [
-            701 => [
+            Configuration::DOKTYPE_MANUAL => [
+                // Honoured by TYPO3 v14, ignored by v13 where ext_localconf.php feeds the PageDoktypeRegistry instead
+                'allowedRecordTypes' => Configuration::ALLOWED_RECORD_TYPES,
                 'showitem' => '
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                         --palette--;;standard,
                         --palette--;;title,
-                    --div--;LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:tab.manual_relations,
+                    --div--;' . Configuration::LANGUAGE_FILE . 'tab.manual_relations,
                         --palette--;;manual-relations,
                     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.resources,
                         --palette--;;media,
