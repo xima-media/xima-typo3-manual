@@ -1,7 +1,5 @@
 @import 'EXT:bw_focuspoint_images/Configuration/TypoScript/setup.typoscript'
 
-config.admPanel = 1
-
 page = PAGE
 page {
   10 = FLUIDTEMPLATE
