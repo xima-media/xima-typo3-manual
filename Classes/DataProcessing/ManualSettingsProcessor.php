@@ -50,6 +50,9 @@ class ManualSettingsProcessor implements DataProcessorInterface
         $processedData['backendSettings'] = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['backend'] ?? [];
 
         $primaryColor = $this->getPrimaryColor($cObj->getRequest());
+        if ($primaryColor === '') {
+            $primaryColor = (string)$cObj->stdWrapValue('primaryColor', $processorConfiguration, '');
+        }
         $processedData['primaryColor'] = $primaryColor;
         $this->registerPrimaryColor($primaryColor);
 

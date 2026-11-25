@@ -13,4 +13,9 @@ styles {
   }
 }
 
+manual.appearance.primaryColor = #1A5FB4
 manual.appearance.eyebrow =
+manual.appearance.showNavigation = 1
+manual.appearance.showToc = 1
+manual.appearance.showContentInNavigation = 0
+manual.behaviour.displayFullManual = 1
