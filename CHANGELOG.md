@@ -8,31 +8,66 @@ All notable changes to this project are documented in this file. The format foll
 
 ### Changed
 
+- The extension requires TYPO3 v13.4.29 as a minimum, support for v12 was dropped. `EXT:indexed_search`,
+`EXT:filelist` and `EXT:fluid_styled_content` are required, the search needs a database compare for its tables
 - **New design.** Calm blue as the lead colour, plum as the accent for editorial contexts, serif headings and
 straight edges instead of rounded cards. The design tokens live as custom properties at the top of
 `Resources/Public/Css/Frontend/manual.css`
 - The manual renders in a three column shell: chapter tree, content, "on this page"
 - Chapters are cards, the manual opens with a hero carrying its title
 - The note element (`mbox`) became the design's note block with an info, editorial, warning, success and error
-variant; its heading is rendered inside the block
-- The step element (`msteps`) is a numbered list with a connector line instead of a carousel
+variant; its heading is rendered inside the block and its text is a rich text field
+- The step element (`msteps`) renders as a numbered list with a connector line instead of a carousel; accordion,
+tabs and slider are available as further layouts
 - Search results replace the chapter tree while a query is active and are shown as result cards
 - The chapter tree remembers its open branches per browser and shows the number of entries per branch
 - The chapter list holds chapters only; the headings of the content elements moved to the "on this page" column
 - The lead colour comes from the site settings instead of the backend login highlight colour
+- `ext_tables.php` was removed; the manual page type is registered through TCA (`allowedRecordTypes`) on v14 and
+through `PageDoktypeRegistry` on v13
+- Event listeners are registered via `#[AsEventListener]` instead of `Services.yaml`
+- `StandaloneView`, `LanguageService::includeLLFile()`, `$GLOBALS['TSFE']` and the deprecated `ButtonBar::make*()`
+factories were replaced by their supported counterparts
+- The user TSconfig option `options.pageTree.doktypesToShowInNewPageDragArea` is only set on v13, where it is not
+yet deprecated, and moved to `Configuration/user.tsconfig`
+- The PDF filename is derived from the manual title instead of being hardcoded to `Handbuch.pdf`
+- Modal titles in the backend JavaScript are translatable
+- New manuals are created with the site set attached instead of a TypoScript record
+- The record types a chapter can document are enumerated by `RecordTypeRegistry`, shared by the TCA field and the
+coverage report
+- `PresetInterface` no longer receives the page id in its constructor; `getData()` takes it as argument and
+`getIconIdentifier()` was added
 
 ### Added
 
-- Chapter titles are editable in the visual editor, in the chapter itself rather than in the chapter list
-- Two site settings, editable per site in the backend: `manual.appearance.primaryColor` sets the lead colour of the
-manual, `manual.behaviour.displayFullManual` decides whether the manual renders every chapter on one page (the
-previous behaviour, still the default) or one chapter per page
+- Support for TYPO3 v14.3 alongside v13.4
+- Site set `xima/manual`, so a manual no longer needs a TypoScript record. The static template and the static page
+TSconfig stay available for existing installations
 - Optional integration of `friendsoftypo3/visual-editor`: with the extension installed, chapter headings and texts
 are editable inline in the backend. The ViewHelper it registers is used through a partial that is only layered in
 while the extension is loaded, so the manual keeps working without it
+- Chapter titles are editable in the visual editor, in the chapter itself rather than in the chapter list
+- Site settings, editable per site in the backend: `manual.appearance.primaryColor` sets the lead colour of the
+manual, `manual.behaviour.displayFullManual` decides whether the manual renders every chapter on one page (the
+previous behaviour, still the default) or one chapter per page. Further settings set the eyebrow above the manual
+title, toggle the chapter tree, the "on this page" column and content headings in the chapter tree, and link a FAQ
+and a changelog page in the quicklinks above the navigation
 - Source Sans 3 and Source Serif 4 are shipped with the extension (SIL Open Font License), so an installation
 makes no request to a third party for them
 - An "on this page" column that follows the chapter currently in view
+- A lightbox for images in text and annotation elements
+- Tables in the rich text editor
+- A colour scheme switcher next to the search
+- Pages hidden in menus are left out of the navigation, the overview and the chapter list
+- Full text search over the manual, based on indexed_search, rendered into the chapter navigation
+- Documentation coverage report listing every record type next to the chapters documenting it, reachable from the
+doc header of the manual module
+- `Configuration/ContentSecurityPolicies.php`; the only inline stylesheet of the manual is registered through the
+asset collector so TYPO3 can attach a nonce
+- Presets for the installation wizard are collected from the service container, so a project can ship its own
+by implementing `PresetInterface`
+- Functional tests for the manual generator, the button bar event listener and the PDF middleware
+- PHPStan runs on level 8 without a baseline
 
 ### Fixed
 
@@ -49,47 +84,6 @@ its heading now follow the design, and the marker colour comes from the design p
 removed Gutenberg stylesheets
 - Picking a file for an image or annotation element failed with "Element browser with identifier file is not
 registered": the manual uses file relations, but never declared its dependency on EXT:filelist
-
-### Removed
-
-- The content slider of the step element, together with `Slider.js` and `slider.css`
-- The Gutenberg stylesheets, replaced by the design system stylesheet
-
-## [2.1.0] - unreleased
-
-### Added
-
-- Support for TYPO3 v14.3 alongside v13.4
-- Site set `xima/manual`, so a manual no longer needs a TypoScript record. The static template and the static page
-TSconfig stay available for existing installations
-- Full text search over the manual, rendered into the chapter navigation and answered in the browser
-- Documentation coverage report listing every record type next to the chapters documenting it, reachable from the
-doc header of the manual module
-- `Configuration/ContentSecurityPolicies.php`; the only inline stylesheet of the manual is registered through the
-asset collector so TYPO3 can attach a nonce
-- Presets for the installation wizard are collected from the service container, so a project can ship its own
-by implementing `PresetInterface`
-- Functional tests for the manual generator, the button bar event listener and the PDF middleware
-- PHPStan runs on level 8 without a baseline
-
-### Changed
-
-- The extension requires TYPO3 v13.4 as a minimum, support for v12 was dropped
-- `ext_tables.php` was removed; the manual page type is registered through TCA (`allowedRecordTypes`) on v14 and
-through `PageDoktypeRegistry` on v13
-- Event listeners are registered via `#[AsEventListener]` instead of `Services.yaml`
-- `StandaloneView`, `LanguageService::includeLLFile()`, `$GLOBALS['TSFE']` and the deprecated `ButtonBar::make*()`
-factories were replaced by their supported counterparts
-- The user TSconfig option `options.pageTree.doktypesToShowInNewPageDragArea` is only set on v13, where it is not
-yet deprecated, and moved to `Configuration/user.tsconfig`
-- The PDF filename is derived from the manual title instead of being hardcoded to `Handbuch.pdf`
-- Modal titles in the backend JavaScript are translatable
-- New manuals are created with the site set attached instead of a TypoScript record
-- The record types a chapter can document are enumerated by `RecordTypeRegistry`, shared by the TCA field and the
-coverage report
-
-### Fixed
-
 - The backend module was unusable on TYPO3 v14 (fatal error in `LanguageService::includeLLFile()`), as were the
 content element previews and the installation wizard
 - The PDF download route was reachable without a backend login and without a page permission check
@@ -106,6 +100,12 @@ content element id
 - Functional tests never ran: the PHPUnit bootstrap path was wrong, the fixtures were not in the format the
 testing framework expects and the tests still used `@test` annotations
 
-## [2.0.5] and earlier
+### Removed
+
+- `Slider.js` and `slider.css` of the former step carousel
+- The Gutenberg stylesheets, replaced by the design system stylesheet
+- `DataProcessing\BackendSettingsProcessor`, replaced by `ManualSettingsProcessor`
+
+## [2.2.0] and earlier
 
 See the [release notes](https://github.com/xima-media/xima-typo3-manual/releases).
