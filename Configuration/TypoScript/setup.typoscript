@@ -1,3 +1,4 @@
 # Legacy entry point for manuals that include the static template instead of the site set "xima/manual"
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript'
+@import 'EXT:indexed_search/Configuration/TypoScript/setup.typoscript'
 @import 'EXT:xima_typo3_manual/Configuration/Sets/Manual/setup.typoscript'

@@ -1,5 +1,6 @@
 # Legacy entry point for manuals that include the static template instead of the site set "xima/manual"
 @import 'EXT:fluid_styled_content/Configuration/TypoScript/constants.typoscript'
+@import 'EXT:indexed_search/Configuration/TypoScript/constants.typoscript'
 @import 'EXT:xima_typo3_manual/Configuration/Sets/Manual/constants.typoscript'
 
 styles {
