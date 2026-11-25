@@ -13,6 +13,7 @@ use Ssch\TYPO3Rector\CodeQuality\General\ExtEmConfRector;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 use Ssch\TYPO3Rector\Set\Typo3SetList;
+use Ssch\TYPO3Rector\TYPO312\v3\UseSelectItemInsteadOfArrayRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -63,5 +64,6 @@ return RectorConfig::configure()
         SafeDeclareStrictTypesRector::class => [
             '*/ext_emconf.php',
         ],
+        UseSelectItemInsteadOfArrayRector::class,
     ])
 ;
