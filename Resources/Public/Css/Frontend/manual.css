@@ -1495,24 +1495,41 @@ h4:hover > .manual-anchor,
     margin-bottom: 16px;
 }
 
-.manual-text--beside {
+.manual-text--left,
+.manual-text--right {
     display: flex;
     align-items: flex-start;
     gap: 24px;
 }
 
-.manual-text--beside .manual-text_media {
+.manual-text--right {
+    flex-direction: row-reverse;
+}
+
+.manual-text--left .manual-text_media,
+.manual-text--right .manual-text_media {
     flex: 0 0 40%;
     margin-bottom: 0;
 }
 
-.manual-text--beside .manual-text_body {
+.manual-text--left .manual-text_body,
+.manual-text--right .manual-text_body {
     flex: 1;
     min-width: 0;
 }
 
+.manual-text--below {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.manual-text--below .manual-text_media {
+    margin: 16px 0 0;
+}
+
 @media (max-width: 860px) {
-    .manual-text--beside {
+    .manual-text--left,
+    .manual-text--right {
         flex-direction: column;
     }
 }

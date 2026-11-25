@@ -2,7 +2,14 @@
 <f:layout name="Default"/>
 
 <f:section name="Main">
-    <div class="manual-text{f:if(condition: '{data.imageorient} == 25 || {data.imageorient} == 26', then: ' manual-text--beside')}">
+    <f:switch expression="{data.imageorient}">
+        <f:case value="8"><f:variable name="imagePosition" value="below"/></f:case>
+        <f:case value="25"><f:variable name="imagePosition" value="right"/></f:case>
+        <f:case value="26"><f:variable name="imagePosition" value="left"/></f:case>
+        <f:defaultCase><f:variable name="imagePosition" value="above"/></f:defaultCase>
+    </f:switch>
+
+    <div class="manual-text manual-text--{imagePosition}">
         <f:if condition="{files}">
             <div class="manual-text_media">
                 <f:for each="{files}" as="file" iteration="fileIterator">
