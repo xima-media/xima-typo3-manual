@@ -37,6 +37,7 @@ yet deprecated, and moved to `Configuration/user.tsconfig`
 coverage report
 - `PresetInterface` no longer receives the page id in its constructor; `getData()` takes it as argument and
 `getIconIdentifier()` was added
+- Requires `blueways/bw-icons` 4.x or 5.x instead of its `dev-main`; 5.0.0 is the first release with TYPO3 v14 support
 
 ### Added
 
