@@ -3,7 +3,7 @@
 /** @var string $_EXTKEY */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Editor manual for TYPO3 backend',
-    'description' => 'This extension provides a new page type for creating an editor manual right in the TYPO3 backend.',
+    'description' => 'Create editor manuals as TYPO3 page trees and read them in the backend, with related-record links, search and PDF export.',
     'category' => 'module',
     'author' => 'Maik Schneider',
     'author_email' => 'maik.schneider@xima.de',
