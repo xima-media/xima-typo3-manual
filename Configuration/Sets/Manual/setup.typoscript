@@ -176,6 +176,8 @@ pdf < page
 pdf.typeNum = 1664618986
 pdf.10.variables.type.value = pdf
 pdf.10.variables.context.value = pdf
+# The download is the whole manual, regardless of whether the web view shows one chapter per page
+pdf.10.variables.displayFullManual.value = 1
 pdf.config.index_enable = 0
 pdf.includeJS.colorScheme >
 pdf.includeJSFooter.navigation >
