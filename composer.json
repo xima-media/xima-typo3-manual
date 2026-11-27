@@ -1,6 +1,6 @@
 {
 	"name": "xima/xima-typo3-manual",
-	"description": "TYPO3 extension to create editor manuals right in the TYPO3 backend.",
+	"description": "Create editor manuals as TYPO3 page trees and read them in the backend, with related-record links, search and PDF export.",
 	"license": "GPL-2.0-or-later",
 	"type": "typo3-cms-extension",
 	"keywords": [

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<guides xmlns="https://www.phpdoc.org/guides"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://www.phpdoc.org/guides ../vendor/phpdocumentor/guides-cli/resources/schema/guides.xsd"
+        links-are-relative="true"
+        default-code-language="php"
+>
+    <extension class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
+               project-home="https://extensions.typo3.org/extension/xima_typo3_manual"
+               project-contact="https://github.com/xima-media/xima-typo3-manual/issues"
+               project-repository="https://github.com/xima-media/xima-typo3-manual"
+               project-issues="https://github.com/xima-media/xima-typo3-manual/issues"
+               edit-on-github-branch="main"
+               edit-on-github="xima-media/xima-typo3-manual"
+               typo3-core-preferred="14.3"
+               interlink-shortcode="xima/xima-typo3-manual"
+    />
+    <project title="Editor manual for TYPO3"
+             release="3.0.0"
+             version="3.0"
+             copyright="XIMA MEDIA GmbH &amp; Contributors"
+    />
+</guides>

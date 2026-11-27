@@ -27,10 +27,14 @@ indent_style = tab
 indent_style = space
 indent_size = 2
 
-# ReST files
+# ReST lists and embedded code blocks have their own indentation
 [{*.rst,*.rst.txt}]
-indent_size = 4
-max_line_length = 80
+indent_size = unset
+max_line_length = 100
+
+# Aligned XML attributes
+[Documentation/guides.xml]
+indent_size = unset
 
 # SQL files
 [*.sql]
