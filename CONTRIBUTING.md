@@ -30,13 +30,31 @@ To login, you can use the username `admin` and password `Passw0rd!`.
 ## Code analysis and linters
 
 ```bash
+# Fix what can be fixed automatically and run all linters
+ddev composer sca
+
+# Run all linters in check mode, like the CI
+ddev composer ci:sca
+
 # Run a specific linter
 ddev composer php:lint
-ddev composer typoscript:lint
-ddev composer xml:lint
-ddev composer yaml:lint
-ddev composer php:stan
+ddev composer php:rector
 ddev composer php:fixer
+ddev composer php:stan
+ddev composer typoscript:lint
+ddev composer yaml:lint
+ddev composer language:lint
+```
+
+## Tests
+
+```bash
+# Unit and functional tests
+ddev composer test
+
+# A single suite
+ddev composer test:unit
+ddev composer test:functional
 ```
 
 ## Submit a pull request

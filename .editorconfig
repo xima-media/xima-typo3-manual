@@ -1,5 +1,3 @@
-# EditorConfig is awesome: http://EditorConfig.org
-
 # top-most EditorConfig file
 root = true
 
@@ -12,63 +10,64 @@ indent_size = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# TS/JS-Files
-[*.{ts,js}]
+# JS files
+[*.js]
 indent_size = 2
 
-# JSON-Files
-[{*.json,.prettierrc}]
+# Comments and aligned attributes don't follow the indent size
+[*.{css,html,ts}]
+indent_size = unset
+
+# JSON files
+[*.json]
 indent_style = tab
 
-# YAML-Files
-[*.{yaml,yml}]
+# npm and TypeScript configs
+[{package.json,package-lock.json,tsconfig.json}]
+indent_style = space
 indent_size = 2
 
-# NEON-Files
-[*.neon]
-indent_size = 2
-indent_style = tab
+# ReST files
+[{*.rst,*.rst.txt}]
+indent_size = 4
+max_line_length = 80
 
-# package.json
-[package.json]
-indent_size = 2
-
-# TypoScript
-[*.{typoscript,tsconfig}]
-indent_size = 2
-
-# XLF-Files
-[*.xlf]
-indent_style = tab
-
-# SQL-Files
+# SQL files
 [*.sql]
 indent_style = tab
 indent_size = 2
 
-# .htaccess
-[{_.htaccess,.htaccess}]
-indent_style = tab
+# TypoScript files
+[*.{typoscript,tsconfig}]
+indent_size = 2
 
-[/var/**]
-charset = unset
-end_of_line = unset
-insert_final_newline = unset
-trim_trailing_whitespace = unset
+# YAML files
+[{*.yml,*.yaml}]
+indent_size = 2
+
+# XLF files are generated/edited by tooling
+[*.xlf]
 indent_style = unset
 indent_size = unset
 
-[/Documentation/**]
-charset = unset
-end_of_line = unset
-insert_final_newline = unset
-trim_trailing_whitespace = unset
-indent_style = unset
-indent_size = unset
-
+# PHP formatting is owned by php-cs-fixer
 [*.php]
 indent_style = unset
 
+# .htaccess
+[.htaccess]
+indent_style = tab
+
+# Markdown files
+[*.md]
+indent_size = 2
+
+# NEON files
+[*.neon]
+indent_style = tab
+indent_size = 2
+
+# DDEV files are managed by ddev
 [.ddev/**]
 charset = unset
 end_of_line = unset
@@ -76,5 +75,3 @@ insert_final_newline = unset
 trim_trailing_whitespace = unset
 indent_style = unset
 indent_size = unset
-
-# end of file

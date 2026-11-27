@@ -8,7 +8,7 @@ Everything runs inside DDEV:
 ddev start
 ddev init-typo3          # empty database, fixtures and site configuration
 ddev composer sca        # composer normalize, php-cs-fixer, PHPStan, rector, linters
-ddev exec vendor/bin/phpunit -c phpunit.xml.dist
+ddev composer test       # unit and functional tests
 ```
 
 To try the extension against the other supported TYPO3 version, put a second

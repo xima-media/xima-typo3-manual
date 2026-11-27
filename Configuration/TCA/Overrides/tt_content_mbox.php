@@ -16,8 +16,8 @@ ExtensionManagementUtility::addTcaSelectItem(
         'group' => 'default',
         'description' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mbox.description',
     ],
-    'image',
-    'after'
+    'mannotation',
+    'before'
 );
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['mbox'] = 'content-idea';
 

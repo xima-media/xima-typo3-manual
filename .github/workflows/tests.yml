@@ -9,9 +9,12 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  functional:
-    name: Functional tests (PHP ${{ matrix.php-version }}, TYPO3 ${{ matrix.typo3-version }})
+  unit-tests:
+    name: Unit (PHP ${{ matrix.php-version }}, TYPO3 ${{ matrix.typo3-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -20,22 +23,42 @@ jobs:
           - { typo3-version: "13.4", php-version: "8.2" }
           - { typo3-version: "13.4", php-version: "8.3" }
           - { typo3-version: "13.4", php-version: "8.4" }
-          - { typo3-version: "14.3", php-version: "8.3" }
+          - { typo3-version: "14.3", php-version: "8.2" }
           - { typo3-version: "14.3", php-version: "8.4" }
+          - { typo3-version: "14.3", php-version: "8.5" }
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           php-version: ${{ matrix.php-version }}
           coverage: none
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, mysql
+          extensions: mbstring, xml, ctype, iconv, intl
+
+      - name: Install Composer dependencies
+        run: composer update --no-progress --with=typo3/cms-core:"^${{ matrix.typo3-version }}"
+
+      - name: Run unit tests
+        run: composer test:unit
+
+  functional-tests:
+    name: Functional (PHP ${{ matrix.php-version }}, TYPO3 ${{ matrix.typo3-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { typo3-version: "13.4", php-version: "8.2" }
+          - { typo3-version: "13.4", php-version: "8.3" }
+          - { typo3-version: "13.4", php-version: "8.4" }
+          - { typo3-version: "14.3", php-version: "8.2" }
+          - { typo3-version: "14.3", php-version: "8.4" }
+          - { typo3-version: "14.3", php-version: "8.5" }
+
+    steps:
+      - uses: actions/checkout@v7
 
       - name: Setup DDEV
         uses: ddev/github-action-setup-ddev@v1
@@ -44,16 +67,54 @@ jobs:
 
       - name: Configure and start DDEV
         run: |
-          ddev config --project-type=typo3 --php-version=${{ matrix.php-version }} --web-environment-add="XDEBUG_MODE=off"
+          ddev config --php-version=${{ matrix.php-version }}
           ddev start
 
       - name: Install Composer dependencies
-        uses: ramsey/composer-install@v2
-        with:
-          composer-options: --with=typo3/cms-core:"^${{ matrix.typo3-version }}" --with=typo3/cms-rte-ckeditor:"^${{ matrix.typo3-version }}"
-
-      - name: Init TYPO3
-        run: ddev init-typo3
+        run: |
+          ddev composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          ddev composer update --no-progress --with=typo3/cms-core:"^${{ matrix.typo3-version }}"
 
       - name: Run functional tests
-        run: ddev exec vendor/bin/phpunit -c phpunit.xml.dist
+        run: ddev composer test:functional
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup DDEV
+        uses: ddev/github-action-setup-ddev@v1
+        with:
+          autostart: false
+
+      - name: Start DDEV
+        run: ddev start
+
+      - name: Install Composer dependencies
+        run: |
+          ddev composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          ddev composer update --no-progress
+
+      - name: Enable Xdebug
+        run: ddev xdebug on
+
+      # `ddev composer` always runs with XDEBUG_MODE=off, so call composer via `ddev exec`.
+      - name: Run unit and functional tests with coverage
+        run: ddev exec XDEBUG_MODE=coverage composer test:coverage
+
+      # Uploaded separately so both suites stay distinguishable as flags in Codecov.
+      - name: Upload unit coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/clover-unit.xml
+          flags: unit
+
+      - name: Upload functional coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/clover-functional.xml
+          flags: functional

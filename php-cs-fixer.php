@@ -1,29 +1,29 @@
 <?php
 
 /*
-* This file is part of the TYPO3 CMS project.
-*
-* It is free software; you can redistribute it and/or modify it under
-* the terms of the GNU General Public License, either version 2
-* of the License, or any later version.
-*
-* For the full copyright and license information, please read the
-* LICENSE.txt file that was distributed with this source code.
-*
-* The TYPO3 project - inspiring people to share!
-*/
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 /**
-* This file represents the configuration for Code Sniffing PSR-2-related
-* automatic checks of coding guidelines
-* Install @fabpot's great php-cs-fixer tool via
-*  $ composer global require friendsofphp/php-cs-fixer
-* And then simply run
-*  $ ./bin/php-cs-fixer fix --config ./Build/php-cs-fixer.php
-* inside the TYPO3 directory. Warning: This may take up to 10 minutes.
-* For more information read:
-*     https://www.php-fig.org/psr/psr-2/
-*     https://cs.sensiolabs.org
-*/
+ * This file represents the configuration for Code Sniffing PSR-2-related
+ * automatic checks of coding guidelines
+ * Install @fabpot's great php-cs-fixer tool via
+ *  $ composer global require friendsofphp/php-cs-fixer
+ * And then simply run
+ *  $ ./bin/php-cs-fixer fix --config ./Build/php-cs-fixer.php
+ * inside the TYPO3 directory. Warning: This may take up to 10 minutes.
+ * For more information read:
+ *     https://www.php-fig.org/psr/psr-2/
+ *     https://cs.sensiolabs.org
+ */
 if (PHP_SAPI !== 'cli') {
     die('This script supports command line usage only. Please check your command.');
 }
@@ -32,6 +32,7 @@ if (PHP_SAPI !== 'cli') {
 $finder = (new PhpCsFixer\Finder())
     ->ignoreVCSIgnored(true)
     ->in(realpath(__DIR__));
+
 // Return a Code Sniffing configuration using
 // all sniffers needed for PSR-2
 // and additionally:
@@ -42,24 +43,25 @@ $finder = (new PhpCsFixer\Finder())
 //  - Ensure Concatenation to have at least one whitespace around
 //  - Remove trailing whitespace at the end of blank lines.
 return (new \PhpCsFixer\Config())
+    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
         'blank_line_after_opening_tag' => true,
-        'braces' => ['allow_single_line_closure' => true],
+        'braces_position' => ['allow_single_line_anonymous_functions' => true],
         'cast_spaces' => ['space' => 'none'],
-        'compact_nullable_typehint' => true,
+        'compact_nullable_type_declaration' => true,
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
+        'declare_parentheses' => true,
         'dir_constant' => true,
-        'function_typehint_space' => true,
         'lowercase_cast' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'modernize_types_casting' => true,
         'native_function_casing' => true,
-        'new_with_braces' => true,
+        'new_with_parentheses' => true,
         'no_alias_functions' => true,
         'no_blank_lines_after_phpdoc' => true,
         'no_empty_phpdoc' => true,
@@ -92,6 +94,7 @@ return (new \PhpCsFixer\Config())
         'single_line_comment_style' => ['comment_types' => ['hash']],
         'single_trait_insert_per_statement' => true,
         'trailing_comma_in_multiline' => ['elements' => ['arrays']],
+        'type_declaration_spaces' => true,
         'whitespace_after_comma_in_array' => true,
     ])
     ->setFinder($finder);

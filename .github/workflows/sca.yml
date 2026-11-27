@@ -4,46 +4,50 @@ on:
   push:
     branches:
       - main
-      - v14
       - 'renovate/**'
   pull_request:
     branches:
       - main
-      - v14
+
+permissions:
+  contents: read
 
 jobs:
   sca:
     name: SCA
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      # Setup DDEV
       - name: Setup DDEV
         uses: ddev/github-action-setup-ddev@v1
         with:
           autostart: false
 
-      # Install dependencies
       - name: Install Composer dependencies
         run: |
           ddev start
           ddev composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
-          ddev composer install
+          ddev composer install --no-progress
+
+      - name: Composer audit
+        run: ddev composer audit
 
       - name: Run static code analysis
         run: ddev composer ci:sca
 
       - uses: staabm/annotate-pull-request-from-checkstyle-action@v1
         name: Annotate PHP CS Fixer
+        if: always()
         with:
           files: php-cs-fixer.xml
           notices-as-warnings: true
 
       - uses: staabm/annotate-pull-request-from-checkstyle-action@v1
         name: Annotate PHPStan
+        if: always()
         with:
           files: phpstan.xml
           notices-as-warnings: true

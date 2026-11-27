@@ -22,7 +22,7 @@ final class ModifyButtonBarEventListenerTest extends AbstractFunctionalTestCase
 
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/tt_content.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Acceptance/Fixtures/be_users.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/be_users.csv');
         $this->setUpBackendUser(1);
     }
 
