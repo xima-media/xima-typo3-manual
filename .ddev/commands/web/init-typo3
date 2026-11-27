@@ -12,7 +12,6 @@ readonly dbPassword="db"
 readonly dbName="db"
 readonly dbCredentials="-h${dbHost} -u${dbUser} -p${dbPassword}"
 readonly fixturePath="/var/www/html/Tests/Fixtures"
-readonly acceptanceFixturePath="/var/www/html/Tests/Acceptance/Fixtures"
 readonly typo3Binary="/var/www/html/vendor/bin/typo3"
 
 function _progress() {
@@ -46,6 +45,7 @@ export TYPO3_PROJECT_NAME="EXT:xima-typo3-manual"
 # Set up environment
 _progress "Setting up TYPO3 installation"
 "$typo3Binary" setup --no-interaction --force --quiet
+"$typo3Binary" configuration:set SYS/trustedHostsPattern ".*"
 _done
 
 # Remove setup-created backend users to avoid duplicate fixture imports
@@ -60,16 +60,8 @@ for file in "$fixturePath"/*.sql; do
     _done
 done
 
-# Import acceptance test DB fixtures
-if [ -d "$acceptanceFixturePath" ]; then
-    for file in "$acceptanceFixturePath"/*.sql; do
-        _progress "Importing acceptance fixture \"$(basename "$file")\""
-        mysql $dbCredentials "$dbName" < "$file"
-        _done
-    done
-fi
-
 # Import site configuration fixtures
 _progress "Importing site configuration fixtures"
 cp -r "$fixturePath/sites/." /var/www/html/config/sites/
+"$typo3Binary" cache:flush
 _done
