@@ -56,6 +56,7 @@ coverage report
 - `PresetInterface` no longer receives the page id in its constructor; `getData()` takes it as argument and
 `getIconIdentifier()` was added
 - Requires `blueways/bw-icons` 4.x or 5.x instead of its `dev-main`; 5.0.0 is the first release with TYPO3 v14 support
+- Release archives no longer ship tests, DDEV and code quality configuration
 
 ### Added
 
@@ -129,6 +130,9 @@ testing framework expects and the tests still used `@test` annotations
 - `Slider.js` and `slider.css` of the former step carousel
 - The Gutenberg stylesheets, replaced by the design system stylesheet
 - `DataProcessing\BackendSettingsProcessor`, replaced by `ManualSettingsProcessor`
+- The TYPO3 v12 wizard group `mod.wizards.newContentElement.wizardItems.xima_typo3_manual`; the elements are
+registered in the TCA group `default`
+- The `plugin.tx_bwfocuspointimages.view` constants, which pointed to the template of the former focus point element
 
 ## [2.2.0] and earlier
 
