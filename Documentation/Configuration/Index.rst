@@ -48,4 +48,5 @@ The related-record selector and coverage report use the same
         ['relations']['additionalTablesToSkip'] = ['tx_example_domain_model_log'];
 
 This is a presentation filter for the selector/report, not an authorization
-mechanism.
+mechanism. On TYPO3 13, ``list_type`` plugins are listed separately and stay in
+the list even if ``tt_content`` is skipped.

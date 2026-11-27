@@ -24,9 +24,12 @@ Requirements and configuration
 4.  Add ``xima/manual`` to each manual site, replacing duplicate static includes,
     **or** keep the existing static TypoScript template and page TSconfig.
 5.  Set ``manual.appearance.primaryColor`` per site if the former backend login
-    highlight colour should be retained.
-6.  Visit the normal frontend to rebuild/refresh the search index. Check the
-    module, related-record links, print view and PDF download.
+    highlight colour should be retained. With the static template, set the
+    constant in the template's constants instead: the static template assigns a
+    default that overrides the site setting.
+6.  Rebuild the search index as described in :ref:`search`, including every
+    chapter URL in one-chapter-per-page mode. Check the module, related-record
+    links, print view and PDF download.
 
 Content and design
 ==================
