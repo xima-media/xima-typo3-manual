@@ -143,6 +143,10 @@ page {
 config.index_enable = 1
 config.index_externals = 0
 
+# Inside the backend module every link has to keep the context, otherwise the next page loses the edit controls and
+# the colour scheme of the backend user
+config.linkVars = context(backend|iframe),colorScheme(auto|light|dark)
+
 [(request.getQueryParams()['context'] ?? '') == 'backend']
   config.index_enable = 0
 [END]
