@@ -17,6 +17,7 @@ $EM_CONF[$_EXTKEY] = [
             'filelist' => '13.4.0-14.3.99',
             'fluid_styled_content' => '13.4.0-14.3.99',
             'indexed_search' => '13.4.0-14.3.99',
+            'rte_ckeditor' => '13.4.0-14.3.99',
             'bw_focuspoint_images' => '6.0.0-7.99.99',
             'bw_icons' => '4.0.0-5.99.99',
         ],
