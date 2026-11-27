@@ -8,6 +8,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
@@ -128,12 +129,30 @@ class ManualRegistry
             return 0;
         }
 
-        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        try {
+            $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
+        } catch (PageNotFoundException) {
+            return 0;
+        }
+
         if ((int)($rootline[0]['doktype'] ?? 0) !== Configuration::DOKTYPE_MANUAL) {
             return 0;
         }
 
         return (int)($rootline[0]['uid'] ?? 0);
+    }
+
+    /**
+     * Whether the current backend user may read the given page of a manual.
+     */
+    public function canRead(int $pageUid): bool
+    {
+        $backendUser = $this->getBackendUser();
+        if ($pageUid <= 0 || !$backendUser instanceof BackendUserAuthentication) {
+            return false;
+        }
+
+        return BackendUtility::readPageAccess($pageUid, $backendUser->getPagePermsClause(Permission::PAGE_SHOW)) !== false;
     }
 
     private function getBackendUser(): ?BackendUserAuthentication

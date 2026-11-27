@@ -36,8 +36,10 @@ class CoverageController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $pageId = (int)($this->request->getQueryParams()['id'] ?? 0);
-        $rootPageUid = $this->manualRegistry->getManualRootForPage($pageId)
-            ?: $this->manualRegistry->getPreferredManualRoot();
+        $rootPageUid = $this->manualRegistry->getManualRootForPage($pageId);
+        if (!$this->manualRegistry->canRead($rootPageUid)) {
+            $rootPageUid = $this->manualRegistry->getPreferredManualRoot();
+        }
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-manual/Coverage.js');
 

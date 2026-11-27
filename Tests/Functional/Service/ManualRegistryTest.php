@@ -53,6 +53,28 @@ final class ManualRegistryTest extends AbstractFunctionalTestCase
     }
 
     #[Test]
+    public function aMissingPageResolvesToNoManual(): void
+    {
+        self::assertSame(0, $this->getRegistry()->getManualRootForPage(999));
+    }
+
+    #[Test]
+    public function onlyPagesTheUserMayShowAreReadable(): void
+    {
+        self::assertTrue($this->getRegistry()->canRead(3));
+        self::assertFalse($this->getRegistry()->canRead(999));
+
+        $this->getConnectionPool()->getConnectionForTable('be_users')->insert('be_users', [
+            'uid' => 2,
+            'username' => 'editor',
+            'admin' => 0,
+        ]);
+        $this->setUpBackendUser(2);
+
+        self::assertFalse($this->getRegistry()->canRead(3));
+    }
+
+    #[Test]
     public function theLastOpenedManualIsPreferredOnTheNextVisit(): void
     {
         $this->createSecondManual();

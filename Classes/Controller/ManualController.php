@@ -66,7 +66,7 @@ class ManualController extends ActionController
     {
         $context = $this->resolveContext();
         $pageId = $this->resolveRequestedPageId();
-        if (!self::hasManualRootPage($pageId)) {
+        if (!self::hasManualRootPage($pageId) || !$this->manualRegistry->canRead($pageId)) {
             $pageId = $this->manualRegistry->getPreferredManualRoot();
             if ($pageId === 0) {
                 $uri = $this->uriBuilder->uriFor('index', ['context' => $context], 'Installation');
