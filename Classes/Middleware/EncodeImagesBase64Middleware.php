@@ -69,7 +69,8 @@ final class EncodeImagesBase64Middleware implements MiddlewareInterface
             }
 
             $path = $this->resolveLocalPath($source);
-            if ($path === null) {
+            $mimeType = $path === null ? null : $this->getImageMimeType($path);
+            if ($path === null || $mimeType === null) {
                 return $img[0];
             }
 
@@ -78,7 +79,7 @@ final class EncodeImagesBase64Middleware implements MiddlewareInterface
                 return $img[0];
             }
 
-            $newSrc = 'data:' . (mime_content_type($path) ?: 'application/octet-stream') . ';base64,' . base64_encode($fileContent);
+            $newSrc = 'data:' . $mimeType . ';base64,' . base64_encode($fileContent);
             return str_replace($source, $newSrc, $img[0]);
         }, $input) ?? $input;
     }
@@ -139,7 +140,7 @@ final class EncodeImagesBase64Middleware implements MiddlewareInterface
         }
 
         $spritePath = $this->resolveLocalPath($urlParts[0]);
-        if ($spritePath === null) {
+        if ($spritePath === null || $this->getImageMimeType($spritePath) !== 'image/svg+xml') {
             return $svgMarkup;
         }
 
@@ -168,6 +169,21 @@ final class EncodeImagesBase64Middleware implements MiddlewareInterface
         $iconMarkup = $searchResult[0]->asXML();
 
         return is_string($iconMarkup) ? $iconMarkup : $svgMarkup;
+    }
+
+    /**
+     * The printable page type is public, so inlining anything but an image would disclose files below the public path.
+     * SVGs are recognised by their extension, because the detected MIME type of an SVG depends on its prolog.
+     */
+    private function getImageMimeType(string $path): ?string
+    {
+        if (strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'svg') {
+            return 'image/svg+xml';
+        }
+
+        $mimeType = mime_content_type($path);
+
+        return is_string($mimeType) && str_starts_with($mimeType, 'image/') ? $mimeType : null;
     }
 
     /**

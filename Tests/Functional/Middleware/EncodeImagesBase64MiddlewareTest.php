@@ -64,6 +64,18 @@ final class EncodeImagesBase64MiddlewareTest extends AbstractFunctionalTestCase
         self::assertStringNotContainsString('data:', $result);
     }
 
+    #[Test]
+    public function filesOtherThanImagesAreNotInlined(): void
+    {
+        $path = Environment::getPublicPath() . '/fileadmin/middleware-test.php';
+        file_put_contents($path, '<?php return [\'secret\' => \'s3cr3t\'];');
+
+        $result = $this->process('<img src="/fileadmin/middleware-test.php">', Configuration::PDF_PAGE_TYPE);
+
+        self::assertStringNotContainsString('data:', $result);
+        self::assertSame('<img src="/fileadmin/middleware-test.php">', $result);
+    }
+
     private function process(string $html, int $pageType): string
     {
         $request = (new ServerRequest('https://example.com/manual/'))
