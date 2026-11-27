@@ -6,7 +6,7 @@ class Navigation {
   #debounceTimer = null
 
   makeIdentifierActive(href) {
-    const navItem = document.querySelector('.manual-nav a[href="' + href + '"]')
+    const navItem = document.querySelector('.manual-nav a[href="' + CSS.escape(href) + '"]')
     if (!navItem) {
       return
     }
@@ -96,7 +96,11 @@ class Navigation {
       return
     }
     this.makeIdentifierActive(hash)
-    document.querySelector(hash)?.scrollIntoView()
+    try {
+      document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView()
+    } catch {
+      // A malformed escape sequence in the hash points to no heading
+    }
   }
 
   headlineObserver = new IntersectionObserver((entries) => {
