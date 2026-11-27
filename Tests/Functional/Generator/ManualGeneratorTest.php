@@ -17,7 +17,7 @@ final class ManualGeneratorTest extends AbstractFunctionalTestCase
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
-        $this->importCSVDataSet(__DIR__ . '/../../Acceptance/Fixtures/be_users.csv');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/be_users.csv');
         $this->setUpBackendUser(1);
     }
 
@@ -34,15 +34,16 @@ final class ManualGeneratorTest extends AbstractFunctionalTestCase
     public function manualGeneratorCreatesManualWithPreset(): void
     {
         $result = $this->getGenerator()->createManualFromPreset('empty');
+        $rootPageUid = $result['rootPageUid'] ?? 0;
 
-        self::assertArrayHasKey('rootPageUid', $result);
-        self::assertGreaterThan(0, $result['rootPageUid']);
+        self::assertGreaterThan(0, $rootPageUid);
 
         $row = $this->getConnectionPool()
             ->getConnectionForTable('pages')
-            ->select(['doktype', 'is_siteroot'], 'pages', ['uid' => $result['rootPageUid']])
+            ->select(['doktype', 'is_siteroot'], 'pages', ['uid' => $rootPageUid])
             ->fetchAssociative();
 
+        self::assertIsArray($row);
         self::assertSame(Configuration::DOKTYPE_MANUAL, (int)$row['doktype']);
         self::assertSame(1, (int)$row['is_siteroot']);
     }
