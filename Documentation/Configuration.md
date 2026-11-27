@@ -24,6 +24,15 @@ Installations that predate site sets can keep the previous wiring instead: inclu
 the **static PageTS** "XIMA Manual" and create a root TypoScript template that
 includes the static TypoScript of this extension.
 
+## Access
+
+The manual is rendered by the frontend of its site, and the backend module shows
+it in an iframe. Like any other site, it is publicly reachable under its base
+URL, its printable version (`?type=1664618986`) included. Only the PDF download
+in the backend requires a backend login and read access to the page. If a manual
+must not be public, restrict its site base on the web server, e.g. to the
+backend's network or by HTTP authentication.
+
 ## Customization
 
 The site set `xima/manual` brings its settings along, so they can be edited per

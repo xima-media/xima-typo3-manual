@@ -6,6 +6,24 @@ All notable changes to this project are documented in this file. The format foll
 
 ## [3.0.0] - unreleased
 
+### Breaking changes and upgrade from 2.x
+
+- TYPO3 v12 is no longer supported; TYPO3 v13.4.29 or v14.3 and PHP 8.2 are required. `EXT:indexed_search`,
+`EXT:filelist`, `EXT:fluid_styled_content` and `EXT:rte_ckeditor` are now dependencies: run the database compare
+after updating
+- The frontend was redesigned. Overrides of the manual templates, partials or stylesheets written against the 2.x
+markup (Gutenberg stylesheets, `.ce-mbox`, the step carousel) have to be redone
+- Note element (`mbox`): the text is a rich text field now, existing plain text is rendered as paragraphs. The
+default layout renders as the "editorial" variant
+- Step element (`msteps`): the default layout is a numbered list; the former carousel is the "slider" layout
+- The lead colour is read from the site setting `manual.appearance.primaryColor` instead of the backend login
+highlight colour
+- `PresetInterface` changed: presets get no constructor argument anymore, `getData()` takes the page id and
+`getIconIdentifier()` is required. Presets are collected from the service container
+- `DataProcessing\BackendSettingsProcessor` was removed
+- Upgrade steps: update the package, run the database compare and the upgrade wizards, flush all caches, then
+either add the site set `xima/manual` to the manual's site or keep the static TypoScript template and page TSconfig
+
 ### Changed
 
 - The extension requires TYPO3 v13.4.29 as a minimum, support for v12 was dropped. `EXT:indexed_search`,
@@ -93,6 +111,11 @@ through the query builder
 - Inline SVGs in the PDF export were appended next to the original element instead of replacing it, and only the
 first element of a live node list was processed
 - Assets for the PDF export are resolved inside the public path only
+- The printable page type inlined any file below the public path that an `<img>` pointed to, PHP files included.
+Only images are inlined now
+- The navigation and the "on this page" column did not load in the frontend: their shared helper was imported by a
+module specifier that only the backend import map resolves
+- The manual module and the coverage report opened manuals the backend user may not read
 - The annotation upgrade wizard no longer issues an `IN ()` statement when there is nothing to migrate
 - The installation wizard crashed on a missing `context` argument and rendered the wrong template for
 non-admin users

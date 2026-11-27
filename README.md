@@ -38,7 +38,7 @@ See [bw_icons](https://extensions.typo3.org/extension/bw_icons)
 
 | TYPO3      | PHP         | Extension |
 |------------|-------------|-----------|
-| 14.3 LTS   | 8.2 – 8.5   | 2.1+      |
+| 14.3 LTS   | 8.2 – 8.5   | 3.0+      |
 | 13.4 LTS   | 8.2 – 8.4   | 2.1+      |
 | 12.4 LTS   | 8.1 – 8.3   | 2.0.x     |
 
