@@ -5,7 +5,6 @@ page {
   10 = FLUIDTEMPLATE
   10 {
     templateName = Default
-    layoutRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Layouts
     partialRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Partials
     templateRootPaths.10 = EXT:xima_typo3_manual/Resources/Private/Templates
 

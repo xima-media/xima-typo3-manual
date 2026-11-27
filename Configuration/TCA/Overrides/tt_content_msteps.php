@@ -16,7 +16,7 @@ ExtensionManagementUtility::addTcaSelectItem(
         'group' => 'default',
         'description' => 'LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.msteps.description',
     ],
-    'image',
+    'mbox',
     'after'
 );
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['msteps'] = 'content-carousel-item-textandimage';

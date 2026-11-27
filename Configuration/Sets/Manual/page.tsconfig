@@ -3,52 +3,8 @@ mod.wizards.newContentElement.wizardItems {
   default.removeItems := removeFromList(mannotation,mbox,msteps,mtext)
 }
 
-# Legacy content element registration for v12
+# Hide the content element groups of other extensions on manual pages
 mod.wizards.newContentElement.wizardItems {
-
-  xima_typo3_manual {
-    header = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:mlang_labels_tablabel
-    elements {
-      tt_content_mtext {
-        iconIdentifier = content-beside-text-img-below-center
-        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.title
-        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mtext.description
-        tt_content_defValues {
-          CType = mtext
-        }
-      }
-
-      tt_content_mbox {
-        iconIdentifier = content-idea
-        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mbox.title
-        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.mbox.description
-        tt_content_defValues {
-          CType = mbox
-        }
-      }
-
-      tt_content_msteps {
-        iconIdentifier = content-carousel-item-textandimage
-        title = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.msteps.title
-        description = LLL:EXT:xima_typo3_manual/Resources/Private/Language/locallang.xlf:wizard.msteps.description
-        tt_content_defValues {
-          CType = msteps
-        }
-      }
-
-      tt_content_mannotation {
-        iconIdentifier = bw_focuspoint_images_svg
-        title = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.title
-        description = LLL:EXT:bw_focuspoint_images/Resources/Private/Language/locallang_db.xlf:tca.wizard.svg.description
-        tt_content_defValues {
-          CType = mannotation
-        }
-      }
-    }
-
-    show = tt_content_mtext,tt_content_mbox,tt_content_msteps,tt_content_mannotation
-  }
-
   common.show =
   forms.show =
   special.show =
