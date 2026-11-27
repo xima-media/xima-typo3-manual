@@ -12,8 +12,8 @@ readonly dbPassword="db"
 readonly dbName="db"
 readonly dbCredentials="-h${dbHost} -u${dbUser} -p${dbPassword}"
 readonly fixturePath="/var/www/html/Tests/Fixtures"
+readonly acceptanceFixturePath="/var/www/html/Tests/Acceptance/Fixtures"
 readonly typo3Binary="/var/www/html/vendor/bin/typo3"
-readonly typo3cmsBinary="/var/www/html/vendor/bin/typo3cms"
 
 function _progress() {
     printf "%s... " "$1"
@@ -48,12 +48,26 @@ _progress "Setting up TYPO3 installation"
 "$typo3Binary" setup --no-interaction --force --quiet
 _done
 
-# Import DB fixtures
+# Remove setup-created backend users to avoid duplicate fixture imports
+_progress "Reset backend users"
+    mysql -e "DELETE FROM be_users" $dbCredentials "$dbName"
+_done
+
+# Import DB fixtures (core test data)
 for file in "$fixturePath"/*.sql; do
     _progress "Importing DB fixture \"$(basename "$file")\""
     mysql $dbCredentials "$dbName" < "$file"
     _done
 done
+
+# Import acceptance test DB fixtures
+if [ -d "$acceptanceFixturePath" ]; then
+    for file in "$acceptanceFixturePath"/*.sql; do
+        _progress "Importing acceptance fixture \"$(basename "$file")\""
+        mysql $dbCredentials "$dbName" < "$file"
+        _done
+    done
+fi
 
 # Import site configuration fixtures
 _progress "Importing site configuration fixtures"
