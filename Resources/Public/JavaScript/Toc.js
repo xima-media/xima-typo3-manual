@@ -1,4 +1,4 @@
-import { getChapterHeadings } from '@xima/xima-typo3-manual/Helper/Headings.js'
+import { getChapterHeadings } from './Helper/Headings.js'
 
 /**
 * Builds the "on this page" column from the headings of the chapter currently in view and keeps the active entry in

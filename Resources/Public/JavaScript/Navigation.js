@@ -1,4 +1,4 @@
-import { getChapterHeadings } from '@xima/xima-typo3-manual/Helper/Headings.js'
+import { getChapterHeadings } from './Helper/Headings.js'
 
 class Navigation {
 
